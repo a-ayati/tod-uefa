@@ -585,7 +585,9 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
 .track:focus-visible{outline-offset:2px}
 .mcard{flex:0 0 224px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;text-align:start}
 .mtop{color:var(--muted);font-size:14px}
-.mtop.pv{color:var(--yellow);font-weight:800;font-size:15px}
+.mtop.pv{color:var(--yellow);font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+.pic{width:1.3em;height:1.3em;flex:none}
+.tabs.sub button:has(.pic){display:inline-flex;align-items:center;gap:7px}
 .mt{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;min-width:0}
 .mt .tn2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mt .sc{margin-inline-start:auto;font-weight:900;font-variant-numeric:tabular-nums}
@@ -1191,6 +1193,9 @@ function renderStats(){
   const car=(cards,allTxt)=>`<div class="carw"><button class="car-btn cb-prev" type="button" aria-label="${s.prev}">${chev}</button><div class="track"><div class="trk">${cards}</div></div><button class="car-btn cb-next" type="button" aria-label="${s.next}">${chev}</button></div>${allTxt?`<div class="va-bot"><button class="va" type="button" data-full="1">${listIc}<span>${allTxt}</span></button></div>`:""}`;
   const less=()=>`<div class="va-row"><button class="va sm" type="button" data-full="0" aria-label="${s.less}" title="${s.less}">${upIc}<span>${s.less}</span></button></div>`;
   const row=(c,sc)=>`<div class="mt">${cr(c)}<span class="tn2">${nm(c)}</span>${sc!=null?`<b class="sc">${sc}</b>`:""}</div>`;
+  const icG='<svg class="pic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m12 8.2 3.6 2.6-1.4 4.2H9.8l-1.4-4.2z" fill="currentColor" stroke="none"/><path d="M12 8.2V3.2M15.6 10.8l4.8-1.6M14.2 15l3 4.1M9.8 15l-3 4.1M8.4 10.8 3.6 9.2"/></svg>';
+  const icA='<svg class="pic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18.5v-4.2c0-.8.5-1.5 1.3-1.7l3.4-.9 2.6-5.2 2.7 1.3-.9 2.6 5.2 1.6c1.3.4 2.2 1.6 2.2 3v3.5z"/><path d="M3 18.5h18M8.5 15.2v3.3M12 15.2v3.3M15.5 15.2v3.3"/></svg>';
+  const pic=k=>k==="g"?icG:icA;
   const count=(n,kind)=>{
     if(l==="ar"){ if(kind==="g") return n===1?"هدف":n===2?"هدفان":n+" أهداف"; return n===1?"تمريرة حاسمة":n===2?"تمريرتان حاسمتان":n+" تمريرات حاسمة"; }
     return n+" "+(kind==="g"?(n===1?"goal":"goals"):(n===1?"assist":"assists"));
@@ -1229,10 +1234,10 @@ function renderStats(){
       html+=`</tbody></table></div>`;
     }
   }else{
-    html+=`<div class="tabs sub" role="tablist"><button type="button" role="tab" data-pl="goals" aria-selected="${stPl==="goals"}">${s.goals}</button><button type="button" role="tab" data-pl="assists" aria-selected="${stPl==="assists"}">${s.assists}</button></div>`;
+    html+=`<div class="tabs sub" role="tablist"><button type="button" role="tab" data-pl="goals" aria-selected="${stPl==="goals"}">${icG}<span>${s.goals}</span></button><button type="button" role="tab" data-pl="assists" aria-selected="${stPl==="assists"}">${icA}<span>${s.assists}</span></button></div>`;
     const rows=stPl==="goals"?SCORERS:ASSISTS, kind=stPl==="goals"?"g":"a";
     if(!stFull){
-      html+=car(rows.map(r=>{const p=PL[r[0]];return `<div class="mcard"><div class="mtop pv">${count(r[1],kind)}</div><div class="pname">${p[i]}</div>${row(p[2])}</div>`;}).join(""),s.allP);
+      html+=car(rows.map(r=>{const p=PL[r[0]];return `<div class="mcard"><div class="mtop pv">${pic(kind)}<span>${count(r[1],kind)}</span></div><div class="pname">${p[i]}</div>${row(p[2])}</div>`;}).join(""),s.allP);
     }else{
       html+=less();
       html+=`<div class="sbox narrow">${rows.map(r=>{const p=PL[r[0]];return `<div class="prow"><span class="pn" aria-label="${count(r[1],kind)}">${r[1]}</span><span class="pi"><b>${p[i]}</b><small class="tl">${cr(p[2],1)}<span>${nm(p[2])}</span></small></span></div>`;}).join("")}</div>`;
