@@ -20,18 +20,12 @@ Direct link to the customer view: https://a-ayati.github.io/tod-uefa/#customer
 | `kv-9x16.jpg` | Key visual 1080 × 1920 |
 | `thumb-6s.jpg` | Thumbnail for the 6s promo, 16:9 |
 
-## Club crests (optional)
+## Club crests
 
-Add the crests to `assets/crests/` as `<CODE>.png` (for example `PSG.png`).
-The full list of codes is in `assets/crests/README.txt`. Missing files show the 3-letter code instead.
-
-To download them from football-logos.cc in one go, run this next to `index.html`:
-
-    python3 get-crests.py
-
-Club crests are trademarks of their owners. football-logos.cc allows them for informational and
-non-commercial design work only, not for promotional material or to imply affiliation.
-For anything real, use the official assets from the TOD / UEFA pack.
+The 36 club crests are already inside `index.html` (so the page works from a single file) and also
+sit in `assets/crests/<CODE>.png` (128 px, transparent). Codes are listed in `assets/crests/README.txt`.
+Club crests are trademarks of their owners; they come from football-logos.cc and are used here for
+a non-commercial design test, not for promotion. For anything real, use the official TOD / UEFA assets.
 
 ## Live results
 
