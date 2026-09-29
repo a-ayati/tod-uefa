@@ -321,6 +321,9 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:6px}
 .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:14px 26px;font-weight:800;font-size:17px;border:0;cursor:pointer;white-space:nowrap}
+.btn span{line-height:1.25}
+.btn .arr{width:1.15em;height:1.15em;flex:none}
+:host([dir="rtl"]) .btn .arr{transform:scaleX(-1)}
 .btn.y{background:var(--yellow);color:#15102E}
 .btn.sm{padding:9px 18px;font-size:15px;border-radius:8px}
 .btn.ghost{background:rgba(255,255,255,.12);color:#fff}
@@ -681,7 +684,7 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
     <a href="#" class="logo en" aria-label="TOD by beIN"><img src="assets/logo.png" alt="TOD by beIN" width="353" height="218"></a>
     <div class="end">
       <button class="lang" id="lang" type="button"></button>
-      <a href="#watch" class="btn y sm" data-t="cta"></a>
+      <a href="#watch" class="btn y sm"><span data-t="cta"></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </header>
@@ -695,7 +698,7 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
       <span class="tag"><i></i><span class="en">UEFA CHAMPIONS LEAGUE</span></span>
       <h1 data-t="h1"></h1>
       <p data-t="heroP"></p>
-      <div class="ctas"><a href="#watch" class="btn y" data-t="cta"></a></div>
+      <div class="ctas"><a href="#watch" class="btn y"><span data-t="cta"></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     </div></div>
     <button class="sound" id="sound" type="button" aria-label="Sound" hidden>
       <svg id="snd-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="m22 9-6 6m0-6 6 6"/></svg>
@@ -748,7 +751,7 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
     <section class="keyv">
       <div class="kv rv">
         <div class="frame sq" data-slot="sq" data-open="sq" data-tilt><span class="expand" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></div>
-        <a href="#watch" class="btn y" data-t="cta"></a>
+        <a href="#watch" class="btn y"><span data-t="cta"></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
 
@@ -782,14 +785,14 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
     <div class="wrap"><div class="inner">
       <h2 data-t="finalH"></h2>
       <p class="lead" data-t="finalP"></p>
-      <a href="https://www.tod.tv" target="_blank" rel="noopener" class="btn y" data-t="cta"></a>
+      <a href="https://www.tod.tv" target="_blank" rel="noopener" class="btn y"><span data-t="cta"></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div></div>
   </div>
 </main>
 
 <footer><div class="wrap"><span>© TOD by beIN</span><span data-t="note"></span></div></footer>
 <dialog id="viewer"><div class="box"><button class="x" type="button" aria-label="Close">×</button><div id="vbody"></div></div></dialog>
-<div class="sticky" id="sticky"><a href="#watch" class="btn y" data-t="cta"></a></div>
+<div class="sticky" id="sticky"><a href="#watch" class="btn y"><span data-t="cta"></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
 
 </div></template>
 
@@ -933,7 +936,7 @@ const ASSETS={
 };
 /* ============================================================== */
 const T={
-ar:{cta:"شاهد الآن →",langBtn:"AR | EN",scroll:"انزل للأسفل",
+ar:{cta:"شاهد الآن",langBtn:"AR | EN",scroll:"انزل للأسفل",
 nextH:"الصافرة القادمة.",nextP:"استعد لليلة جديدة من دوري الأبطال.",cD:"يوم",cH:"ساعة",cM:"دقيقة",cS:"ثانية",
 dc1:"كبّر اللحظة. على الشاشة الكبيرة، عِش المباراة بأجواء الملعب.",dc2:"في جيبك، أينما ذهبت.",dc3:"شاشة أوسع لتفاصيل أدق.",dc4:"من المكتب أو من البيت.",
 h1:"دوري أبطال أوروبا على TOD",heroP:"كل مباراة. كل هدف. كل لحظة من أكبر مسرح في كرة القدم.",
@@ -951,7 +954,7 @@ q3:"هل تتوفر الإعادات والملخصات؟",a3:"نعم. أعد ا
 finalH:"كل ليالي أبطال أوروبا UEFA\nتبدأ من هنا",finalP:"هنا TOD",
 stH:"دوري الأبطال بالأرقام",stP:"المباريات والجدول وأفضل اللاعبين في مكان واحد.",stTab1:"المباريات",stTab2:"الجدول",stTab3:"أفضل اللاعبين",stNote:"بيانات دوري أبطال أوروبا 2026/27 بعد المرحلة الأولى · آخر تحديث 29 سبتمبر 2026 · المصدر: UEFA وموفّرو بيانات كرة القدم.",
 note:"صفحة تجريبية لاختبار وظيفي، وليست صفحة رسمية من TOD.",add:"أضف ملفاً",title:"دوري أبطال أوروبا على TOD"},
-en:{cta:"Watch now →",langBtn:"AR | EN",scroll:"Scroll",
+en:{cta:"Watch now",langBtn:"AR | EN",scroll:"Scroll",
 nextH:"The next whistle.",nextP:"Get ready for another Champions League night.",cD:"Days",cH:"Hours",cM:"Min",cS:"Sec",
 dc1:"Make the moment bigger. On the big screen, feel the match with the atmosphere of the stadium.",dc2:"In your pocket, wherever you go.",dc3:"A wider screen for finer detail.",dc4:"From the office or from home.",
 h1:"UEFA Champions League on TOD",heroP:"Every match. Every goal. Every moment from football’s biggest stage.",
