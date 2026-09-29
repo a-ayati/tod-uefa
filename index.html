@@ -1051,11 +1051,15 @@ addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(o
 onScroll();
 
 /* Floodlight follows the pointer over the hero */
-heroEl.addEventListener("pointermove",e=>{
+let ptX=null,ptY=0;
+function moveSpot(){
+  if(ptX===null) return;
   const r=heroEl.getBoundingClientRect();
-  heroEl.style.setProperty("--mx",(e.clientX-r.left)+"px");
-  heroEl.style.setProperty("--my",(e.clientY-r.top)+"px");
-});
+  heroEl.style.setProperty("--mx",(ptX-r.left)+"px");
+  heroEl.style.setProperty("--my",(ptY-r.top)+"px");
+}
+heroEl.addEventListener("pointermove",e=>{ptX=e.clientX;ptY=e.clientY;moveSpot()});
+addEventListener("scroll",moveSpot,{passive:true});
 
 /* Reveal on scroll */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
