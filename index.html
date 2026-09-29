@@ -81,6 +81,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:li
 .topbar{display:flex;align-items:center;gap:28px;height:68px}
 .logo{font-family:var(--en);font-weight:900;font-size:30px;letter-spacing:-.04em;color:var(--yellow);line-height:1;display:flex;flex-direction:column;align-items:flex-start}
 .logo small{font-size:9px;font-weight:600;color:#fff;letter-spacing:0;margin-top:-2px;align-self:flex-end}
+.logo img{display:block;height:46px;width:auto}
 nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-weight:500;font-size:15px}
 nav a{color:var(--muted);padding:6px 0;border-bottom:2px solid transparent}
 nav a[aria-current]{color:#fff;border-color:var(--yellow)}
@@ -210,7 +211,7 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
 
 <header>
   <div class="wrap topbar">
-    <a href="#" class="logo en" aria-label="TOD">TOD<small>by beIN</small></a>
+    <a href="#" class="logo en" aria-label="TOD by beIN"><img src="assets/logo.png" alt="TOD by beIN" width="353" height="218"></a>
     <nav aria-label="Main"><ul>
       <li><a href="#" data-t="navHome"></a></li>
       <li><a href="#" aria-current="page" data-t="navSport"></a></li>
@@ -677,7 +678,7 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
 <header id="hdr">
   <div class="prog" id="prog" aria-hidden="true"></div>
   <div class="wrap bar">
-    <a href="#" class="logo en" aria-label="TOD">TOD<small>by beIN</small></a>
+    <a href="#" class="logo en" aria-label="TOD by beIN"><img src="assets/logo.png" alt="TOD by beIN" width="353" height="218"></a>
     <div class="end">
       <button class="lang" id="lang" type="button"></button>
       <a href="#watch" class="btn y sm" data-t="cta"></a>
