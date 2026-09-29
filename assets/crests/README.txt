@@ -1,10 +1,11 @@
 Club crests
 ===========
-Put the official club crests here (from the TOD / UEFA asset pack), one file per club:
+The club crests, one file per club (128 x 128 px, transparent PNG):
 
-  <CODE>.png      square or transparent PNG, ideally 200 x 200 or larger
+  <CODE>.png
 
-Any missing file falls back to the 3-letter code automatically.
+The same crests are embedded in index.html; these files are used for any club that is not embedded.
+A missing file falls back to the 3-letter code automatically.
 
 PSG  Paris Saint-Germain        BMU  Bayern Munich          BAR  Barcelona
 MUN  Manchester United          COM  Como                   SPO  Sporting CP
