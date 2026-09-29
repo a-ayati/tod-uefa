@@ -572,6 +572,57 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
   .dh{padding:12px 14px 8px}
 }
 
+
+/* Carousel cards (UEFA-style) */
+.carw{display:flex;align-items:center;gap:14px}
+.track{flex:1 1 0;min-width:0;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px}
+.track::-webkit-scrollbar{display:none}
+.track:focus-visible{outline-offset:2px}
+.mcard{flex:0 0 224px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;text-align:start}
+.mtop{color:var(--muted);font-size:14px}
+.mtop.pv{color:var(--yellow);font-weight:800;font-size:15px}
+.mt{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;min-width:0}
+.mt .tn2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mt .sc{margin-inline-start:auto;font-weight:900;font-variant-numeric:tabular-nums}
+.pname{font-weight:800;font-size:19px;line-height:1.25}
+.mfoot{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.mfoot b{font-size:28px;font-weight:900;color:var(--yellow);line-height:1}
+.mfoot span{font-size:14px;font-weight:700}
+.mfoot small{flex-basis:100%;color:var(--muted);font-size:13px}
+.car-btn{flex:none;width:44px;height:44px;border-radius:50%;border:2px solid var(--yellow);background:transparent;color:var(--yellow);display:grid;place-items:center;cursor:pointer;transition:background .2s,opacity .2s}
+.car-btn:hover:not(:disabled){background:rgba(255,194,14,.16)}
+.car-btn:disabled{opacity:.3;cursor:default}
+.car-btn.cb-prev svg{transform:scaleX(-1)}
+:host([dir="rtl"]) .car-btn.cb-prev svg{transform:none}
+:host([dir="rtl"]) .car-btn.cb-next svg{transform:scaleX(-1)}
+.va{flex:none;display:inline-flex;align-items:center;gap:10px;border:2px solid var(--yellow);color:var(--yellow);background:transparent;border-radius:12px;padding:14px 22px;font:800 16px var(--ar);cursor:pointer;white-space:nowrap;transition:background .2s}
+:host([lang="en"]) .va{font-family:var(--en)}
+.va:hover{background:rgba(255,194,14,.14)}
+.va-row{display:flex;justify-content:center;margin-top:18px}
+.tznote{margin:14px 0 0;text-align:center;color:var(--muted);font-size:13px}
+@media (max-width:900px){
+  .carw{flex-wrap:wrap}
+  .car-btn{display:none}
+  .track{flex:1 1 100%}
+  .mcard{flex-basis:200px}
+  .va{width:100%;justify-content:center}
+}
+
+
+/* Carousel tweaks: smaller arrows and buttons, compact sub-tabs, live tag */
+.carw{gap:10px}
+.car-btn{width:34px;height:34px;border-width:1.5px}
+.va{padding:8px 14px;font-size:14px;border-width:1.5px;border-radius:10px;gap:8px}
+.va.sm{padding:6px 12px;font-size:13px;border-radius:999px}
+.va-row{display:flex;justify-content:flex-end;margin:0 0 12px}
+.tabs.sub{padding:3px;border-radius:12px;margin-bottom:14px}
+.tabs.sub button{padding:6px 13px;font-size:13px;border-radius:9px}
+.mtop.lv{color:#ff6b6b;font-weight:800;display:flex;align-items:center}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff3b30;margin-inline-end:6px;animation:lvblink 1.4s infinite}
+@keyframes lvblink{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+@media (max-width:900px){.va:not(.sm){width:100%;justify-content:center;padding:10px 14px}}
+
 @media (max-width:900px){
   .split{grid-template-columns:1fr;gap:32px}
   .benefits{gap:10px;margin-top:28px}
@@ -842,7 +893,7 @@ const ASSETS={
 /* ============================================================== */
 const T={
 ar:{cta:"شاهد الآن →",langBtn:"AR | EN",scroll:"انزل للأسفل",
-nextH:"الليلة الكبيرة القادمة",nextP:"العدّ التنازلي حتى صافرة البداية.",cD:"يوم",cH:"ساعة",cM:"دقيقة",cS:"ثانية",
+nextH:"الصافرة القادمة.",nextP:"استعد لليلة جديدة من دوري الأبطال.",cD:"يوم",cH:"ساعة",cM:"دقيقة",cS:"ثانية",
 dc1:"كبّر اللحظة. على الشاشة الكبيرة، عِش المباراة بأجواء الملعب.",dc2:"في جيبك، أينما ذهبت.",dc3:"شاشة أوسع لتفاصيل أدق.",dc4:"من المكتب أو من البيت.",
 h1:"دوري أبطال أوروبا على TOD",heroP:"كل مباراة. كل هدف. كل لحظة من أكبر مسرح في كرة القدم.",
 b1:"مباشر",b1s:"عِش المباراة لحظة بلحظة.",
@@ -860,7 +911,7 @@ finalH:"كل ليالي أبطال أوروبا UEFA\nتبدأ من هنا",fina
 stH:"دوري الأبطال بالأرقام",stP:"المباريات والجدول وأفضل اللاعبين في مكان واحد.",stTab1:"المباريات",stTab2:"الجدول",stTab3:"أفضل اللاعبين",stNote:"بيانات دوري أبطال أوروبا 2026/27 بعد المرحلة الأولى · آخر تحديث 29 سبتمبر 2026 · المصدر: UEFA وموفّرو بيانات كرة القدم.",
 note:"صفحة تجريبية لاختبار وظيفي، وليست صفحة رسمية من TOD.",add:"أضف ملفاً",title:"دوري أبطال أوروبا على TOD"},
 en:{cta:"Watch now →",langBtn:"AR | EN",scroll:"Scroll",
-nextH:"The next big night",nextP:"Counting down to kick-off.",cD:"Days",cH:"Hours",cM:"Min",cS:"Sec",
+nextH:"The next whistle.",nextP:"Get ready for another Champions League night.",cD:"Days",cH:"Hours",cM:"Min",cS:"Sec",
 dc1:"Make the moment bigger. On the big screen, feel the match with the atmosphere of the stadium.",dc2:"In your pocket, wherever you go.",dc3:"A wider screen for finer detail.",dc4:"From the office or from home.",
 h1:"UEFA Champions League on TOD",heroP:"Every match. Every goal. Every moment from football’s biggest stage.",
 b1:"Live",b1s:"Live the match, moment by moment.",
@@ -1045,16 +1096,16 @@ const TM={
  FEY:["فينورد","Feyenoord"],SBH:["صباح","Sabah"],SLO:["سلوفان براتيسلافا","Slovan Bratislava"],BOG:["بودو غليمت","Bodø/Glimt"]
 };
 /* rank, team, W, D, L, points (played = W+D+L) */
-const STANDINGS=[[1,"PSG",1,0,0,3],[2,"BMU",1,0,0,3],[3,"BAR",1,0,0,3],[4,"MUN",1,0,0,3],[5,"COM",1,0,0,3],[6,"SPO",1,0,0,3],[6,"VFB",1,0,0,3],[8,"MCI",1,0,0,3],
+let STANDINGS=[[1,"PSG",1,0,0,3],[2,"BMU",1,0,0,3],[3,"BAR",1,0,0,3],[4,"MUN",1,0,0,3],[5,"COM",1,0,0,3],[6,"SPO",1,0,0,3],[6,"VFB",1,0,0,3],[8,"MCI",1,0,0,3],
  [9,"AVL",1,0,0,3],[9,"RCL",1,0,0,3],[9,"RBB",1,0,0,3],[12,"BVB",1,0,0,3],[13,"LFC",1,0,0,3],[13,"RMA",1,0,0,3],[15,"ARS",1,0,0,3],[16,"AEK",1,0,0,3],
  [17,"ROM",0,1,0,1],[17,"SHA",0,1,0,1],[19,"FEN",0,1,0,1],[19,"PSV",0,1,0,1],
  [21,"VIL",0,0,1,0],[22,"BRU",0,0,1,0],[22,"LIL",0,0,1,0],[22,"SLA",0,0,1,0],[25,"ATM",0,0,1,0],[25,"INT",0,0,1,0],[27,"ASK",0,0,1,0],[27,"NAP",0,0,1,0],
  [29,"GAL",0,0,1,0],[29,"VIK",0,0,1,0],[31,"FCP",0,0,1,0],[32,"RBL",0,0,1,0],[33,"FEY",0,0,1,0],[34,"SBH",0,0,1,0],[35,"SLO",0,0,1,0],[36,"BOG",0,0,1,0]];
 /* kick-off (UTC), home, home goals, away, away goals */
-const RESULTS=[["2026-09-09T19:00:00Z","LFC",2,"ATM",1],["2026-09-09T19:00:00Z","PSG",6,"SLO",1],["2026-09-09T19:00:00Z","SPO",3,"GAL",1],["2026-09-09T19:00:00Z","NAP",0,"ARS",1],
+let RESULTS=[["2026-09-09T19:00:00Z","LFC",2,"ATM",1],["2026-09-09T19:00:00Z","PSG",6,"SLO",1],["2026-09-09T19:00:00Z","SPO",3,"GAL",1],["2026-09-09T19:00:00Z","NAP",0,"ARS",1],
  ["2026-09-10T16:45:00Z","FEN",1,"ROM",1],["2026-09-10T16:45:00Z","PSV",1,"SHA",1],["2026-09-10T19:00:00Z","COM",4,"RBL",1],["2026-09-10T19:00:00Z","BMU",5,"BOG",0],
  ["2026-09-10T19:00:00Z","MUN",4,"SBH",0],["2026-09-10T19:00:00Z","SLA",2,"RCL",3]];
-const UPCOMING=[["2026-10-13T16:45:00Z","RCL","SPO"],["2026-10-13T16:45:00Z","SBH","SLA"],["2026-10-13T19:00:00Z","ARS","LIL"],["2026-10-13T19:00:00Z","ATM","MUN"],
+let UPCOMING=[["2026-10-13T16:45:00Z","RCL","SPO"],["2026-10-13T16:45:00Z","SBH","SLA"],["2026-10-13T19:00:00Z","ARS","LIL"],["2026-10-13T19:00:00Z","ATM","MUN"],
  ["2026-10-13T19:00:00Z","INT","BRU"],["2026-10-13T19:00:00Z","GAL","BAR"],["2026-10-13T19:00:00Z","RBL","PSV"],["2026-10-13T19:00:00Z","VIK","BMU"],
  ["2026-10-13T19:00:00Z","VIL","NAP"],["2026-10-14T16:45:00Z","FEY","COM"]];
 const PL={
@@ -1063,12 +1114,12 @@ const PL={
  olise:["مايكل أوليس","Michael Olise","BMU"],raphinha:["رافينيا","Raphinha","BAR"],sturm:["دانييل شتورم","Danijel Šturm","SLA"],
  undav:["دينيز أونداف","Deniz Undav","VFB"],yamal:["لامين يامال","Lamine Yamal","BAR"],ptorres:["باو توريس","Pau Torres","AVL"],paz:["نيكو باز","Nico Paz","COM"]
 };
-const SCORERS=[["demirovic",3],["torres",3],["bartra",2],["dembele",2],["guirassy",2],["haaland",2],["olise",2],["raphinha",2],["sturm",2]];
+let SCORERS=[["demirovic",3],["torres",3],["bartra",2],["dembele",2],["guirassy",2],["haaland",2],["olise",2],["raphinha",2],["sturm",2]];
 const ASSISTS=[["undav",2],["yamal",2],["ptorres",2],["dembele",2],["paz",2]];
 
 const S={
- ar:{up:"القادمة",res:"النتائج",tz:"بتوقيت الدوحة",team:"الفريق",P:"ل",W:"ف",D:"ت",L:"خ",Pts:"نقاط",Pf:"لعب",Wf:"فوز",Df:"تعادل",Lf:"خسارة",goals:"الهدّافون",assists:"صنّاع الأهداف",gl:"أهداف",al:"تمريرات حاسمة"},
- en:{up:"Upcoming",res:"Results",tz:"Doha time",team:"Team",P:"P",W:"W",D:"D",L:"L",Pts:"Pts",Pf:"Played",Wf:"Won",Df:"Drawn",Lf:"Lost",goals:"Top scorers",assists:"Top assists",gl:"goals",al:"assists"}
+ ar:{up:"القادمة",res:"النتائج",tz:"بتوقيت الدوحة",team:"الفريق",P:"ل",W:"ف",D:"ت",L:"خ",Pts:"نقاط",Pf:"لعب",Wf:"فوز",Df:"تعادل",Lf:"خسارة",goals:"الهدّافون",assists:"صنّاع الأهداف",gl:"أهداف",al:"تمريرات حاسمة",prev:"السابق",next:"التالي",allM:"عرض كل المباريات",allT:"عرض الجدول كاملاً",less:"عرض أقل",rank:"المركز",ft:"انتهت",tzn:"المواعيد بتوقيت الدوحة.",live:"مباشر",allP:"عرض كل اللاعبين",astn:"التمريرات الحاسمة: بيانات المرحلة الأولى، وتُحدَّث يدوياً.",liveN:"يتحدّث تلقائياً · آخر تحديث {t} بتوقيت الدوحة · المصدر: ESPN."},
+ en:{up:"Upcoming",res:"Results",tz:"Doha time",team:"Team",P:"P",W:"W",D:"D",L:"L",Pts:"Pts",Pf:"Played",Wf:"Won",Df:"Drawn",Lf:"Lost",goals:"Top scorers",assists:"Top assists",gl:"goals",al:"assists",prev:"Previous",next:"Next",allM:"View all matches",allT:"View full table",less:"Show less",rank:"#",ft:"FT",tzn:"Times shown in Doha time.",live:"LIVE",allP:"View all players",astn:"Assists: matchday 1 data, updated manually.",liveN:"Updates automatically · Last updated {t} Doha time · Source: ESPN."}
 };
 /* Club crests: drop official files into assets/crests/<CODE>.png (codes = keys of TM). Missing files fall back to the 3-letter code. */
 const cr=(c,sm)=>`<span class="cr${sm?" sm":""}"><img src="assets/crests/${c}.png" alt=""><em>${c}</em></span>`;
@@ -1079,7 +1130,7 @@ function wireCrests(){
     else{im.addEventListener("load",ok);im.addEventListener("error",bad);}
   });
 }
-let stTab="matches", stSub="up", stPl="goals";
+let stTab="matches", stSub="up", stPl="goals", stFull=false, liveOK=false, liveAt=null;
 const stPanel=root.getElementById("spanel");
 function renderStats(){
   const l=lang, s=S[l], i=l==="ar"?0:1, loc=l==="ar"?"ar-u-nu-latn":"en-GB", tz="Asia/Qatar";
@@ -1087,41 +1138,164 @@ function renderStats(){
   const dayKey=iso=>new Intl.DateTimeFormat("en-CA",{timeZone:tz,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date(iso));
   const dayLbl=iso=>new Intl.DateTimeFormat(loc,{timeZone:tz,weekday:"long",day:"numeric",month:"long"}).format(new Date(iso));
   const tmLbl=iso=>new Intl.DateTimeFormat(loc,{timeZone:tz,hour:"numeric",minute:"2-digit",hour12:true}).format(new Date(iso));
+  const shortDT=iso=>new Intl.DateTimeFormat(loc,{timeZone:tz,day:"numeric",month:"short",hour:"numeric",minute:"2-digit",hour12:true}).format(new Date(iso));
+  const shortD=iso=>new Intl.DateTimeFormat(loc,{timeZone:tz,day:"numeric",month:"short"}).format(new Date(iso));
+  const chev='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+  const listIc='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 12h16M12 3v18"/><circle cx="12" cy="12" r="2.5"/></svg>';
+  const upIc='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>';
+  const car=(cards,allTxt)=>`<div class="carw"><button class="car-btn cb-prev" type="button" aria-label="${s.prev}">${chev}</button><div class="track" tabindex="0">${cards}</div><button class="car-btn cb-next" type="button" aria-label="${s.next}">${chev}</button>${allTxt?`<button class="va" type="button" data-full="1">${listIc}<span>${allTxt}</span></button>`:""}</div>`;
+  const less=()=>`<div class="va-row"><button class="va sm" type="button" data-full="0" aria-label="${s.less}" title="${s.less}">${upIc}<span>${s.less}</span></button></div>`;
+  const row=(c,sc)=>`<div class="mt">${cr(c)}<span class="tn2">${nm(c)}</span>${sc!=null?`<b class="sc">${sc}</b>`:""}</div>`;
+  const count=(n,kind)=>{
+    if(l==="ar"){ if(kind==="g") return n===1?"هدف":n===2?"هدفان":n+" أهداف"; return n===1?"تمريرة حاسمة":n===2?"تمريرتان حاسمتان":n+" تمريرات حاسمة"; }
+    return n+" "+(kind==="g"?(n===1?"goal":"goals"):(n===1?"assist":"assists"));
+  };
   let html="";
   if(stTab==="matches"){
     html+=`<div class="tabs sub" role="tablist"><button type="button" role="tab" data-sub="up" aria-selected="${stSub==="up"}">${s.up}</button><button type="button" role="tab" data-sub="res" aria-selected="${stSub==="res"}">${s.res}</button></div>`;
-    const list=stSub==="up"?UPCOMING.slice():RESULTS.slice().reverse();
-    let cur="", open=false;
-    html+=`<div class="sbox">`;
-    list.forEach(m=>{
-      const k=dayKey(m[0]);
-      if(k!==cur){cur=k;html+=`<div class="dh">${dayLbl(m[0])} · ${s.tz}</div>`;}
-      if(stSub==="up") html+=`<div class="mrow"><span class="t h"><span>${nm(m[1])}</span>${cr(m[1])}</span><span class="mid up">${tmLbl(m[0])}</span><span class="t a">${cr(m[2])}<span>${nm(m[2])}</span></span></div>`;
-      else html+=`<div class="mrow"><span class="t h"><span>${nm(m[1])}</span>${cr(m[1])}</span><span class="mid"><b>${m[2]}</b><i>–</i><b>${m[4]}</b></span><span class="t a">${cr(m[3])}<span>${nm(m[3])}</span></span></div>`;
-    });
-    html+=`</div>`;
+    if(!stFull){
+      const cards=stSub==="up"
+        ? UPCOMING.map(m=>{const lv=m[3]; return `<div class="mcard"><div class="mtop${lv?" lv":""}">${lv?`<i class="dot"></i>${s.live} ${lv.clock||""}`:shortDT(m[0])}</div>${row(m[1],lv?lv.hs:null)}${row(m[2],lv?lv.as:null)}</div>`;}).join("")
+        : RESULTS.slice().reverse().map(m=>`<div class="mcard"><div class="mtop">${shortD(m[0])} · ${s.ft}</div>${row(m[1],m[2])}${row(m[3],m[4])}</div>`).join("");
+      html+=car(cards,s.allM)+`<p class="tznote">${s.tzn}</p>`;
+    }else{
+      html+=less();
+      const list=stSub==="up"?UPCOMING.slice():RESULTS.slice().reverse();
+      let cur="";
+      html+=`<div class="sbox">`;
+      list.forEach(m=>{
+        const k=dayKey(m[0]);
+        if(k!==cur){cur=k;html+=`<div class="dh">${dayLbl(m[0])} · ${s.tz}</div>`;}
+        if(stSub==="up"){
+          const lv=m[3];
+          html+=`<div class="mrow"><span class="t h"><span>${nm(m[1])}</span>${cr(m[1])}</span>${lv?`<span class="mid"><b>${lv.hs}</b><i>–</i><b>${lv.as}</b></span>`:`<span class="mid up">${tmLbl(m[0])}</span>`}<span class="t a">${cr(m[2])}<span>${nm(m[2])}</span></span></div>`;
+        }else html+=`<div class="mrow"><span class="t h"><span>${nm(m[1])}</span>${cr(m[1])}</span><span class="mid"><b>${m[2]}</b><i>–</i><b>${m[4]}</b></span><span class="t a">${cr(m[3])}<span>${nm(m[3])}</span></span></div>`;
+      });
+      html+=`</div>`;
+    }
   }else if(stTab==="table"){
-    html+=`<div class="tblw"><table class="tbl"><thead><tr><th>#</th><th class="tn">${s.team}</th><th title="${s.Pf}">${s.P}</th><th title="${s.Wf}">${s.W}</th><th title="${s.Df}">${s.D}</th><th title="${s.Lf}">${s.L}</th><th>${s.Pts}</th></tr></thead><tbody>`;
-    STANDINGS.forEach(r=>{html+=`<tr><td>${r[0]}</td><td class="tn"><span class="tc">${cr(r[1])}<span>${nm(r[1])}</span></span></td><td>${r[2]+r[3]+r[4]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td class="pts">${r[5]}</td></tr>`;});
-    html+=`</tbody></table></div>`;
+    if(!stFull){
+      const cards=STANDINGS.slice(0,10).map(r=>`<div class="mcard"><div class="mtop">${s.rank} ${r[0]}</div>${row(r[1])}<div class="mfoot"><b>${r[5]}</b><span>${s.Pts}</span><small>${s.W} ${r[2]} · ${s.D} ${r[3]} · ${s.L} ${r[4]}</small></div></div>`).join("");
+      html+=car(cards,s.allT);
+    }else{
+      html+=less();
+      html+=`<div class="tblw"><table class="tbl"><thead><tr><th>#</th><th class="tn">${s.team}</th><th title="${s.Pf}">${s.P}</th><th title="${s.Wf}">${s.W}</th><th title="${s.Df}">${s.D}</th><th title="${s.Lf}">${s.L}</th><th>${s.Pts}</th></tr></thead><tbody>`;
+      STANDINGS.forEach(r=>{html+=`<tr><td>${r[0]}</td><td class="tn"><span class="tc">${cr(r[1])}<span>${nm(r[1])}</span></span></td><td>${r[2]+r[3]+r[4]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td class="pts">${r[5]}</td></tr>`;});
+      html+=`</tbody></table></div>`;
+    }
   }else{
     html+=`<div class="tabs sub" role="tablist"><button type="button" role="tab" data-pl="goals" aria-selected="${stPl==="goals"}">${s.goals}</button><button type="button" role="tab" data-pl="assists" aria-selected="${stPl==="assists"}">${s.assists}</button></div>`;
-    const rows=stPl==="goals"?SCORERS:ASSISTS, unit=stPl==="goals"?s.gl:s.al;
-    html+=`<div class="sbox narrow">${rows.map(r=>{const p=PL[r[0]];return `<div class="prow"><span class="pn" aria-label="${r[1]} ${unit}">${r[1]}</span><span class="pi"><b>${p[i]}</b><small class="tl">${cr(p[2],1)}<span>${nm(p[2])}</span></small></span></div>`;}).join("")}</div>`;
+    const rows=stPl==="goals"?SCORERS:ASSISTS, kind=stPl==="goals"?"g":"a";
+    if(!stFull){
+      html+=car(rows.map(r=>{const p=PL[r[0]];return `<div class="mcard"><div class="mtop pv">${count(r[1],kind)}</div><div class="pname">${p[i]}</div>${row(p[2])}</div>`;}).join(""),s.allP);
+    }else{
+      html+=less();
+      html+=`<div class="sbox narrow">${rows.map(r=>{const p=PL[r[0]];return `<div class="prow"><span class="pn" aria-label="${count(r[1],kind)}">${r[1]}</span><span class="pi"><b>${p[i]}</b><small class="tl">${cr(p[2],1)}<span>${nm(p[2])}</span></small></span></div>`;}).join("")}</div>`;
+    }
+    if(liveOK&&stPl==="assists") html+=`<p class="tznote">${s.astn}</p>`;
   }
   stPanel.innerHTML=html;
-  wireCrests();
+  wireCrests(); wireCarousel();
+  const nn=root.querySelector(".snote");
+  if(nn) nn.textContent=liveOK?s.liveN.replace("{t}",new Intl.DateTimeFormat(loc,{timeZone:tz,hour:"numeric",minute:"2-digit",hour12:true}).format(liveAt)):T[l].stNote;
   root.querySelectorAll("[data-st]").forEach(b=>b.setAttribute("aria-selected",b.dataset.st===stTab));
 }
-root.querySelectorAll("[data-st]").forEach(b=>b.addEventListener("click",()=>{stTab=b.dataset.st;renderStats();}));
-stPanel.addEventListener("click",e=>{const b=e.target.closest("[data-sub]"); if(b){stSub=b.dataset.sub;renderStats();return;} const q=e.target.closest("[data-pl]"); if(q){stPl=q.dataset.pl;renderStats();}});
+let autoT=null;
+function wireCarousel(){
+  clearInterval(autoT);
+  const w=stPanel.querySelector(".carw"); if(!w) return;
+  const tr=w.querySelector(".track"), pv=w.querySelector(".cb-prev"), nx=w.querySelector(".cb-next");
+  const sign=()=>getComputedStyle(tr).direction==="rtl"?-1:1;   /* Arabic: cards travel left to right, English: right to left */
+  const stepPx=()=>{const c=tr.querySelector(".mcard"); return c?c.offsetWidth+14:tr.clientWidth*.8;};
+  let hold=0;
+  const upd=()=>{const a=Math.abs(tr.scrollLeft); pv.disabled=a<5; nx.disabled=a+tr.clientWidth>=tr.scrollWidth-5;};
+  pv.addEventListener("click",()=>{hold=Date.now()+10000; tr.scrollBy({left:-sign()*stepPx(),behavior:"smooth"});});
+  nx.addEventListener("click",()=>{hold=Date.now()+10000; tr.scrollBy({left:sign()*stepPx(),behavior:"smooth"});});
+  ["pointerenter","focusin","touchstart","wheel"].forEach(ev=>tr.addEventListener(ev,()=>{hold=Date.now()+8000;},{passive:true}));
+  tr.addEventListener("pointerleave",()=>{hold=Date.now()+1500;});
+  tr.addEventListener("scroll",upd,{passive:true}); upd();
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  let vis=true; new IntersectionObserver(es=>{vis=es[0].isIntersecting;}).observe(w);
+  autoT=setInterval(()=>{
+    if(host.hidden||document.hidden||!vis||Date.now()<hold) return;
+    const a=Math.abs(tr.scrollLeft), max=tr.scrollWidth-tr.clientWidth;
+    if(max<=5) return;
+    if(a>=max-5) tr.scrollTo({left:0,behavior:"smooth"});
+    else tr.scrollBy({left:sign()*stepPx(),behavior:"smooth"});
+  },3200);
+}
+root.querySelectorAll("[data-st]").forEach(b=>b.addEventListener("click",()=>{stTab=b.dataset.st;stFull=false;renderStats();}));
+stPanel.addEventListener("click",e=>{const b=e.target.closest("[data-sub]"); if(b){stSub=b.dataset.sub;stFull=false;renderStats();return;} const q=e.target.closest("[data-pl]"); if(q){stPl=q.dataset.pl;renderStats();return;} const f=e.target.closest("[data-full]"); if(f){stFull=f.dataset.full==="1";renderStats();}});
+/* ===== Live data: ESPN public scoreboard + standings. If a request fails, the snapshot above stays on screen. ===== */
+const LIVE={base:"https://site.api.espn.com/apis",league:"soccer/uefa.champions",seasonStart:"20260901",fast:120000,slow:1800000};
+const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+const NAME2CODE={}; Object.keys(TM).forEach(c=>{NAME2CODE[norm(TM[c][1])]=c;});
+Object.assign(NAME2CODE,{"internazionale":"INT","inter milan":"INT","lask linz":"ASK","feyenoord rotterdam":"FEY","sabah fk":"SBH","viking fk":"VIK","bodo glimt":"BOG","as roma":"ROM","fc barcelona":"BAR","fc porto":"FCP","rc lens":"RCL","sporting":"SPO","vfb stuttgart":"VFB","atletico madrid":"ATM","shakhtar":"SHA","slavia praha":"SLA"});
+const PLAR={}; Object.keys(PL).forEach(k=>{PLAR[norm(PL[k][1])]=PL[k][0];});
+function teamCode(t){
+  const n=norm(t.displayName||t.name); let c=NAME2CODE[n];
+  if(!c){ c=String(t.abbreviation||n.slice(0,3)).toUpperCase(); if(!TM[c]) TM[c]=[t.displayName||t.name,t.displayName||t.name]; NAME2CODE[n]=c; }
+  return c;
+}
+const evs=new Map();
+function ingest(json){
+  (json.events||[]).forEach(e=>{
+    const c=e.competitions&&e.competitions[0]; if(!c||!c.competitors) return;
+    const h=c.competitors.find(x=>x.homeAway==="home"), a=c.competitors.find(x=>x.homeAway==="away"); if(!h||!a) return;
+    const hc=teamCode(h.team), ac=teamCode(a.team), idc={}; idc[h.team.id]=hc; idc[a.team.id]=ac;
+    const goals=(c.details||[]).filter(d=>d.scoringPlay&&!d.ownGoal&&!d.shootout&&d.athletesInvolved&&d.athletesInvolved[0]).map(d=>({n:d.athletesInvolved[0].displayName,t:idc[d.team&&d.team.id]||hc}));
+    evs.set(e.id,{d:e.date,st:c.status&&c.status.type&&c.status.type.state,hc,ac,hs:+h.score||0,as:+a.score||0,clock:c.status&&c.status.displayClock,goals});
+  });
+}
+function deriveLive(){
+  const all=[...evs.values()], byDate=(a,b)=>new Date(a.d)-new Date(b.d);
+  const past=all.filter(x=>x.st==="post").sort(byDate);
+  const now=all.filter(x=>x.st==="in").sort(byDate);
+  const pre=all.filter(x=>x.st==="pre").sort(byDate);
+  if(past.length) RESULTS=past.map(x=>[x.d,x.hc,x.hs,x.ac,x.as]);
+  if(now.length||pre.length) UPCOMING=now.map(x=>[x.d,x.hc,x.ac,{hs:x.hs,as:x.as,clock:x.clock}]).concat(pre.map(x=>[x.d,x.hc,x.ac]));
+  const g={};
+  all.filter(x=>x.st!=="pre").forEach(x=>x.goals.forEach(o=>{const k=norm(o.n); (g[k]=g[k]||{n:o.n,t:o.t,c:0}).c++;}));
+  const top=Object.values(g).sort((a,b)=>b.c-a.c||a.n.localeCompare(b.n)).slice(0,10);
+  if(top.length) SCORERS=top.map(o=>{const k="l_"+norm(o.n).replace(/ /g,"_"); PL[k]=[PLAR[norm(o.n)]||o.n,o.n,o.t]; return [k,o.c];});
+}
+async function loadStandings(){
+  const r=await fetch(LIVE.base+"/v2/sports/"+LIVE.league+"/standings"); if(!r.ok) throw new Error("standings");
+  const j=await r.json(), ent=j.children&&j.children[0]&&j.children[0].standings&&j.children[0].standings.entries;
+  if(!ent||!ent.length) return;
+  const val=(e,n)=>{const x=(e.stats||[]).find(y=>y.name===n); return x?+x.value:0;};
+  STANDINGS=ent.map(e=>[val(e,"rank"),teamCode(e.team),val(e,"wins"),val(e,"ties"),val(e,"losses"),val(e,"points")]).sort((a,b)=>a[0]-b[0]);
+}
+async function loadBoard(range){
+  const r=await fetch(LIVE.base+"/site/v2/sports/"+LIVE.league+"/scoreboard?dates="+range+"&limit=500"); if(!r.ok) throw new Error("scoreboard");
+  ingest(await r.json());
+}
+const ymd=d=>d.toISOString().slice(0,10).replace(/-/g,"");
+async function refreshLive(full){
+  try{
+    const now=new Date(), y=new Date(now-864e5), fut=new Date(+now+120*864e5);
+    const jobs=[loadStandings(),loadBoard(ymd(now)+"-"+ymd(fut))];
+    if(full&&ymd(y)>=LIVE.seasonStart) jobs.push(loadBoard(LIVE.seasonStart+"-"+ymd(y)));
+    await Promise.all(jobs);
+    deriveLive(); liveOK=true; liveAt=new Date(); renderStats();
+  }catch(e){ /* keep whatever is on screen */ }
+}
+let lastFull=0;
+function tick(){
+  if(document.hidden||host.hidden) return;
+  const full=Date.now()-lastFull>LIVE.slow; if(full) lastFull=Date.now();
+  refreshLive(full);
+}
+tick(); setInterval(tick,LIVE.fast);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden) tick();});
+
 const _setLang3=setLang; setLang=function(l){_setLang3(l); renderStats();};
 renderStats();
 
 return {
   setLang:l=>setLang(l),
   pause(){root.querySelectorAll("video").forEach(v=>{v.pause()}); root.querySelectorAll("dialog[open]").forEach(d=>d.close());},
-  resume(){root.querySelectorAll("video").forEach(v=>{if(v.autoplay){const p=v.play(); if(p&&p.catch)p.catch(()=>{})}}); onScroll(); tickClock();}
+  resume(){root.querySelectorAll("video").forEach(v=>{if(v.autoplay){const p=v.play(); if(p&&p.catch)p.catch(()=>{})}}); onScroll(); tickClock(); tick();}
 };
 })(srL,hLand);
 

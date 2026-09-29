@@ -32,3 +32,10 @@ To download them from football-logos.cc in one go, run this next to `index.html`
 Club crests are trademarks of their owners. football-logos.cc allows them for informational and
 non-commercial design work only, not for promotional material or to imply affiliation.
 For anything real, use the official assets from the TOD / UEFA pack.
+
+## Live results
+
+The "Champions League by the numbers" section refreshes itself every 2 minutes from ESPN's public
+scoreboard and standings feeds (matches, results, table and top scorers). If the feed is unreachable
+the built-in snapshot stays on screen. Assists are a manual snapshot in `index.html` (`ASSISTS`).
+The ESPN feed is unofficial, so it can change without notice.
