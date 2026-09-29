@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دوري أبطال أوروبا على TOD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F0B22; --bg2:#17123A; --card:#1E1845; --line:rgba(255,255,255,.1);
+  --violet:#5B3FA6; --violet2:#7A5CD6; --yellow:#FFC20E; --text:#FFFFFF; --muted:#A9A3C9;
+  --ar:"Tajawal","Geeza Pro",Tahoma,sans-serif; --en:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* The page mirrors a streaming site, which is dark in both themes */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F0B22}}
+:root[data-theme="dark"]{--bg:#0F0B22}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--ar);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+html[lang="en"] body{font-family:var(--en)}
+.en{font-family:var(--en);direction:ltr;unicode-bidi:isolate}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+
+/* Header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:linear-gradient(180deg,rgba(15,11,34,.96),rgba(15,11,34,.82));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar{display:flex;align-items:center;gap:28px;height:68px}
+.logo{font-family:var(--en);font-weight:900;font-size:30px;letter-spacing:-.04em;color:var(--yellow);line-height:1;display:flex;flex-direction:column;align-items:flex-start}
+.logo small{font-size:9px;font-weight:600;color:#fff;letter-spacing:0;margin-top:-2px;align-self:flex-end}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-weight:500;font-size:15px}
+nav a{color:var(--muted);padding:6px 0;border-bottom:2px solid transparent}
+nav a[aria-current]{color:#fff;border-color:var(--yellow)}
+.topbar .end{margin-inline-start:auto;display:flex;align-items:center;gap:14px}
+.icon-btn{background:none;border:0;cursor:pointer;padding:6px;display:grid;place-items:center;color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;border:0;cursor:pointer;white-space:nowrap}
+.btn.y{background:var(--yellow);color:#15102E}
+.btn.g{background:rgba(255,255,255,.12);color:#fff}
+.btn.o{background:transparent;border:1.5px solid rgba(255,255,255,.5);color:#fff}
+.lang{font-weight:700;font-size:14px;background:none;border:0;cursor:pointer;color:#fff;padding:6px}
+
+/* Hero */
+.hero{position:relative;background:#000}
+.hero .media{position:relative;aspect-ratio:16/9;max-height:78vh;width:100%;overflow:hidden}
+.hero .media>img,.hero .media>video{width:100%;height:100%;object-fit:cover;display:block}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 0%,rgba(15,11,34,.55) 22%,transparent 50%);pointer-events:none}
+.hero .info{position:absolute;inset-inline:0;bottom:0;padding-bottom:40px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:20px;padding:5px 12px;margin-bottom:14px;backdrop-filter:blur(8px)}
+.tag i{width:8px;height:8px;border-radius:50%;background:#FF3B30;box-shadow:0 0 0 3px rgba(255,59,48,.25)}
+.hero h1{margin:0 0 6px;font-size:clamp(26px,3.4vw,44px);font-weight:800;line-height:1.1}
+.hero p{margin:0 0 20px;color:#E4E0F7;max-width:52ch}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.dots{position:absolute;bottom:18px;inset-inline-end:32px;display:flex;gap:6px}
+.dots b{width:22px;height:4px;border-radius:4px;background:rgba(255,255,255,.3)}
+.dots b:first-child{background:var(--yellow)}
+
+/* Rails */
+section{padding-top:40px}
+.rail-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.rail-h h2{margin:0;font-size:22px;font-weight:800}
+.rail-h a{color:var(--muted);font-size:14px}
+.rail{display:grid;grid-auto-flow:column;gap:16px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.rail>*{scroll-snap-align:start}
+.rail.v{grid-auto-columns:minmax(300px,400px)}
+.tile{position:relative;border-radius:10px;overflow:hidden;background:var(--card);cursor:pointer;border:0;padding:0;text-align:start;display:block;width:100%}
+.tile .th{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--card)}
+.tile img,.tile video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.tile:hover img,.tile:hover video{transform:scale(1.04)}
+.th:has(.slot)+.play{display:none}
+.tile .play{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(0deg,rgba(0,0,0,.45),transparent 60%)}
+.tile .play span{width:52px;height:52px;border-radius:50%;background:rgba(255,194,14,.95);display:grid;place-items:center;color:#15102E}
+.dur{position:absolute;bottom:8px;inset-inline-end:8px;font:700 12px var(--en);background:rgba(0,0,0,.7);padding:2px 7px;border-radius:4px}
+.tile .meta{padding:12px 14px 14px}
+.tile .meta b{display:block;font-size:16px}
+.tile .meta span{color:var(--muted);font-size:13px}
+
+/* Formats grid */
+.formats{display:flex;gap:16px;align-items:flex-start}
+.fmt{min-width:0;flex-basis:0}
+.fmt.sq{flex-grow:1}.fmt.st{flex-grow:.5625}.fmt.hd{flex-grow:1.7778}
+.fmt .th{border-radius:10px;overflow:hidden;background:var(--card);cursor:pointer;position:relative}
+.fmt.sq .th{aspect-ratio:1/1}.fmt.st .th{aspect-ratio:9/16}.fmt.hd .th{aspect-ratio:16/9}
+.fmt .th img{width:100%;height:100%;object-fit:cover;display:block}
+.fmt p{display:flex;gap:8px;margin:10px 2px 0;font-size:14px;color:var(--muted)}
+.fmt p b{color:#fff;margin-inline-end:6px}
+
+/* In context: phone */
+.context{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;background:linear-gradient(135deg,var(--violet) 0%,var(--bg2) 70%);border-radius:18px;padding:40px;margin-top:8px;overflow:hidden}
+.phone{width:260px;aspect-ratio:9/19.5;border-radius:40px;background:#000;padding:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),inset 0 0 0 2px #2c2c33}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:31px;overflow:hidden;background:var(--card)}
+.phone .scr img{width:100%;height:100%;object-fit:cover}
+.phone .bar{position:absolute;top:10px;inset-inline:12px;display:flex;gap:3px;z-index:2}
+.phone .bar i{flex:1;height:2.5px;border-radius:2px;background:rgba(255,255,255,.4)}
+.phone .bar i:first-child{background:#fff}
+.phone .island{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:80px;height:22px;border-radius:20px;background:#000;z-index:3}
+.context h2{margin:0 0 10px;font-size:28px;font-weight:800}
+.context p{margin:0 0 18px;color:#DCD6F5;max-width:50ch}
+
+/* About */
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;border-top:1px solid var(--line);margin-top:48px;padding-top:36px}
+.about h2{margin:0 0 10px;font-size:22px}
+.about p{margin:0 0 10px;color:var(--muted)}
+.about dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:15px}
+.about dt{color:var(--muted)}
+.about dd{margin:0}
+
+footer{margin-top:56px;border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:13px}
+footer .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+
+/* Empty slot */
+.slot{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:repeating-linear-gradient(135deg,#1E1845 0 14px,#221B4E 14px 28px);color:var(--muted);font-size:13px;padding:10px}
+.slot b{display:block;color:#fff;font:700 14px var(--en);margin-bottom:4px}
+.slot label{display:inline-block;margin-top:8px;background:rgba(255,255,255,.1);border-radius:6px;padding:5px 10px;cursor:pointer;color:#fff}
+.slot input{position:absolute;width:1px;height:1px;opacity:0}
+.hero .slot{font-size:15px}
+.hero .slot b{font-size:18px}
+
+/* Modal */
+dialog{border:0;padding:0;background:transparent;max-width:min(1200px,94vw);width:100%}
+dialog::backdrop{background:rgba(5,3,15,.88);backdrop-filter:blur(6px)}
+dialog .box{position:relative}
+dialog video,dialog img{width:100%;max-height:86vh;object-fit:contain;display:block;border-radius:10px;background:#000}
+dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255,255,.14);border:0;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px}
+
+.credit{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));inset-inline-start:14px;z-index:40;background:rgba(15,11,34,.85);border:1px solid var(--line);border-radius:30px;padding:7px 14px;font-size:12px;color:var(--muted);backdrop-filter:blur(10px)}
+.credit b{color:#fff}
+
+@media (max-width:980px){
+  nav{display:none}
+  .formats{flex-wrap:wrap}.fmt.hd{flex:1 1 100%;order:-1}.fmt.sq{flex:1 1 0}.fmt.st{flex:.5625 1 0}
+  .context{grid-template-columns:1fr;justify-items:center;text-align:center;padding:28px}
+  .context p{margin-inline:auto}
+  .about{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  .topbar .btn.g{display:none}
+  .hero .media{aspect-ratio:4/5;max-height:none}
+  .hero .info{padding-bottom:24px}
+  .dots{inset-inline-end:16px}
+}
+@media (prefers-reduced-motion:reduce){.tile img,.tile video{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <a href="#" class="logo en" aria-label="TOD">TOD<small>by beIN</small></a>
+    <nav aria-label="Main"><ul>
+      <li><a href="#" data-t="navHome"></a></li>
+      <li><a href="#" aria-current="page" data-t="navSport"></a></li>
+      <li><a href="#" data-t="navLive"></a></li>
+      <li><a href="#" data-t="navEnt"></a></li>
+      <li><a href="#" data-t="navKids"></a></li>
+    </ul></nav>
+    <div class="end">
+      <button class="icon-btn" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+      <button class="lang" id="lang" type="button"></button>
+      <a href="#" class="btn g" data-t="signIn"></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="media" data-slot="hero"></div>
+    <div class="shade"></div>
+    <div class="info"><div class="wrap">
+      <span class="tag"><i></i><span class="en">UEFA Champions League</span></span>
+      <h1 data-t="heroTitle"></h1>
+      <p data-t="heroText"></p>
+      <div class="ctas">
+        <button class="btn y" type="button" data-open="promo15"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg><span data-t="watchPromo"></span></button>
+      </div>
+    </div></div>
+    <div class="dots" aria-hidden="true"><b></b><b></b><b></b></div>
+  </div>
+
+  <div class="wrap">
+    <section>
+      <div class="rail-h"><h2 data-t="railPromos"></h2><a href="#" data-t="viewAll"></a></div>
+      <div class="rail v">
+        <button class="tile" type="button" data-open="promo15">
+          <div class="th" data-slot="promo15thumb"></div>
+          <div class="play"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></div>
+          <div class="meta"><b data-t="p15"></b><span data-t="p15s"></span></div>
+        </button>
+        <button class="tile" type="button" data-open="promo6">
+          <div class="th" data-slot="promo6thumb"></div>
+          <div class="play"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></div>
+          <div class="meta"><b data-t="p6"></b><span data-t="p6s"></span></div>
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <div class="rail-h"><h2 data-t="railStatics"></h2></div>
+      <div class="formats">
+        <div class="fmt sq"><div class="th" data-slot="sq" data-open="sq"></div><p><b class="en">1:1</b><span class="en">1080 × 1080</span></p></div>
+        <div class="fmt st"><div class="th" data-slot="st" data-open="st"></div><p><b class="en">9:16</b><span class="en">1080 × 1920</span></p></div>
+        <div class="fmt hd"><div class="th" data-slot="hd" data-open="hd"></div><p><b class="en">16:9</b><span class="en">1920 × 1080</span></p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="context">
+        <div class="phone"><div class="scr"><span class="island"></span><div class="bar"><i></i><i></i><i></i></div><div data-slot="story" style="position:absolute;inset:0"></div></div></div>
+        <div>
+          <h2 data-t="ctxTitle"></h2>
+          <p data-t="ctxText"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about">
+      <div>
+        <h2 data-t="aboutTitle"></h2>
+        <p data-t="aboutText1"></p>
+        <p data-t="aboutText2"></p>
+      </div>
+      <dl>
+        <dt data-t="dRole"></dt><dd data-t="vRole"></dd>
+        <dt data-t="dBy"></dt><dd data-t="vBy"></dd>
+        <dt data-t="dDel"></dt><dd data-t="vDel"></dd>
+      </dl>
+    </section>
+  </div>
+</main>
+
+<footer><div class="wrap row">
+  <ul><li><a href="#" data-t="fAbout"></a></li><li><a href="#" data-t="fFaq"></a></li><li><a href="#" data-t="fTerms"></a></li></ul>
+  <span data-t="fNote"></span>
+</div></footer>
+
+<div class="credit"><span data-t="credit"></span></div>
+
+<dialog id="viewer"><div class="box"><button class="x" type="button" aria-label="Close">×</button><div id="vbody"></div></div></dialog>
+
+<script>
+/* ========= EDIT HERE: put your files in an "assets" folder next to this page ========= */
+const ASSETS = {
+  hero:        {type:"video", src:"assets/promo-15s.mp4", poster:"assets/kv-16x9.jpg", size:"1920 × 1080"},
+  promo15:     {type:"video", src:"assets/promo-15s.mp4", size:"15s · 16:9"},
+  promo6:      {type:"video", src:"assets/promo-6s.mp4",  size:"6s · 16:9"},
+  promo15thumb:{type:"image", src:"assets/kv-16x9.jpg",   size:"16:9"},
+  promo6thumb: {type:"image", src:"assets/thumb-6s.jpg",  size:"16:9"},
+  sq:          {type:"image", src:"assets/kv-1x1.jpg",    size:"1080 × 1080"},
+  st:          {type:"image", src:"assets/kv-9x16.jpg",   size:"1080 × 1920"},
+  hd:          {type:"image", src:"assets/kv-16x9.jpg",   size:"1920 × 1080"},
+  story:       {type:"image", src:"assets/kv-9x16.jpg",   size:"1080 × 1920"}
+};
+/* ===================================================================================== */
+
+const T={
+ar:{navHome:"الرئيسية",navSport:"رياضة",navLive:"مباشر",navEnt:"ترفيه",navKids:"أطفال",signIn:"تسجيل الدخول",subscribe:"اشترك الآن",
+heroTitle:"دوري أبطال أوروبا على TOD",heroText:"كل مباراة من أكبر مسرح في أوروبا، مباشرة وحسب الطلب.",watchPromo:"شاهد الإعلان",
+railPromos:"إعلانات الحملة",viewAll:"عرض الكل",p15:"إعلان 15 ثانية",p15s:"فوتج، موسيقى، موشن غرافيكس، والإطار الختامي",p6:"إعلان 6 ثوانٍ",p6s:"نسخة قصيرة مع النصوص والإطار الختامي",
+railStatics:"تصاميم الحملة",ctxTitle:"جاهزة للسوشال",ctxText:"نفس الفكرة بمقاس الستوري، مصممة لتُقرأ في ثانية واحدة وتبقى بعيدة عن واجهة التطبيق.",
+aboutTitle:"عن هذا العمل",aboutText1:"حملة إبداعية للترويج لبث دوري أبطال أوروبا على TOD، تشمل إعلانين بمدة 15 و6 ثوانٍ وثلاثة تصاميم ثابتة بمقاسات مختلفة. الهدف تقديم تجربة بصرية فاخرة وديناميكية تعكس حجم البطولة وإثارتها، مع الحفاظ على هوية TOD في كل التفاصيل.",
+aboutText2:"دوري أبطال أوروبا. أكبر مسرح في كرة القدم، الآن على TOD. حملة متكاملة من الفيديو إلى السوشال، بطابع فاخر وطاقة لا تهدأ.",
+dRole:"الاختبار",vRole:"Creative Producer، TOD by beIN",dBy:"إعداد",vBy:"عبد الواحد عياطي",dLine:"شعار الحملة",dDel:"المخرجات",vDel:"إعلان 15 ثانية، إعلان 6 ثوانٍ، و3 تصاميم ثابتة",
+fAbout:"من نحن",fFaq:"الأسئلة الشائعة",fTerms:"الشروط والأحكام",fNote:"عرض تجريبي لاختبار وظيفي، وليس صفحة رسمية من TOD.",
+credit:"عرض الحملة من إعداد عبد الواحد عياطي",add:"أضف ملفاً للمعاينة",missing:"مكان",langBtn:"EN",title:"دوري أبطال أوروبا على TOD"},
+en:{navHome:"Home",navSport:"Sports",navLive:"Live",navEnt:"Entertainment",navKids:"Kids",signIn:"Sign in",subscribe:"Subscribe now",
+heroTitle:"UEFA Champions League on TOD",heroText:"Every match from Europe’s biggest stage, live and on demand.",watchPromo:"Watch the promo",
+railPromos:"Campaign promos",viewAll:"View all",p15:"15-second promo",p15s:"Footage, music, motion graphics and end frame",p6:"6-second promo",p6s:"Short cut with supers and end frame",
+railStatics:"Campaign key visuals",ctxTitle:"Built for social",ctxText:"The same idea in story format, designed to read in one second and stay clear of the app UI.",
+aboutTitle:"About this work",aboutText1:"A creative campaign promoting the UEFA Champions League on TOD, with two promos of 15 and 6 seconds and three static key visuals in different formats. The goal is a premium, dynamic visual experience that captures the scale and excitement of the competition, with TOD’s identity in every detail.",
+aboutText2:"The UEFA Champions League. Football’s biggest stage, now on TOD. One campaign from video to social, premium in look and relentless in energy.",
+dRole:"Test",vRole:"Creative Producer, TOD by beIN",dBy:"By",vBy:"Abdelouahed Ayati",dLine:"Campaign line",dDel:"Deliverables",vDel:"15s promo, 6s promo and 3 static key visuals",
+fAbout:"About",fFaq:"FAQ",fTerms:"Terms",fNote:"Concept presentation for a job test, not an official TOD page.",
+credit:"Campaign presentation by Abdelouahed Ayati",add:"Add a file to preview",missing:"Slot",langBtn:"عربي",title:"UEFA Champions League on TOD"}
+};
+let lang="ar";
+const local={}; // files picked in the browser for preview
+
+function mediaEl(key){
+  const a=ASSETS[key], src=local[key]?.url||a.src, type=local[key]?.type||a.type;
+  if(type==="video"){
+    const v=document.createElement("video");
+    Object.assign(v,{src,muted:true,loop:true,playsInline:true,autoplay:key==="hero"});
+    if(a.poster&&!local[key]) v.poster=a.poster;
+    v.onerror=()=>slot(key); return v;
+  }
+  const i=document.createElement("img"); i.src=src; i.alt=""; i.onerror=()=>slot(key); return i;
+}
+function slot(key){
+  const host=document.querySelector(`[data-slot="${key}"]`); if(!host) return;
+  const a=ASSETS[key], id="f_"+key;
+  host.innerHTML=`<div class="slot"><div><b class="en">${a.size}</b><span class="en">${a.src}</span><br>
+    <label for="${id}">${T[lang].add}</label><input id="${id}" type="file" accept="${a.type==="video"?"video/*":"image/*"}"></div></div>`;
+  host.querySelector("input").onchange=e=>{
+    const f=e.target.files[0]; if(!f) return;
+    local[key]={url:URL.createObjectURL(f),type:f.type.startsWith("video")?"video":"image"};
+    // share one picked file with its sibling slots
+    const twins={kv16:["hero","promo15thumb","hd"],st:["st","story"],story:["st","story"],hd:["hd","promo15thumb"],promo15:["promo15","hero"]};
+    (twins[key]||[]).forEach(k=>{local[k]=local[key];});
+    if(key==="hero"&&local[key].type==="video") local.promo15=local[key];
+    fill();
+  };
+  host.querySelector("label").onclick=e=>e.stopPropagation();
+}
+function fill(){
+  document.querySelectorAll("[data-slot]").forEach(h=>{h.innerHTML="";h.appendChild(mediaEl(h.dataset.slot));});
+}
+function setLang(l){
+  lang=l; const h=document.documentElement; h.lang=l; h.dir=l==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-t]").forEach(el=>el.textContent=T[l][el.dataset.t]);
+  const lb=document.getElementById("lang"); lb.textContent=T[l].langBtn; lb.style.fontFamily=l==="ar"?"var(--en)":"var(--ar)"; lb.style.fontSize=l==="ar"?"14px":"16px";
+  document.title=T[l].title;
+  document.querySelectorAll(".slot label").forEach(x=>x.textContent=T[l].add);
+  try{localStorage.setItem("todshow-lang",l)}catch(e){}
+}
+document.getElementById("lang").onclick=()=>setLang(lang==="ar"?"en":"ar");
+
+const dlg=document.getElementById("viewer"), vb=document.getElementById("vbody");
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-open]"); if(!t||e.target.closest(".slot")) return;
+  const key=t.dataset.open, el=mediaEl(key);
+  if(el.tagName==="VIDEO"){el.controls=true;el.muted=false;el.autoplay=true;el.loop=false;}
+  vb.innerHTML=""; vb.appendChild(el); dlg.showModal();
+});
+dlg.querySelector(".x").onclick=()=>dlg.close();
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+dlg.addEventListener("close",()=>{vb.innerHTML=""});
+
+let saved=null; try{saved=localStorage.getItem("todshow-lang")}catch(e){}
+setLang(saved==="en"?"en":"ar");
+fill();
+</script>
+</body>
+</html>
