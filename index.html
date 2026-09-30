@@ -1077,7 +1077,7 @@ var setLang=function(l){
   lang=l; const h=document.documentElement; h.lang=l; h.dir=l==="ar"?"rtl":"ltr"; host.setAttribute("lang",l); host.setAttribute("dir",h.dir);
   root.querySelectorAll("[data-t]").forEach(el=>el.textContent=T[l][el.dataset.t]);
   window.todMark(root);
-  root.querySelectorAll("a[data-cta]").forEach(x=>x.href=l==="ar"?"https://www.tod.tv/ar":"https://www.tod.tv/");
+  root.querySelectorAll("a[data-cta]").forEach(x=>x.href=l==="ar"?"https://www.tod.tv/ar":"https://www.tod.tv/en");
   const lb=root.getElementById("lang"); lb.textContent=T[l].langBtn; lb.style.fontFamily="var(--en)";
   root.querySelectorAll(".ph label").forEach(x=>x.textContent=T[l].add);
   document.title=T[l].title;
