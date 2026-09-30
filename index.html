@@ -182,25 +182,25 @@ section{padding-top:40px}
 .ctx-chips b{color:var(--yellow);font-weight:800}
 .stack{position:relative;height:500px;min-width:0}
 .stack .orb{position:absolute;border-radius:50%;filter:blur(40px);z-index:0;pointer-events:none}
-.stack .o1{width:280px;height:280px;background:rgba(255,194,14,.28);inset-inline-start:8%;top:8%}
-.stack .o2{width:320px;height:320px;background:rgba(140,90,255,.5);inset-inline-end:2%;bottom:-6%}
-.stack .ring{position:absolute;left:50%;top:50%;width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;border:1.5px dashed rgba(255,194,14,.35);animation:spin 40s linear infinite;z-index:0}
+.stack .o1{width:240px;height:240px;background:rgba(255,194,14,.2);left:50%;top:50%;margin:-120px 0 0 -120px}
+.stack .o2{display:none}
+.stack .ring{position:absolute;left:50%;top:50%;width:380px;height:380px;margin:-190px 0 0 -190px;border-radius:50%;border:1.5px dashed rgba(255,194,14,.22);animation:spin 40s linear infinite;z-index:0}
 .stack .phone{position:absolute;left:50%;top:50%;width:220px;margin:-238px 0 0 -110px;z-index:3;animation:flt 6s ease-in-out infinite}
 .stack .card{position:absolute;border-radius:16px;padding:6px;background:#34305C;box-shadow:0 0 0 1px rgba(255,255,255,.2),0 26px 50px -22px rgba(0,0,0,.8);z-index:2}
 .stack .card .th{border-radius:11px;overflow:hidden;background:var(--card);position:relative;cursor:pointer}
 .stack .card .th img,.stack .card .th video{width:100%;height:100%;object-fit:cover;display:block}
-.stack .hdc{width:340px;inset-inline-start:-4%;top:6%;transform:rotate(-7deg);animation:flt2 7s ease-in-out infinite}
+.stack .hdc{width:250px;inset-inline-end:0;top:9%;transform:rotate(4deg);animation:flt2 7s ease-in-out infinite}
 .stack .hdc .th{aspect-ratio:16/9}
-.stack .sqc{width:230px;inset-inline-end:0;bottom:2%;transform:rotate(6deg);animation:flt3 8s ease-in-out infinite}
+.stack .sqc{width:185px;inset-inline-start:0;bottom:8%;transform:rotate(-4deg);animation:flt3 8s ease-in-out infinite}
 .stack .sqc .th{aspect-ratio:1/1}
 .stack .bub{position:absolute;z-index:4;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--yellow);color:#15102E;box-shadow:0 12px 26px -10px rgba(0,0,0,.7)}
 .stack .bub svg{width:22px;height:22px}
 .stack .b1{left:34%;top:4%;animation:flt 5s ease-in-out infinite}
-.stack .b2{inset-inline-end:14%;top:14%;background:#fff;animation:flt2 6s ease-in-out infinite}
-.stack .b3{inset-inline-start:10%;bottom:8%;background:#fff;animation:flt3 5.500s ease-in-out infinite}
+.stack .b2{inset-inline-start:6%;top:12%;background:#fff;animation:flt 6s ease-in-out infinite}
+.stack .b3{inset-inline-end:8%;bottom:10%;background:var(--yellow);animation:flt 5.500s ease-in-out infinite}
 @keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes flt2{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(-5deg) translateY(-10px)}}
-@keyframes flt3{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(4deg) translateY(10px)}}
+@keyframes flt2{0%,100%{transform:rotate(4deg) translateY(0)}50%{transform:rotate(3deg) translateY(-10px)}}
+@keyframes flt3{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-3deg) translateY(10px)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.stack *{animation:none!important}}
 .context h2{margin:0 0 10px;font-size:28px;font-weight:800}
@@ -243,7 +243,7 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
   .context p{margin-inline:auto}
   .ctx-chips{justify-content:center}
   .stack{width:100%;height:440px}
-  .stack .hdc{width:220px}.stack .sqc{width:150px}
+  .stack .hdc{width:150px;top:4%}.stack .sqc{width:120px;bottom:4%}
   .stack .phone{width:170px;margin:-184px 0 0 -85px}
   .stack .ring{width:300px;height:300px;margin:-150px 0 0 -150px}
   .about{grid-template-columns:1fr}
@@ -331,7 +331,6 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
           <div class="card hdc"><div class="th" data-slot="hd" data-open="hd"></div></div>
           <div class="card sqc"><div class="th" data-slot="sq" data-open="sq"></div></div>
           <div class="phone"><div class="scr"><span class="island"></span><div class="bar"><i></i><i></i><i></i></div><div data-slot="story" style="position:absolute;inset:0"></div></div></div>
-          <span class="bub b1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.3 5c2 0 3.3 1.1 3.7 1.9h.1C10.6 6.1 12 5 13.900 5c3.400 0 5.300 3.600 3.900 6.800C15.500 16.400 12 21 12 21z" transform="translate(1 0)"/></svg></span>
           <span class="bub b2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg></span>
           <span class="bub b3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
         </div>
