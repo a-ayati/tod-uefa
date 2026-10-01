@@ -706,13 +706,14 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
 .wg{position:relative;max-width:660px;transform:translate3d(calc(var(--px,0)*var(--d,0)*1px + var(--sx,0)*1px),calc(var(--py,0)*var(--d,0)*1px),0);transition:transform .25s ease-out}
 .wg.g1{justify-self:start}
 .wg.g2{justify-self:end}
-.wg.g3{justify-self:center;text-align:center}
+.wg.g3{justify-self:center;text-align:center;max-width:900px}
 .wg h3{margin:0;font-weight:800;line-height:1.25;font-size:clamp(42px,8vw,100px);letter-spacing:0}
 .wg.g2 h3{font-size:clamp(42px,8vw,98px)}
 .wg.g3 h3{color:var(--yellow)}
 .wg h3 .w{display:inline-block;transition:transform 1s cubic-bezier(.22,1,.36,1),opacity .7s ease,filter .8s ease;transition-delay:calc(var(--i)*90ms)}
 .wg p{margin:12px 0 0;color:var(--muted);font-size:clamp(15px,1.5vw,19px);max-width:34ch;transition:opacity .8s ease .6s,transform .9s cubic-bezier(.22,1,.36,1) .6s}
 .wg.g3 p{margin-inline:auto}
+.wclose{max-width:36ch;margin:clamp(36px,5vw,64px) auto 0;text-align:center;font-size:clamp(18px,2vw,26px);font-weight:600;line-height:1.7;color:#fff}
 .words.arm .wg:not(.in) .w{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.6);filter:blur(10px)}
 .words.arm .wg:not(.in) p{opacity:0;transform:translateY(18px)}
 .keyv{padding-top:72px}
@@ -817,6 +818,7 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
         <div class="wg g2" style="--d:-26"><h3 data-w="pt2h"></h3><p data-t="pt2"></p></div>
         <div class="wg g3" style="--d:14"><h3 data-w="pt3h"></h3><p data-t="pt3"></p></div>
       </div>
+      <p class="wclose" data-t="ptClose"></p>
     </section>
 
     <section class="keyv">
@@ -1015,7 +1017,7 @@ b1:"مباشر",b1s:"عِش المباراة لحظة بلحظة.",
 b2:"في أي وقت",b2s:"أعد اللحظات، وشاهد الملخصات بعد صافرة النهاية.",
 b3:"شاهد أينما كنت",b3s:"تجربة واحدة. على كل شاشتك.",
 nightsH:"ليالي أوروبا الكبرى",nightsP:"حيث يجتمع كبار الأندية ونجوم العالم، وكل ثانية قد تصنع لحظة لا تُنسى.",
-pt1h:"كل مباراة.",pt1:"من صافرة البداية إلى اللحظة الأخيرة.",pt2h:"كل لحظة.",pt2:"الأهداف، الاحتفالات واللحظات التي تصنع المباراة.",pt3h:"كل ليلة.",pt3:"تجربة دوري الأبطال على TOD.",
+pt1h:"هنــا الفـرجة…",pt1:"حيث كل لحظة استثنائية.",pt2h:"هنــا الإثـارة…",pt2:"حيث الحماس بلا حدود.",pt3h:"هنــا التشـويق…",pt3:"حيث كل ثانية تحبس الأنفاس.",ptClose:"استمتع بكل لحظة من أقوى مواجهات أوروبا مباشرة على TOD.",
 devH:"شاهد أينما كنت",devP:"دوري الأبطال بتجربة تناسب شاشتك\n- تلفاز، جوال، تابلت أو لابتوب -",
 d1:"التلفاز",d2:"الجوال",d3:"التابلت",d4:"اللابتوب",
 faqH:"أسئلة شائعة",
@@ -1033,7 +1035,7 @@ b1:"Live",b1s:"Live the match, moment by moment.",
 b2:"Anytime",b2s:"Replay the moments and watch highlights after the final whistle.",
 b3:"Watch wherever you are",b3s:"One experience. On all your screens.",
 nightsH:"Europe’s biggest nights",nightsP:"Where the biggest clubs and the world’s stars meet, and every second can make a moment you’ll never forget.",
-pt1h:"Every match.",pt1:"From the first whistle to the last moment.",pt2h:"Every moment.",pt2:"Goals, celebrations and the moments that make the match.",pt3h:"Every night.",pt3:"The Champions League experience on TOD.",
+pt1h:"Here is the spectacle…",pt1:"Where every moment is extraordinary.",pt2h:"Here is the thrill…",pt2:"Where the excitement knows no limits.",pt3h:"Here is the suspense…",pt3:"Where every second takes your breath away.",ptClose:"Enjoy every moment of Europe’s biggest matches, live on TOD.",
 devH:"Watch wherever you are",devP:"The Champions League, in an experience that fits your screen\n- TV, mobile, tablet or laptop -",
 d1:"TV",d2:"Mobile",d3:"Tablet",d4:"Laptop",
 faqH:"FAQ",
