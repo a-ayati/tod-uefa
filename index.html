@@ -718,17 +718,15 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
 .wg h3{margin:0;font-weight:800;line-height:1.25;font-size:clamp(28px,4.6vw,58px);letter-spacing:0;white-space:nowrap}
 .wg.g2 h3{font-size:clamp(28px,4.6vw,58px)}
 .wg.g3 h3{color:var(--yellow)}
-.wg h3 .w{display:inline-block;transition:transform 1s cubic-bezier(.22,1,.36,1),opacity .7s ease,filter .8s ease;transition-delay:calc(var(--i)*90ms)}
-.wg p{margin:12px 0 0;color:var(--muted);font-size:clamp(15px,1.5vw,19px);max-width:34ch;transition:opacity .8s ease .6s,transform .9s cubic-bezier(.22,1,.36,1) .6s}
+.wg h3 .w{display:inline-block;will-change:transform,opacity,filter;transform:translate(calc(var(--x)*var(--s,0)),calc(var(--y)*var(--s,0))) rotate(calc(var(--r)*var(--s,0))) scale(calc(1 - .4*var(--s,0)));opacity:calc(1 - var(--s,0));filter:blur(calc(var(--s,0)*10px))}
+.wg p{margin:12px 0 0;color:var(--muted);font-size:clamp(15px,1.5vw,19px);max-width:34ch;opacity:calc(1 - var(--s,0));transform:translateY(calc(var(--s,0)*18px))}
 .wg.g3 p{margin-inline:auto}
 .wclose{max-width:36ch;margin:clamp(36px,5vw,64px) auto 0;text-align:center;font-size:clamp(18px,2vw,26px);font-weight:600;line-height:1.7;color:#fff}
-.words.arm .wg:not(.in) .w{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.6);filter:blur(10px)}
-.words.arm .wg:not(.in) p{opacity:0;transform:translateY(18px)}
 .keyv{padding-top:72px}
 .kv{display:flex;flex-direction:column;align-items:center;gap:26px}
 .kv .frame{width:min(480px,100%)}
 @media (max-width:900px){.words{padding-top:40px}.keyv{padding-top:56px}}
-@media (prefers-reduced-motion:reduce){.wg{transition:none}.wg h3 .w,.wg p{transition:none}}
+@media (prefers-reduced-motion:reduce){.wg h3 .w,.wg p{opacity:1!important;transform:none!important;filter:none!important}}
 
 
 .va-bot{display:flex;justify-content:center;margin-top:16px}
@@ -1461,7 +1459,7 @@ function buildWords(){
   /* and keep drifting sideways while it passes */
   let raf=0;
   const drift=()=>{raf=0; if(host.hidden) return; const vh=innerHeight;
-    groups.forEach((g,i)=>{const r=g.getBoundingClientRect(); const p=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2))); g.style.setProperty("--sx",(p*(i===1?-46:i===0?46:26)).toFixed(1));});};
+    groups.forEach((g,i)=>{const r=g.getBoundingClientRect(); const p=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2))); g.style.setProperty("--sx",(p*(i===1?-46:i===0?46:26)).toFixed(1)); g.style.setProperty("--s",Math.max(0,Math.min(1,(Math.abs(p)-.42)/.5)).toFixed(3));});};
   addEventListener("scroll",()=>{if(!raf) raf=requestAnimationFrame(drift);},{passive:true}); drift();
   if(matchMedia("(hover:hover)").matches){
     wordsEl.addEventListener("pointermove",e=>{const bb=wordsEl.getBoundingClientRect(); wordsEl.style.setProperty("--px",((e.clientX-bb.left)/bb.width-.5).toFixed(3)); wordsEl.style.setProperty("--py",((e.clientY-bb.top)/bb.height-.5).toFixed(3));});
