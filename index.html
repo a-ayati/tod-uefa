@@ -1459,7 +1459,7 @@ function buildWords(){
   /* and keep drifting sideways while it passes */
   let raf=0;
   const drift=()=>{raf=0; if(host.hidden) return; const vh=innerHeight;
-    groups.forEach((g,i)=>{const r=g.getBoundingClientRect(); const p=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2))); g.style.setProperty("--sx",(p*(i===1?-46:i===0?46:26)).toFixed(1)); g.style.setProperty("--s",Math.max(0,Math.min(1,(Math.abs(p)-.42)/.5)).toFixed(3));});};
+    groups.forEach((g,i)=>{const r=g.getBoundingClientRect(); const p=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2))); g.style.setProperty("--sx",(p*(i===1?-46:i===0?46:26)).toFixed(1)); g.style.setProperty("--s",Math.max(0,Math.min(1,(p>0?(p-.45)/.5:(-p-.82)/.3))).toFixed(3));});};
   addEventListener("scroll",()=>{if(!raf) raf=requestAnimationFrame(drift);},{passive:true}); drift();
   if(matchMedia("(hover:hover)").matches){
     wordsEl.addEventListener("pointermove",e=>{const bb=wordsEl.getBoundingClientRect(); wordsEl.style.setProperty("--px",((e.clientX-bb.left)/bb.width-.5).toFixed(3)); wordsEl.style.setProperty("--py",((e.clientY-bb.top)/bb.height-.5).toFixed(3));});
