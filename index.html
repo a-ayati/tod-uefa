@@ -238,6 +238,10 @@ dialog .box{position:relative}
 dialog video,dialog img{width:100%;max-height:86vh;object-fit:contain;display:block;border-radius:10px;background:#000}
 dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255,255,.14);border:0;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px}
 
+.more{display:flex;align-items:center;justify-content:center;gap:8px;width:max-content;margin:14px auto 0;color:var(--yellow);font-weight:700;font-size:14px;line-height:1.7;padding:4px 2px;border-bottom:1px solid transparent}
+.more:hover{border-color:var(--yellow)}
+.more .arr{width:1.1em;height:1.1em;flex:none}
+:host([dir="rtl"]) .more .arr{transform:scaleX(-1)}
 .credit{margin:22px auto 0;width:max-content;max-width:100%;text-align:center;border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:6px 16px;font-size:12px;font-weight:500;color:#EDEAFB;background:rgba(255,255,255,.04)}
 .credit b{color:#fff}
 
@@ -364,7 +368,7 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
 <footer><div class="wrap row">
   <ul><li><a href="#" data-t="fAbout"></a></li><li><a href="#" data-t="fFaq"></a></li><li><a href="#" data-t="fTerms"></a></li></ul>
   <span data-t="fNote"></span>
-</div><div class="wrap"><div class="credit"><span data-t="credit"></span></div></div></footer>
+</div><div class="wrap"><div class="credit"><span data-t="credit"></span></div><a class="more" data-more href="https://a-ayati.github.io/?lang=ar" target="_blank" rel="noopener"><span data-t="more"></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></footer>
 
 <dialog id="viewer"><div class="box"><button class="x" type="button" aria-label="Close">×</button><div id="vbody"></div></div></dialog>
 
@@ -919,7 +923,7 @@ railStatics:"تصاميم الحملة",ctxTitle:"حملة واحدة. بكل ا
 aboutTitle:"عن هذا العمل",aboutText1:"حملة إبداعية للترويج لبث دوري أبطال أوروبا على TOD، تشمل إعلانين بمدة 15 و6 ثوانٍ وثلاثة تصاميم ثابتة بمقاسات مختلفة. الهدف تقديم تجربة بصرية فاخرة وديناميكية تعكس حجم البطولة وإثارتها، مع الحفاظ على هوية TOD في كل التفاصيل.",
 dRole:"الاختبار",vRole:"Creative Producer، TOD by beIN",dBy:"إعداد",vBy:"عبد الواحد عياطي",dLine:"شعار الحملة",dDel:"المخرجات",vDel:"إعلان 15 ثانية، إعلان 6 ثوانٍ، و3 تصاميم ثابتة",
 fAbout:"من نحن",fFaq:"الأسئلة الشائعة",fTerms:"الشروط والأحكام",fNote:"عرض تجريبي لاختبار وظيفي، وليس صفحة رسمية من TOD.",
-credit:"عرض الحملة من إعداد عبد الواحد عياطي",add:"أضف ملفاً للمعاينة",missing:"مكان",langBtn:"EN",title:"دوري أبطال أوروبا على TOD"},
+credit:"عرض الحملة من إعداد عبد الواحد عياطي",more:"يمكنك الاطلاع على المزيد من أعمالي",add:"أضف ملفاً للمعاينة",missing:"مكان",langBtn:"EN",title:"دوري أبطال أوروبا على TOD"},
 en:{navHome:"Home",navSport:"Sports",navLive:"Live",navEnt:"Entertainment",navKids:"Kids",signIn:"Sign in",subscribe:"Subscribe now",
 heroTitle:"UEFA Champions League on TOD",heroText:"Every match from Europe’s biggest stage, live and on demand.",watchPromo:"Watch the promo",
 railPromos:"Campaign promos",viewAll:"View all",p15:"15-second promo",p15s:"Footage, music, motion graphics and end frame",p6:"6-second promo",p6s:"Short cut with supers and end frame",
@@ -927,7 +931,7 @@ railStatics:"Campaign key visuals",ctxTitle:"One campaign. Every size.",ctxText:
 aboutTitle:"About this work",aboutText1:"A creative campaign promoting the UEFA Champions League on TOD, with two promos of 15 and 6 seconds and three static key visuals in different formats. The goal is a premium, dynamic visual experience that captures the scale and excitement of the competition, with TOD’s identity in every detail.",
 dRole:"Test",vRole:"Creative Producer, TOD by beIN",dBy:"By",vBy:"Abdelouahed Ayati",dLine:"Campaign line",dDel:"Deliverables",vDel:"15s promo, 6s promo and 3 static key visuals",
 fAbout:"About",fFaq:"FAQ",fTerms:"Terms",fNote:"Concept presentation for a job test, not an official TOD page.",
-credit:"Campaign presentation by Abdelouahed Ayati",add:"Add a file to preview",missing:"Slot",langBtn:"عربي",title:"UEFA Champions League on TOD"}
+credit:"Campaign presentation by Abdelouahed Ayati",more:"See more of my work",add:"Add a file to preview",missing:"Slot",langBtn:"عربي",title:"UEFA Champions League on TOD"}
 };
 let lang="ar";
 const local={}; // files picked in the browser for preview
@@ -968,6 +972,7 @@ function setLang(l){
   const lb=root.getElementById("lang"); lb.textContent=T[l].langBtn; lb.style.fontFamily=l==="ar"?"var(--en)":"var(--ar)"; lb.style.fontSize=l==="ar"?"14px":"16px";
   document.title=T[l].title;
   root.querySelectorAll(".slot label").forEach(x=>x.textContent=T[l].add);
+  root.querySelectorAll("a[data-more]").forEach(x=>x.href="https://a-ayati.github.io/?lang="+l);
 }
 root.getElementById("lang").onclick=()=>window.__applyLang(lang==="ar"?"en":"ar");
 
