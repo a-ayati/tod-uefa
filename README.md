@@ -38,3 +38,10 @@ The "Champions League by the numbers" section refreshes itself every 2 minutes f
 scoreboard and standings feeds (matches, results, table and top scorers). If the feed is unreachable
 the built-in snapshot stays on screen. Assists are a manual snapshot in `index.html` (`ASSISTS`).
 The ESPN feed is unofficial, so it can change without notice.
+
+## Colours
+
+Only the TOD colour system (TOD_Colour-Reference.pdf, v3.0) is used on the page:
+TOD Yellow `#FFBC00`, TOD Black `#101010`, Deep Navy `#0C1423`, Royal Indigo `#262861`,
+Royal Purple `#5B308E`, Cloud Grey `#D7D6D6`, Pure White `#FFFFFF`, and the "Happy" gradient accent `#E0298C` / `#FF6B5C`.
+Secondary text, borders and glows are these colours at reduced opacity, never new hues.
