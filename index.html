@@ -159,6 +159,7 @@ section{padding-top:40px}
 /* Formats grid */
 .dcar{width:100%}
 .st-car .dc-view{aspect-ratio:9/16}
+.hd-car .dc-view{aspect-ratio:16/9}
 .dc-view{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:var(--card)}
 .dc-slide{position:absolute;inset:0;margin:0;opacity:0;transform:scale(.97);transition:opacity .6s ease,transform .6s ease;pointer-events:none}
 .dc-slide.on{opacity:1;transform:none;pointer-events:auto}
@@ -411,7 +412,16 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
           </div>
           <p><b class="en">9:16</b><span class="en">1080 × 1920</span></p>
         </div>
-        <div class="fmt hd"><div class="th" data-slot="hd" data-open="hd"></div><p><b class="en">16:9</b><span class="en">1920 × 1080</span></p></div>
+        <div class="fmt hd">
+          <div class="dcar hd-car">
+            <div class="dc-view">
+              <div class="dc-slide on"><div class="dc-img" data-slot="w1" data-open="w1"></div></div>
+              <div class="dc-slide"><div class="dc-img" data-slot="w2" data-open="w2"></div></div>
+              <div class="dc-slide"><div class="dc-img" data-slot="w3" data-open="w3"></div></div>
+            </div>
+          </div>
+          <p><b class="en">16:9</b><span class="en">1920 × 1080</span></p>
+        </div>
       </div>
     </section>
 
@@ -1005,7 +1015,10 @@ const ASSETS = {
   d3:          {type:"image", src:"assets/design-3.jpg",  size:"Design 3 · TOD identity"},
   s1:          {type:"image", src:"assets/story-1.jpg",   size:"Story 1 · 1080 × 1920"},
   s2:          {type:"image", src:"assets/story-2.jpg",   size:"Story 2 · 1080 × 1920"},
-  s3:          {type:"image", src:"assets/story-3.jpg",   size:"Story 3 · 1080 × 1920"}
+  s3:          {type:"image", src:"assets/story-3.jpg",   size:"Story 3 · 1080 × 1920"},
+  w1:          {type:"image", src:"assets/wide-1.jpg",    size:"Wide 1 · 1920 × 1080"},
+  w2:          {type:"image", src:"assets/wide-2.jpg",    size:"Wide 2 · 1920 × 1080"},
+  w3:          {type:"image", src:"assets/wide-3.jpg",    size:"Wide 3 · 1920 × 1080"}
 };
 /* ===================================================================================== */
 
