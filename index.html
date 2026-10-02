@@ -212,7 +212,7 @@ section{padding-top:40px}
 .context p{margin:0 0 18px;color:#DCD6F5;max-width:50ch}
 
 /* About */
-.brief{margin-top:56px;padding:36px;border-radius:18px;background:linear-gradient(135deg,rgba(91,48,142,.35),rgba(38,40,97,.55));border:1px solid rgba(255,255,255,.12)}
+.brief{scroll-margin-top:90px;margin-top:56px;padding:36px;border-radius:18px;background:linear-gradient(135deg,rgba(91,48,142,.35),rgba(38,40,97,.55));border:1px solid rgba(255,255,255,.12)}
 .brief .kick{display:inline-block;color:var(--yellow);font-weight:800;font-size:13px;letter-spacing:.04em;margin-bottom:8px}
 .brief h2{margin:0 0 22px;font-size:clamp(24px,3vw,36px);font-weight:800;line-height:1.4}
 .bf-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px}
@@ -293,11 +293,8 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
   <div class="wrap topbar">
     <a href="#" class="logo en" aria-label="TOD by beIN"><img src="assets/logo.png" alt="TOD by beIN" width="353" height="218"></a>
     <nav aria-label="Main"><ul>
-      <li><a href="#" data-t="navHome"></a></li>
-      <li><a href="#" aria-current="page" data-t="navSport"></a></li>
-      <li><a href="#" data-t="navLive"></a></li>
-      <li><a href="#" data-t="navEnt"></a></li>
-      <li><a href="#" data-t="navKids"></a></li>
+      <li><a href="#" data-nav="top" aria-current="page" data-t="navHome"></a></li>
+      <li><a href="#brief" data-nav="brief" data-t="bfKick"></a></li>
     </ul></nav>
     <div class="end">
       <button class="icon-btn" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
@@ -323,7 +320,7 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
   </div>
 
   <div class="wrap">
-    <section class="brief">
+    <section class="brief" id="brief">
       <span class="kick" data-t="bfKick"></span>
       <h2 data-t="bfTitle"></h2>
       <div class="bf-grid">
@@ -1002,6 +999,7 @@ function slot(key){
   };
   host.querySelector("label").onclick=e=>e.stopPropagation();
 }
+root.querySelectorAll("a[data-nav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const t=a.dataset.nav==="brief"?root.getElementById("brief"):null;if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else scrollTo({top:0,behavior:"smooth"});root.querySelectorAll("a[data-nav]").forEach(x=>x.toggleAttribute("aria-current",x===a));}));
 function fill(){
   root.querySelectorAll("[data-slot]").forEach(h=>{h.innerHTML="";h.appendChild(mediaEl(h.dataset.slot));});
 }
