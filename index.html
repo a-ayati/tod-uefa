@@ -212,9 +212,11 @@ section{padding-top:40px}
 .context p{margin:0 0 18px;color:#DCD6F5;max-width:50ch}
 
 /* About */
-.brief{scroll-margin-top:90px;margin-top:56px;padding:36px;border-radius:18px;background:linear-gradient(135deg,rgba(91,48,142,.35),rgba(38,40,97,.55));border:1px solid rgba(255,255,255,.12)}
+.brief{display:none;margin-top:32px;padding:36px;border-radius:18px;background:linear-gradient(135deg,rgba(91,48,142,.35),rgba(38,40,97,.55));border:1px solid rgba(255,255,255,.12)}
 .brief .kick{display:inline-block;color:var(--yellow);font-weight:800;font-size:13px;letter-spacing:.04em;margin-bottom:8px}
 .brief h2{margin:0 0 22px;font-size:clamp(24px,3vw,36px);font-weight:800;line-height:1.4}
+:host([data-view="brief"]) .brief{display:block}
+:host([data-view="brief"]) main>.hero,:host([data-view="brief"]) main .wrap>section:not(.brief){display:none}
 .bf-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px}
 .bf-blk h3,.bf-end h3,.bf-h4{margin:0 0 10px;font-size:19px;font-weight:800;color:var(--yellow);line-height:1.5}
 .bf-blk h3.gap{margin-top:26px}
@@ -320,7 +322,7 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
   </div>
 
   <div class="wrap">
-    <section class="brief" id="brief">
+    <section class="brief">
       <span class="kick" data-t="bfKick"></span>
       <h2 data-t="bfTitle"></h2>
       <div class="bf-grid">
@@ -999,7 +1001,7 @@ function slot(key){
   };
   host.querySelector("label").onclick=e=>e.stopPropagation();
 }
-root.querySelectorAll("a[data-nav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const t=a.dataset.nav==="brief"?root.getElementById("brief"):null;if(t)t.scrollIntoView({behavior:"smooth",block:"start"});else scrollTo({top:0,behavior:"smooth"});root.querySelectorAll("a[data-nav]").forEach(x=>x.toggleAttribute("aria-current",x===a));}));
+root.querySelectorAll("a[data-nav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const b=a.dataset.nav==="brief";host.setAttribute("data-view",b?"brief":"home");const d=root.querySelector(".bf-more");if(d)d.open=b;root.querySelectorAll("a[data-nav]").forEach(x=>x.toggleAttribute("aria-current",x===a));scrollTo({top:0,behavior:"smooth"});}));
 function fill(){
   root.querySelectorAll("[data-slot]").forEach(h=>{h.innerHTML="";h.appendChild(mediaEl(h.dataset.slot));});
 }
