@@ -1071,12 +1071,12 @@ const ASSETS = {
   d1:          {type:"image", src:"assets/design-1.jpg",  size:"Design 1 · Key Visual"},
   d2:          {type:"image", src:"assets/design-2.jpg",  size:"Design 2 · Champions League identity"},
   d3:          {type:"image", src:"assets/design-3.jpg",  size:"Design 3 · TOD identity"},
-  s1:          {type:"image", src:"assets/story-1.jpg",   size:"Story 1 · 1080 × 1920"},
-  s2:          {type:"image", src:"assets/story-2.jpg",   size:"Story 2 · 1080 × 1920"},
-  s3:          {type:"image", src:"assets/story-3.jpg",   size:"Story 3 · 1080 × 1920"},
+  s1:          {type:"image", src:"assets/story-1.jpg", en:"assets/story-en-1.jpg",   size:"Story 1 · 1080 × 1920"},
+  s2:          {type:"image", src:"assets/story-2.jpg", en:"assets/story-en-2.jpg",   size:"Story 2 · 1080 × 1920"},
+  s3:          {type:"image", src:"assets/story-3.jpg", en:"assets/story-en-3.jpg",   size:"Story 3 · 1080 × 1920"},
   w1:          {type:"image", src:"assets/wide-1.jpg",    size:"Wide 1 · 1920 × 1080"},
-  w2:          {type:"image", src:"assets/wide-2.jpg",    size:"Wide 2 · 1920 × 1080"},
-  w3:          {type:"image", src:"assets/wide-3.jpg",    size:"Wide 3 · 1920 × 1080"}
+  w2:          {type:"image", src:"assets/wide-2.jpg", en:"assets/wide-en-2.jpg",    size:"Wide 2 · 1920 × 1080"},
+  w3:          {type:"image", src:"assets/wide-3.jpg", en:"assets/wide-en-3.jpg",    size:"Wide 3 · 1920 × 1080"}
 };
 /* ===================================================================================== */
 
@@ -1102,7 +1102,7 @@ let lang="ar";
 const local={}; // files picked in the browser for preview
 
 function mediaEl(key){
-  const a=ASSETS[key], src=local[key]?.url||a.src, type=local[key]?.type||a.type;
+  const a=ASSETS[key], src=local[key]?.url||(lang==="en"&&a.en)||a.src, type=local[key]?.type||a.type;
   if(type==="video"){
     const v=document.createElement("video");
     Object.assign(v,{src,muted:true,loop:true,playsInline:true,autoplay:key==="hero"});
@@ -1153,6 +1153,7 @@ function setLang(l){
   const lb=root.getElementById("lang"); lb.textContent=T[l].langBtn; lb.style.fontFamily=l==="ar"?"var(--en)":"var(--ar)"; lb.style.fontSize=l==="ar"?"14px":"16px";
   document.title=T[l].title;
   root.querySelectorAll(".slot label").forEach(x=>x.textContent=T[l].add);
+  root.querySelectorAll("[data-slot]").forEach(h=>{const a=ASSETS[h.dataset.slot]; if(a&&a.en&&!local[h.dataset.slot]){h.innerHTML="";h.appendChild(mediaEl(h.dataset.slot));}});
   root.querySelectorAll("a[data-more]").forEach(x=>x.href="https://a-ayati.github.io/?lang="+l);
 }
 root.getElementById("lang").onclick=()=>window.__applyLang(lang==="ar"?"en":"ar");
