@@ -25,7 +25,7 @@ Direct link to the campaign brief page: https://a-ayati.github.io/tod-uefa/#brie
 | `story-1.jpg`, `story-2.jpg`, `story-3.jpg` | The three story (9:16) versions, shown next to the 1:1 slider |
 | `wide-1.jpg`, `wide-2.jpg`, `wide-3.jpg` | The three screen / TV (16:9) versions, shown below the 1:1 and story sliders |
 | `customer-1.jpg`, `customer-2.jpg`, `customer-3.jpg` | The three 1:1 versions (without the watch button) shown in the customer view |
-| `design-en-1..3.jpg`, `story-en-1..3.jpg`, `wide-en-1..3.jpg` | English versions, shown when the page language is English (missing ones fall back to the Arabic file) |
+| `design-en-1..3.jpg`, `customer-en-1..3.jpg`, `story-en-1..3.jpg`, `wide-en-1..3.jpg` | English versions, shown when the page language is English (missing ones fall back to the Arabic file) |
 | `character-sheet.webp` | Sample character sheet shown in the "Campaign brief" page |
 
 ## Club crests
