@@ -22,6 +22,7 @@ Direct link to the campaign brief page: https://a-ayati.github.io/tod-uefa/#brie
 | `kv-9x16.jpg` | Key visual 1080 × 1920 |
 | `thumb-6s.jpg` | Thumbnail for the 6s promo, 16:9 |
 | `design-1.jpg`, `design-2.jpg`, `design-3.jpg` | The three designs shown in the "Campaign brief" page (any size, shown in a 4:5 frame) |
+| `story-1.jpg`, `story-2.jpg`, `story-3.jpg` | The three story (9:16) versions, shown next to the 1:1 slider |
 | `character-sheet.webp` | Sample character sheet shown in the "Campaign brief" page |
 
 ## Club crests
