@@ -1119,7 +1119,7 @@ root.addEventListener("click",e=>{
   vb.innerHTML=""; vb.appendChild(el); dlg.showModal();
 });
 dlg.querySelector(".x").onclick=()=>dlg.close();
-dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+dlg.addEventListener("click",e=>{if(!e.target.closest("img,video,.x,input,label"))dlg.close()});
 dlg.addEventListener("close",()=>{vb.innerHTML=""});
 
 let saved=null; try{saved=localStorage.getItem("todshow-lang")}catch(e){}
@@ -1351,7 +1351,7 @@ root.addEventListener("click",e=>{
   vb.innerHTML=""; vb.appendChild(el); dlg.showModal();
 });
 dlg.querySelector(".x").onclick=()=>dlg.close();
-dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+dlg.addEventListener("click",e=>{if(!e.target.closest("img,video,.x,input,label"))dlg.close()});
 dlg.addEventListener("close",()=>{vb.innerHTML=""});
 
 
