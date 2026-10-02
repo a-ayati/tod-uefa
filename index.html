@@ -176,8 +176,7 @@ section{padding-top:40px}
 .dc-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,width .3s}
 .dc-dots i.on{background:var(--yellow);width:22px;border-radius:8px}
 @media (prefers-reduced-motion:reduce){.dc-slide{transition:none}}
-.formats{display:grid;grid-template-columns:1fr .5625fr;gap:18px 16px;align-items:start;max-width:780px;margin:0 auto}
-.fmt.hd{grid-column:1/-1}
+.formats{display:grid;grid-template-columns:1fr .5625fr 1.7778fr;gap:14px;align-items:start;max-width:1060px;margin:0 auto}
 .fmt{min-width:0;flex-basis:0}
 .fmt.sq{flex-grow:1}.fmt.st{flex-grow:.5625}.fmt.hd{flex-grow:1.7778}
 .fmt .th{border-radius:10px;overflow:hidden;background:var(--card);cursor:pointer;position:relative}
@@ -295,7 +294,7 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
 
 @media (max-width:980px){
   nav{display:none}
-  .formats{flex-wrap:wrap}.fmt.hd{flex:1 1 100%;order:-1}.fmt.sq{flex:1 1 0}.fmt.st{flex:.5625 1 0}
+  .formats{grid-template-columns:1fr .5625fr}.fmt.hd{grid-column:1/-1;order:-1}
   .context{grid-template-columns:1fr;justify-items:center;text-align:center;padding:28px}
   .context p{margin-inline:auto}
   .ctx-chips{justify-content:center}
