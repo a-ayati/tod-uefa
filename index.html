@@ -1620,6 +1620,7 @@ function syncSticky(){document.body.classList.toggle("sticky-on",mode==="land"&&
 addEventListener("scroll",syncSticky,{passive:true}); addEventListener("resize",syncSticky);
 function swap(m){
   mode=m;
+  if(m==="show"&&hShow.__setView) hShow.__setView(false,false);
   hShow.hidden=m!=="show"; hLand.hidden=m!=="land";
   document.body.classList.toggle("mode-land",m==="land");
   (m==="show"?V2:V1).pause();
