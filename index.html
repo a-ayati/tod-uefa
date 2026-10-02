@@ -167,16 +167,16 @@ section{padding-top:40px}
 .dc-img img{width:100%;height:100%;object-fit:cover;display:block}
 .dc-slide figcaption{display:flex;justify-content:space-between;gap:12px;margin:12px 4px 0;font-size:14px;color:var(--muted)}
 .dc-slide figcaption b{color:#fff;font-weight:700}
-.dc-ctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px}
-.dc-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--yellow);background:rgba(255,188,0,.12);color:var(--yellow);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+.dc-ctl{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;margin-top:2px}
+.dc-btn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--yellow);background:rgba(255,188,0,.12);color:var(--yellow);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
 .dc-btn:hover,.dc-btn:focus-visible{background:var(--yellow);color:#101010}
-.dc-btn svg{width:20px;height:20px}
+.dc-btn svg{width:15px;height:15px}
 :host([dir="rtl"]) .dc-btn svg{transform:scaleX(-1)}
 .dc-dots{display:flex;gap:8px}
 .dc-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,width .3s}
 .dc-dots i.on{background:var(--yellow);width:22px;border-radius:8px}
 @media (prefers-reduced-motion:reduce){.dc-slide{transition:none}}
-.formats{display:grid;grid-template-columns:1fr .5625fr;gap:18px 16px;align-items:start;max-width:900px;margin:0 auto}
+.formats{display:grid;grid-template-columns:1fr .5625fr;gap:18px 16px;align-items:start;max-width:780px;margin:0 auto}
 .fmt.hd{grid-column:1/-1}
 .fmt{min-width:0;flex-basis:0}
 .fmt.sq{flex-grow:1}.fmt.st{flex-grow:.5625}.fmt.hd{flex-grow:1.7778}
@@ -396,11 +396,6 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
             </div>
           </div>
           <p><b class="en">1:1</b><span class="en">1080 × 1080</span></p>
-          <div class="dc-ctl">
-            <button type="button" class="dc-btn dc-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
-            <span class="dc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
-            <button type="button" class="dc-btn dc-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
-          </div>
         </div>
         <div class="fmt st">
           <div class="dcar st-car">
@@ -421,6 +416,11 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
             </div>
           </div>
           <p><b class="en">16:9</b><span class="en">1920 × 1080</span></p>
+        </div>
+        <div class="dc-ctl">
+          <button type="button" class="dc-btn dc-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+          <span class="dc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
+          <button type="button" class="dc-btn dc-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
         </div>
       </div>
     </section>
@@ -1072,7 +1072,7 @@ function slot(key){
 const navAs=[...root.querySelectorAll("a[data-nav]")];
 function setView(b,scroll){host.setAttribute("data-view",b?"brief":"home");const d=root.querySelector(".bf-more");if(d)d.open=b;navAs.forEach(x=>x.toggleAttribute("aria-current",(x.dataset.nav==="brief")===b));if(scroll)scrollTo({top:0,behavior:"smooth"});}
 host.__setView=setView;
-(function(){const c0=root.getElementById("dcar"); if(!c0) return; const c=c0.parentNode, grp=c.closest(".formats");
+(function(){const c0=root.getElementById("dcar"); if(!c0) return; const grp=c0.closest(".formats"), c=grp;
   const sets=[...grp.querySelectorAll(".dc-view")].map(v=>[...v.querySelectorAll(".dc-slide")]), dots=[...c.querySelectorAll(".dc-dots i")], N=3; let n=0,hold=0;
   const show=i=>{n=(i+N)%N; sets.forEach(sl=>sl.forEach((x,k)=>x.classList.toggle("on",k===n))); dots.forEach((x,k)=>x.classList.toggle("on",k===n));};
   const tick=()=>{ if(hold||document.hidden||host.hidden||host.getAttribute("data-view")==="brief") return; const r=grp.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return; show(n+1); };
