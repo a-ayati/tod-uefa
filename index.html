@@ -821,6 +821,18 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
 .keyv{padding-top:72px}
 .kv{display:flex;flex-direction:column;align-items:center;gap:26px}
 .kv .frame{width:min(480px,100%)}
+.ks{position:absolute;inset:0;opacity:0;transform:scale(.97);transition:opacity .6s ease,transform .6s ease;pointer-events:none}
+.ks.on{opacity:1;transform:none;pointer-events:auto}
+.kctl{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:-10px}
+.kbtn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--yellow);background:rgba(255,188,0,.12);color:var(--yellow);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+.kbtn:hover,.kbtn:focus-visible{background:var(--yellow);color:#101010}
+.kbtn svg{width:15px;height:15px}
+:host([dir="rtl"]) .kbtn svg{transform:scaleX(-1)}
+.kdots{display:flex;gap:8px}
+.kdots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,width .3s}
+.kdots i.on{background:var(--yellow);width:22px;border-radius:8px}
+@media (prefers-reduced-motion:reduce){.ks{transition:none}}
+
 @media (max-width:900px){.words{padding-top:40px}.keyv{padding-top:56px}}
 @media (prefers-reduced-motion:reduce){.wg h3 .w,.wg p{opacity:1!important;transform:none!important;filter:none!important}}
 
@@ -925,7 +937,8 @@ dialog .x{position:absolute;top:-46px;inset-inline-end:0;background:rgba(255,255
 
     <section class="keyv">
       <div class="kv rv">
-        <div class="frame sq" data-slot="sq" data-open="sq" data-tilt><span class="expand" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></div>
+        <div class="frame sq" data-tilt><div class="ks on" data-slot="c1" data-open="c1"></div><div class="ks" data-slot="c2" data-open="c2"></div><div class="ks" data-slot="c3" data-open="c3"></div><span class="expand" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></div>
+        <div class="kctl"><button type="button" class="kbtn kprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button><span class="kdots" aria-hidden="true"><i class="on"></i><i></i><i></i></span><button type="button" class="kbtn knext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button></div>
         <a href="https://www.tod.tv/ar" data-cta target="_blank" rel="noopener" class="btn y"><span data-t="cta"></span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
@@ -1132,7 +1145,10 @@ const ASSETS={
   heroMobile: {type:"image",src:"assets/kv-9x16.jpg",size:"9:16 · 1080 × 1920"},
   sq:         {type:"image",src:"assets/kv-1x1.jpg",size:"1:1 · 1080 × 1080"},
   promo6:     {type:"video",src:"assets/promo-6s.mp4",poster:"assets/thumb-6s.jpg",size:"6s · 16:9"},
-  final:      {type:"image",src:"assets/kv-16x9.jpg",size:"16:9 · 1920 × 1080"}
+  final:      {type:"image",src:"assets/kv-16x9.jpg",size:"16:9 · 1920 × 1080"},
+  c1:         {type:"image",src:"assets/customer-1.jpg",size:"1:1 · 1080 × 1080"},
+  c2:         {type:"image",src:"assets/customer-2.jpg",size:"1:1 · 1080 × 1080"},
+  c3:         {type:"image",src:"assets/customer-3.jpg",size:"1:1 · 1080 × 1080"}
 };
 /* ============================================================== */
 const T={
@@ -1201,6 +1217,14 @@ function fill(){
   root.querySelectorAll("[data-slot]").forEach(h=>build(h,h.dataset.slot==="hero"?heroKey():h.dataset.slot));
 }
 mq.addEventListener("change",()=>build(root.querySelector('[data-slot="hero"]'),heroKey()));
+(function(){const sl=[...root.querySelectorAll(".ks")], dots=[...root.querySelectorAll(".kdots i")], box=root.querySelector(".kv"); if(!sl.length) return; let n=0,hold=0;
+  const show=i=>{n=(i+sl.length)%sl.length; sl.forEach((x,k)=>x.classList.toggle("on",k===n)); dots.forEach((x,k)=>x.classList.toggle("on",k===n));};
+  const tick=()=>{ if(hold||document.hidden||host.hidden) return; const r=box.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return; show(n+1); };
+  if(!matchMedia("(prefers-reduced-motion:reduce)").matches) setInterval(tick,4500);
+  const manual=d=>{show(n+d); hold=1; clearTimeout(manual.t); manual.t=setTimeout(()=>hold=0,9000);};
+  root.querySelector(".kprev").addEventListener("click",()=>manual(-1)); root.querySelector(".knext").addEventListener("click",()=>manual(1));
+  box.addEventListener("pointerenter",()=>hold=1); box.addEventListener("pointerleave",()=>{clearTimeout(manual.t); hold=0;});
+})();
 
 var setLang=function(l){
   lang=l; const h=document.documentElement; h.lang=l; h.dir=l==="ar"?"rtl":"ltr"; host.setAttribute("lang",l); host.setAttribute("dir",h.dir);
