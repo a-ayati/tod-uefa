@@ -295,12 +295,15 @@ dialog .vnav svg{width:18px;height:18px}
 dialog .vprev{inset-inline-start:12px}
 dialog .vnext{inset-inline-end:12px}
 :host([dir="rtl"]) dialog .vnav svg{transform:scaleX(-1)}
-dialog .box.has-info{display:flex;align-items:center;gap:22px;width:auto;max-width:100%}
+dialog .box.has-info{display:flex;align-items:center;justify-content:center;gap:22px;width:fit-content;max-width:100%;margin:0 auto}
 dialog .vstage{position:relative;display:grid;place-items:center;min-width:0;flex:0 1 auto}
-dialog .vinfo{flex:0 0 340px;max-height:86vh;overflow:auto;background:rgba(12,20,35,.72);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:22px;color:#fff;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 30px 80px -24px rgba(0,0,0,.7)}
+dialog .vinfo{flex:0 0 340px;max-height:86vh;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,188,0,.55) transparent;background:rgba(12,20,35,.72);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:22px;color:#fff;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 30px 80px -24px rgba(0,0,0,.7)}
 dialog .vinfo[hidden]{display:none}
 dialog .vinfo .vk{display:inline-block;color:var(--yellow);font-size:12.5px;font-weight:800;margin-bottom:8px}
 dialog .vinfo h4{margin:0 0 14px;font-size:19px;font-weight:800;line-height:1.55}
+dialog .vinfo::-webkit-scrollbar{width:6px}
+dialog .vinfo::-webkit-scrollbar-thumb{background:rgba(255,188,0,.55);border-radius:6px}
+dialog .vinfo::-webkit-scrollbar-track{background:transparent}
 dialog .vchips{display:flex;gap:8px;margin-bottom:16px}
 dialog .vchip{min-width:38px;height:34px;padding:0 12px;border-radius:20px;border:1.5px solid rgba(255,188,0,.6);background:transparent;color:var(--yellow);font:800 14px var(--en);cursor:pointer;transition:background .2s,color .2s}
 dialog .vchip:hover{background:rgba(255,188,0,.18)}
