@@ -1290,7 +1290,7 @@ const mq=matchMedia("(max-width:700px)");
 const heroKey=()=>mq.matches?"heroMobile":"heroDesktop";
 
 function build(host,key){
-  const a=ASSETS[key], l=local[key], type=l?.type||a.type, src=l?.url||a.src;
+  const a=ASSETS[key], l=local[key], type=l?.type||a.type, src=l?.url||(lang==="en"&&a.en)||a.src;
   host.innerHTML="";
   let el;
   if(type==="video"){
@@ -1333,6 +1333,7 @@ var setLang=function(l){
   const lb=root.getElementById("lang"); lb.textContent=T[l].langBtn; lb.style.fontFamily="var(--en)";
   root.querySelectorAll(".ph label").forEach(x=>x.textContent=T[l].add);
   document.title=T[l].title;
+  root.querySelectorAll("[data-slot]").forEach(h=>{const k=h.dataset.slot,A=ASSETS[k]; if(A&&A.en&&!local[k]) build(h,k);});
 };
 root.getElementById("lang").onclick=()=>window.__applyLang(lang==="ar"?"en":"ar");
 
@@ -1455,7 +1456,7 @@ function lbNav(groups,getKey,openKey){
 }
 let curKey=null, navUpd=()=>{};
 function openKey(key){
-  const a=ASSETS[key], l=local[key], type=l?.type||a.type, src=l?.url||a.src;
+  const a=ASSETS[key], l=local[key], type=l?.type||a.type, src=l?.url||(lang==="en"&&a.en)||a.src;
   let el;
   if(type==="video"){el=document.createElement("video");Object.assign(el,{src,controls:true,autoplay:true,playsInline:true,loop:false})}
   else{el=document.createElement("img");el.src=src;el.alt=""}
