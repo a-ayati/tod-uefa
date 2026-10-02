@@ -9,6 +9,8 @@ One page, two views:
 
 Direct link to the customer view: https://a-ayati.github.io/tod-uefa/#customer
 
+Direct link to the campaign brief page: https://a-ayati.github.io/tod-uefa/#brief
+
 ## Files to add in `assets/`
 
 | File | Content |

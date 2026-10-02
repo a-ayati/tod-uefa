@@ -1010,7 +1010,10 @@ function slot(key){
   };
   host.querySelector("label").onclick=e=>e.stopPropagation();
 }
-root.querySelectorAll("a[data-nav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const b=a.dataset.nav==="brief";host.setAttribute("data-view",b?"brief":"home");const d=root.querySelector(".bf-more");if(d)d.open=b;root.querySelectorAll("a[data-nav]").forEach(x=>x.toggleAttribute("aria-current",x===a));scrollTo({top:0,behavior:"smooth"});}));
+const navAs=[...root.querySelectorAll("a[data-nav]")];
+function setView(b,scroll){host.setAttribute("data-view",b?"brief":"home");const d=root.querySelector(".bf-more");if(d)d.open=b;navAs.forEach(x=>x.toggleAttribute("aria-current",(x.dataset.nav==="brief")===b));if(scroll)scrollTo({top:0,behavior:"smooth"});}
+host.__setView=setView;
+navAs.forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const b=a.dataset.nav==="brief";setView(b,true);try{history.replaceState(null,"",b?"#brief":location.pathname+location.search)}catch(err){}}));
 function fill(){
   root.querySelectorAll("[data-slot]").forEach(h=>{h.innerHTML="";h.appendChild(mediaEl(h.dataset.slot));});
 }
@@ -1553,7 +1556,7 @@ function swap(m){
   (m==="show"?V1:V2).resume();
   scrollTo(0,0); syncSticky();
   paintSwitch(); peek();
-  try{history.replaceState(null,"",m==="land"?"#customer":location.pathname+location.search)}catch(e){}
+  try{history.replaceState(null,"",m==="land"?"#customer":(hShow.getAttribute("data-view")==="brief"?"#brief":location.pathname+location.search))}catch(e){}
 }
 async function go(m){
   if(m===mode) return;
@@ -1572,7 +1575,14 @@ sw.addEventListener("click",()=>go(mode==="show"?"land":"show"));
 let saved=null; try{saved=localStorage.getItem("tod-lang")}catch(e){}
 window.__applyLang(saved==="en"?"en":"ar");
 V2.pause(); peek();
-if(location.hash==="#customer"){swap("land");}
+function route(){
+  const h=location.hash;
+  if(h==="#customer"){ if(mode!=="land") swap("land"); return; }
+  if(mode!=="show") swap("show");
+  if(hShow.__setView) hShow.__setView(h==="#brief",false);
+}
+if(location.hash==="#customer"||location.hash==="#brief") route();
+addEventListener("hashchange",route);
 })();
 </script>
 </body>
