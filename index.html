@@ -157,16 +157,16 @@ section{padding-top:40px}
 .tile .meta span{color:var(--muted);font-size:13px}
 
 /* Formats grid */
-.dcar{max-width:560px;margin:0 auto}
-.dc-view{position:relative;aspect-ratio:1/1.12;border-radius:16px}
+.dcar{width:100%}
+.dc-view{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:var(--card)}
 .dc-slide{position:absolute;inset:0;margin:0;opacity:0;transform:scale(.97);transition:opacity .6s ease,transform .6s ease;pointer-events:none}
 .dc-slide.on{opacity:1;transform:none;pointer-events:auto}
-.dc-img{position:relative;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:var(--card);cursor:zoom-in;box-shadow:0 26px 50px -26px rgba(0,0,0,.8)}
+.dc-img{position:absolute;inset:0;cursor:zoom-in;background:var(--card)}
 .dc-img img{width:100%;height:100%;object-fit:cover;display:block}
 .dc-slide figcaption{display:flex;justify-content:space-between;gap:12px;margin:12px 4px 0;font-size:14px;color:var(--muted)}
 .dc-slide figcaption b{color:#fff;font-weight:700}
-.dc-ctl{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px}
-.dc-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--yellow);background:rgba(255,188,0,.12);color:var(--yellow);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+.dc-ctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px}
+.dc-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--yellow);background:rgba(255,188,0,.12);color:var(--yellow);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
 .dc-btn:hover,.dc-btn:focus-visible{background:var(--yellow);color:#101010}
 .dc-btn svg{width:20px;height:20px}
 :host([dir="rtl"]) .dc-btn svg{transform:scaleX(-1)}
@@ -174,7 +174,8 @@ section{padding-top:40px}
 .dc-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,width .3s}
 .dc-dots i.on{background:var(--yellow);width:22px;border-radius:8px}
 @media (prefers-reduced-motion:reduce){.dc-slide{transition:none}}
-.formats{display:flex;gap:16px;align-items:flex-start}
+.formats{display:grid;grid-template-columns:1fr .5625fr;gap:18px 16px;align-items:start;max-width:900px;margin:0 auto}
+.fmt.hd{grid-column:1/-1}
 .fmt{min-width:0;flex-basis:0}
 .fmt.sq{flex-grow:1}.fmt.st{flex-grow:.5625}.fmt.hd{flex-grow:1.7778}
 .fmt .th{border-radius:10px;overflow:hidden;background:var(--card);cursor:pointer;position:relative}
@@ -383,17 +384,24 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
 
     <section>
       <div class="rail-h"><span class="ln l" aria-hidden="true"></span><h2 data-t="railStatics"></h2><span class="ln r" aria-hidden="true"></span></div>
-      <div class="dcar" id="dcar">
-        <div class="dc-view">
-          <figure class="dc-slide on"><div class="dc-img" data-slot="d1" data-open="d1"></div><figcaption><b data-t="dcN1"></b><span class="en">1:1 · 1080 × 1080</span></figcaption></figure>
-          <figure class="dc-slide"><div class="dc-img" data-slot="d2" data-open="d2"></div><figcaption><b data-t="dcN2"></b><span class="en">1:1 · 1080 × 1080</span></figcaption></figure>
-          <figure class="dc-slide"><div class="dc-img" data-slot="d3" data-open="d3"></div><figcaption><b data-t="dcN3"></b><span class="en">1:1 · 1080 × 1080</span></figcaption></figure>
+      <div class="formats">
+        <div class="fmt sq">
+          <div class="dcar" id="dcar">
+            <div class="dc-view">
+              <div class="dc-slide on"><div class="dc-img" data-slot="d1" data-open="d1"></div></div>
+              <div class="dc-slide"><div class="dc-img" data-slot="d2" data-open="d2"></div></div>
+              <div class="dc-slide"><div class="dc-img" data-slot="d3" data-open="d3"></div></div>
+            </div>
+          </div>
+          <p><b class="en">1:1</b><span class="en">1080 × 1080</span></p>
+          <div class="dc-ctl">
+            <button type="button" class="dc-btn dc-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+            <span class="dc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
+            <button type="button" class="dc-btn dc-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+          </div>
         </div>
-        <div class="dc-ctl">
-          <button type="button" class="dc-btn dc-prev" data-t-label="prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
-          <span class="dc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
-          <button type="button" class="dc-btn dc-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
-        </div>
+        <div class="fmt st"><div class="th" data-slot="st" data-open="st"></div><p><b class="en">9:16</b><span class="en">1080 × 1920</span></p></div>
+        <div class="fmt hd"><div class="th" data-slot="hd" data-open="hd"></div><p><b class="en">16:9</b><span class="en">1920 × 1080</span></p></div>
       </div>
     </section>
 
@@ -1038,10 +1046,10 @@ function slot(key){
 const navAs=[...root.querySelectorAll("a[data-nav]")];
 function setView(b,scroll){host.setAttribute("data-view",b?"brief":"home");const d=root.querySelector(".bf-more");if(d)d.open=b;navAs.forEach(x=>x.toggleAttribute("aria-current",(x.dataset.nav==="brief")===b));if(scroll)scrollTo({top:0,behavior:"smooth"});}
 host.__setView=setView;
-(function(){const c=root.getElementById("dcar"); if(!c) return;
+(function(){const c0=root.getElementById("dcar"); if(!c0) return; const c=c0.parentNode;
   const sl=[...c.querySelectorAll(".dc-slide")], dots=[...c.querySelectorAll(".dc-dots i")]; let n=0,tm=0,hold=0;
   const show=i=>{n=(i+sl.length)%sl.length; sl.forEach((x,k)=>x.classList.toggle("on",k===n)); dots.forEach((x,k)=>x.classList.toggle("on",k===n));};
-  const tick=()=>{ if(hold||document.hidden||host.hidden||host.getAttribute("data-view")==="brief") return; const r=c.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return; show(n+1); };
+  const tick=()=>{ if(hold||document.hidden||host.hidden||host.getAttribute("data-view")==="brief") return; const r=c0.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) return; show(n+1); };
   const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
   if(!reduce) tm=setInterval(tick,4500);
   const manual=d=>{show(n+d); hold=1; clearTimeout(manual.t); manual.t=setTimeout(()=>hold=0,9000);};
