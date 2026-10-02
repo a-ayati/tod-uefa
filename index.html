@@ -232,6 +232,8 @@ section{padding-top:40px}
 .bf-h4{margin-top:26px;font-size:22px}
 .bf-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
 .bf-card{background:rgba(12,20,35,.55);border:1px solid var(--line);border-radius:14px;padding:22px}
+.bf-shot{position:relative;aspect-ratio:4/5;margin:-4px -4px 16px;border-radius:10px;overflow:hidden;background:var(--card);cursor:zoom-in}
+.bf-shot img{width:100%;height:100%;object-fit:contain;display:block}
 .bf-card h4{margin:0 0 12px;font-size:17px;font-weight:800;line-height:1.6}
 .bf-end{margin-top:30px;max-width:78ch}
 .bf-big{font-size:20px!important;font-weight:800;color:#fff!important;line-height:1.7!important}
@@ -337,9 +339,9 @@ dialog .x{position:absolute;top:-44px;inset-inline-end:0;background:rgba(255,255
         <summary><span data-t="bfBtn"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
         <h3 class="bf-h4" data-t="bf4h"></h3>
         <div class="bf-cards">
-          <article class="bf-card"><h4 data-t="d1h"></h4><p data-t="d1a"></p><p data-t="d1b"></p><p data-t="d1c"></p></article>
-          <article class="bf-card"><h4 data-t="d2h"></h4><p data-t="d2a"></p><p data-t="d2b"></p><p data-t="d2c"></p></article>
-          <article class="bf-card"><h4 data-t="d3h"></h4><p data-t="d3a"></p><p data-t="d3b"></p><p data-t="d3c"></p></article>
+          <article class="bf-card"><div class="bf-shot" data-slot="d1" data-open="d1"></div><h4 data-t="d1h"></h4><p data-t="d1a"></p><p data-t="d1b"></p><p data-t="d1c"></p></article>
+          <article class="bf-card"><div class="bf-shot" data-slot="d2" data-open="d2"></div><h4 data-t="d2h"></h4><p data-t="d2a"></p><p data-t="d2b"></p><p data-t="d2c"></p></article>
+          <article class="bf-card"><div class="bf-shot" data-slot="d3" data-open="d3"></div><h4 data-t="d3h"></h4><p data-t="d3a"></p><p data-t="d3b"></p><p data-t="d3c"></p></article>
         </div>
         <div class="bf-end"><h3 data-t="bf5h"></h3><p class="bf-big" data-t="bf5a"></p><p data-t="bf5b"></p></div>
       </details>
@@ -954,7 +956,10 @@ const ASSETS = {
   sq:          {type:"image", src:"assets/kv-1x1.jpg",    size:"1080 × 1080"},
   st:          {type:"image", src:"assets/kv-9x16.jpg",   size:"1080 × 1920"},
   hd:          {type:"image", src:"assets/kv-16x9.jpg",   size:"1920 × 1080"},
-  story:       {type:"image", src:"assets/kv-9x16.jpg",   size:"1080 × 1920"}
+  story:       {type:"image", src:"assets/kv-9x16.jpg",   size:"1080 × 1920"},
+  d1:          {type:"image", src:"assets/design-1.jpg",  size:"Design 1 · Key Visual"},
+  d2:          {type:"image", src:"assets/design-2.jpg",  size:"Design 2 · Champions League identity"},
+  d3:          {type:"image", src:"assets/design-3.jpg",  size:"Design 3 · TOD identity"}
 };
 /* ===================================================================================== */
 

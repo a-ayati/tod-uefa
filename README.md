@@ -19,6 +19,8 @@ Direct link to the customer view: https://a-ayati.github.io/tod-uefa/#customer
 | `kv-1x1.jpg` | Key visual 1080 × 1080 |
 | `kv-9x16.jpg` | Key visual 1080 × 1920 |
 | `thumb-6s.jpg` | Thumbnail for the 6s promo, 16:9 |
+| `design-1.jpg`, `design-2.jpg`, `design-3.jpg` | The three designs shown in the "Campaign brief" page (any size, shown in a 4:5 frame) |
+| `character-sheet.webp` | Sample character sheet shown in the "Campaign brief" page |
 
 ## Club crests
 
