@@ -213,6 +213,14 @@ section{padding-top:40px}
 .fmt p b{color:#fff;margin-inline-end:6px}
 
 /* In context: phone */
+.context{overflow:hidden}
+.ctxcaps{z-index:0;opacity:1}
+.ctxcaps i{width:420px;height:70px;border-radius:40px;top:auto;inset-inline-start:auto!important;inset-inline-end:auto!important;left:auto!important;transform-origin:center!important;rotate:-45deg!important;opacity:.55}
+.ctxcaps i:nth-child(1){bottom:-60px;right:46%;background:linear-gradient(90deg,rgba(91,48,142,.9),rgba(91,48,142,.15));animation-duration:9s}
+.ctxcaps i:nth-child(2){top:-40px;right:38%;margin-top:0;background:linear-gradient(90deg,rgba(255,188,0,.55),rgba(255,188,0,.05));width:300px;animation-duration:11s;animation-delay:-3s}
+.ctxcaps i:nth-child(3){bottom:20px;left:-90px;margin-top:0;background:linear-gradient(90deg,rgba(38,40,97,.95),rgba(38,40,97,.1));animation-duration:10s;animation-delay:-5s}
+.ctxcaps i:nth-child(4){top:30px;left:30%;margin-top:0;width:220px;height:44px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,0));animation-duration:7s;animation-delay:-2s}
+.context .copy,.context .stack{z-index:2}
 .context{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;background:linear-gradient(135deg,var(--violet) 0%,var(--bg2) 70%);border-radius:18px;padding:40px;margin-top:8px;overflow:hidden}
 .phone{width:260px;border-radius:30px;background:#101010;padding:6px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),inset 0 0 0 1.5px #262861,0 0 0 1px rgba(255,255,255,.16)}
 .phone .scr{position:relative;width:100%;aspect-ratio:9/19.5;border-radius:24px;overflow:hidden;background:#000}
@@ -638,6 +646,7 @@ dialog .box.has-info img{max-height:56dvh}
 
     <section>
       <div class="context">
+        <span class="capbg ctxcaps" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <div class="copy">
           <h2 data-t="ctxTitle"></h2>
           <p data-t="ctxText"></p>
