@@ -51,3 +51,11 @@ Only the TOD colour system (TOD_Colour-Reference.pdf, v3.0) is used on the page:
 TOD Yellow `#FFBC00`, TOD Black `#101010`, Deep Navy `#0C1423`, Royal Indigo `#262861`,
 Royal Purple `#5B308E`, Cloud Grey `#D7D6D6`, Pure White `#FFFFFF`, and the "Happy" gradient accent `#E0298C` / `#FF6B5C`.
 Secondary text, borders and glows are these colours at reduced opacity, never new hues.
+
+## Share links (language-specific cover images)
+
+- Arabic: https://a-ayati.github.io/tod-uefa/ar/  (share image `og-ar.jpg`)
+- English: https://a-ayati.github.io/tod-uefa/en/  (share image `og-en.jpg`)
+
+Social networks read the cover from the link itself, so each language has its own short page that sets the
+language and forwards to the site. The site also accepts `?lang=ar` / `?lang=en`.
