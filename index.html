@@ -439,11 +439,14 @@ dialog .box.has-info img{max-height:56dvh}
 .fl-n.y{background:var(--yellow);color:#101010;border-color:var(--yellow)}.fl-n.y .ic{color:#101010}.fl-n .ic{color:var(--yellow)}
 .fl-a{width:22px;height:22px;color:var(--yellow);flex:none}
 :host([dir="rtl"]) .fl-a{transform:scaleX(-1)}
-.caps{position:relative;height:70px;margin-bottom:10px;overflow:hidden;border-radius:12px}
-.caps i{position:absolute;width:180px;height:34px;border-radius:20px;background:linear-gradient(90deg,#5B308E,#7a4fb0);top:18px;inset-inline-start:0;transform:rotate(-45deg) translateX(0);transform-origin:left center;animation:capm 5s ease-in-out infinite}
-.caps i:nth-child(2){inset-inline-start:70px;background:linear-gradient(90deg,#262861,#5B308E);animation-delay:-1.6s}
-.caps i:nth-child(3){inset-inline-start:140px;background:rgba(255,188,0,.85);width:90px;animation-delay:-3.2s}
-@keyframes capm{0%,100%{translate:0 0}50%{translate:14px -10px}}
+.caps{position:relative;height:104px;margin-bottom:12px;overflow:hidden;border-radius:14px;background:rgba(12,20,35,.45);border:1px solid var(--line)}
+.caps i{position:absolute;bottom:14px;inset-inline-start:16px;width:92px;height:26px;border-radius:30px;transform-origin:left center;rotate:-45deg;background:linear-gradient(90deg,#5B308E,#7B4FB5);animation:capm 4.5s ease-in-out infinite}
+.caps i:nth-child(2){inset-inline-start:52px;background:linear-gradient(90deg,#262861,#5B308E);animation-delay:-1.5s}
+.caps i:nth-child(3){inset-inline-start:88px;width:62px;background:linear-gradient(90deg,#FFBC00,#ffd25c);animation-delay:-3s}
+:host([dir="rtl"]) .caps i{transform-origin:right center;rotate:45deg}
+@keyframes capm{0%,100%{translate:0 0}50%{translate:10px -8px}}
+:host([dir="rtl"]) .caps i{animation-name:capmr}
+@keyframes capmr{0%,100%{translate:0 0}50%{translate:-10px -8px}}
 .prodgrid{align-items:start}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
 .stp{position:relative;padding:18px 14px 14px;border-radius:16px;background:rgba(38,40,97,.7);border:1px solid var(--line)}
