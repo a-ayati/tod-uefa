@@ -15,7 +15,8 @@ Direct link to the campaign brief page: https://a-ayati.github.io/tod-uefa/#brie
 
 | File | Content |
 |---|---|
-| `hero-textless.mp4` | 15-second textless film used as the cover (both views) |
+| `hero-textless.mp4` | 15-second film without text, used as the cover on the English site |
+| `hero-ar.mp4` | 15-second film with a single Arabic line, used as the cover on the Arabic site |
 | `promo-15s-ar.mp4`, `promo-15s-en.mp4` | 15-second promo, Arabic / English (shown by page language) |
 | `promo-6s-ar.mp4`, `promo-6s-en.mp4` | 6-second promo, Arabic / English (shown by page language) |
 | `kv-16x9.jpg` | Key visual 1920 × 1080 |
