@@ -373,6 +373,8 @@ dialog .box.has-info img{max-height:56dvh}
   .wrap{padding:0 16px}
   .topbar .btn.g{display:none}
   .hero .media{aspect-ratio:4/5;max-height:none}
+  .hero::before{content:"";position:absolute;inset:0;background:url(assets/kv-16x9.jpg) center/cover;filter:blur(26px) brightness(.75);transform:scale(1.3)}
+  .hero .media video,.hero .media img,.hero .media2 img{object-fit:contain}
   .hero .info{padding-bottom:24px}
   .dots{inset-inline-end:16px}
 }
@@ -1155,6 +1157,7 @@ dialog .box.has-info img{max-height:56dvh}
 }
 @media (max-width:600px){.wrap{padding:0 18px}.hero .copy{padding-bottom:40px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (max-width:760px){.hero::before{content:"";position:absolute;inset:0;background:url(assets/kv-16x9.jpg) center/cover;filter:blur(26px) brightness(.75);transform:scale(1.3)}.hero .media video,.hero .media img,.hero .media2 img{object-fit:contain}.hero .media,.hero .media2{background:transparent}}
 </style><div class="page">
 
 <header id="hdr">
