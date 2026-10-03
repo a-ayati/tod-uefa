@@ -113,6 +113,12 @@ nav a[aria-current]{color:#fff;border-color:var(--yellow)}
 .lang{font-weight:700;font-size:14px;background:none;border:0;cursor:pointer;color:#fff;padding:6px}
 
 /* Hero */
+.hsound{position:absolute;z-index:4;top:16px;inset-inline-end:20px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(12,20,35,.55);color:#fff;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.hsound[hidden]{display:none}
+.hsound:hover,.hsound:focus-visible{background:var(--yellow);color:#101010;transform:scale(1.06)}
+.hsound svg{width:19px;height:19px}.hsound svg[hidden]{display:none}
+.hsound.hint::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--yellow);animation:hpulse 2s ease-out 1s 4;opacity:0}
+@keyframes hpulse{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.5);opacity:0}}
 .hero{position:relative;background:#000}
 .hero .media{position:relative;aspect-ratio:16/9;max-height:78vh;width:100%;overflow:hidden}
 .hero .media>img,.hero .media>video{width:100%;height:100%;object-fit:cover;display:block}
@@ -383,6 +389,10 @@ dialog .box.has-info img{max-height:56dvh}
   <div class="hero">
     <div class="media" data-slot="hero"></div>
     <div class="shade"></div>
+    <button class="hsound" id="hsound" type="button" aria-label="Sound" hidden>
+      <svg class="s-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="m22 9-6 6m0-6 6 6"/></svg>
+      <svg class="s-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+    </button>
     <div class="info"><div class="wrap">
       <span class="tag"><i></i><span class="en">UEFA Champions League</span></span>
       <h1 data-t="heroTitle"></h1>
@@ -1145,6 +1155,16 @@ function slot(key){
 const navAs=[...root.querySelectorAll("a[data-nav]")];
 function setView(b,scroll){host.setAttribute("data-view",b?"brief":"home");const d=root.querySelector(".bf-more");if(d)d.open=b;navAs.forEach(x=>x.toggleAttribute("aria-current",(x.dataset.nav==="brief")===b));if(scroll)scrollTo({top:0,behavior:"smooth"});}
 host.__setView=setView;
+(function(){const b=root.getElementById("hsound"), hero=root.querySelector(".hero"); if(!b||!hero) return;
+  const vid=()=>root.querySelector('.hero [data-slot="hero"] video');
+  b.classList.add("hint");
+  b.addEventListener("click",()=>{const v=vid(); if(!v) return; b.classList.remove("hint"); v.muted=!v.muted; if(!v.muted){v.volume=.8; v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});} root.querySelector(".s-off").hidden=!v.muted; root.querySelector(".s-on").hidden=v.muted;});
+  const mute=()=>{const v=vid(); if(v&&!v.muted){v.muted=true; root.querySelector(".s-off").hidden=false; root.querySelector(".s-on").hidden=true;}};
+  new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting) mute();}),{threshold:.15}).observe(hero);
+  document.addEventListener("visibilitychange",()=>{if(document.hidden) mute();});
+  root.addEventListener("click",e=>{if(e.target.closest("[data-open]")) mute();},true);
+  setInterval(()=>{const v=vid(); b.hidden=!v; if(v){root.querySelector(".s-off").hidden=!v.muted; root.querySelector(".s-on").hidden=v.muted;}},1000);
+})();
 (function(){const c0=root.getElementById("dcar"); if(!c0) return; const grp=c0.closest(".formats"), c=grp;
   const sets=[...root.querySelectorAll(".dc-view")].map(v=>[...v.querySelectorAll(".dc-slide")]), dots=[...c.querySelectorAll(".dc-dots i")], N=3; let n=0,hold=0;
   const bars=[...root.querySelectorAll(".phone .bar i")];
@@ -1158,8 +1178,11 @@ host.__setView=setView;
   grp.addEventListener("pointerenter",()=>hold=1); grp.addEventListener("pointerleave",()=>{clearTimeout(manual.t); hold=0;});
 })();
 navAs.forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const b=a.dataset.nav==="brief";setView(b,true);try{history.replaceState(null,"",b?"#brief":location.pathname+location.search)}catch(err){}}));
+const hsnd=root.getElementById("hsound");
+function syncSound(){const v=root.querySelector('.hero [data-slot="hero"] video'); if(!hsnd) return; hsnd.hidden=!v; if(v){root.querySelector(".s-off").hidden=!v.muted; root.querySelector(".s-on").hidden=v.muted;}}
 function fill(){
   root.querySelectorAll("[data-slot]").forEach(h=>{h.innerHTML="";h.appendChild(mediaEl(h.dataset.slot));});
+  syncSound(); setTimeout(syncSound,300);
 }
 function setLang(l){
   lang=l; const h=document.documentElement; h.lang=l; h.dir=l==="ar"?"rtl":"ltr"; host.setAttribute("lang",l); host.setAttribute("dir",h.dir);
