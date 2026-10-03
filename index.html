@@ -1600,11 +1600,13 @@ var setLang=function(l){
 };
 root.getElementById("lang").onclick=()=>window.__applyLang(lang==="ar"?"en":"ar");
 
+const sndSync=()=>{const v=root.querySelector('[data-slot="hero"] video'); const b=root.getElementById("sound"); if(!v){return;} b.hidden=false; root.getElementById("snd-off").hidden=!v.muted; root.getElementById("snd-on").hidden=v.muted;};
 root.getElementById("sound").onclick=()=>{
   const v=root.querySelector('[data-slot="hero"] video'); if(!v) return;
-  v.muted=!v.muted; if(!v.muted){v.currentTime=0;v.play();}
-  root.getElementById("snd-off").hidden=!v.muted; root.getElementById("snd-on").hidden=v.muted;
+  v.muted=!v.muted; if(!v.muted){v.volume=.8; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}
+  sndSync();
 };
+setInterval(sndSync,500);
 const hdr=root.getElementById("hdr"), sticky=root.getElementById("sticky");
 addEventListener("scroll",()=>{
   hdr.classList.toggle("solid",scrollY>40);
