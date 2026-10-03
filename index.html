@@ -1366,7 +1366,7 @@ host.__setView=setView;
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
     st=to; mark(to);
   }
-  function playFilm(){const v=vid(); go(1); if(v){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
+  function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
   setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.pause(); v.addEventListener("ended",toImage);
       const wait=()=>{const el=Date.now()-t0; if(el>=4000&&(v.readyState>=3||el>9000)) playFilm(); else setTimeout(wait,200);}; wait();}},300);
@@ -1464,7 +1464,7 @@ fill();
 
 return {
   setLang:l=>setLang(l),
-  pause(){root.querySelectorAll("video").forEach(v=>{v.pause()}); root.querySelectorAll("dialog[open]").forEach(d=>d.close());},
+  pause(){root.querySelectorAll("video").forEach(v=>{v.pause(); v.muted=true}); root.querySelectorAll("dialog[open]").forEach(d=>d.close());},
   resume(){root.querySelectorAll("video").forEach(v=>{if(v.autoplay){const p=v.play(); if(p&&p.catch)p.catch(()=>{})}}); }
 };
 })(srS,hShow);
@@ -1574,7 +1574,7 @@ mq.addEventListener("change",()=>build(root.querySelector('[data-slot="hero"]'),
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
     st=to; mark(to);
   }
-  function playFilm(){const v=vid(); go(1); if(v){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
+  function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
   setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.pause(); v.addEventListener("ended",toImage);
       const wait=()=>{const el=Date.now()-t0; if(el>=4000&&(v.readyState>=3||el>9000)) playFilm(); else setTimeout(wait,200);}; wait();}},300);
@@ -2005,7 +2005,7 @@ renderStats();
 
 return {
   setLang:l=>setLang(l),
-  pause(){root.querySelectorAll("video").forEach(v=>{v.pause()}); root.querySelectorAll("dialog[open]").forEach(d=>d.close());},
+  pause(){root.querySelectorAll("video").forEach(v=>{v.pause(); v.muted=true}); root.querySelectorAll("dialog[open]").forEach(d=>d.close());},
   resume(){root.querySelectorAll("video").forEach(v=>{if(v.autoplay){const p=v.play(); if(p&&p.catch)p.catch(()=>{})}}); onScroll(); tickClock(); tick(); wireCarousel();}
 };
 })(srL,hLand);
