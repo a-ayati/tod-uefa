@@ -254,6 +254,14 @@ section{padding-top:40px}
 /* About */
 
 :host([data-view="brief"]) main>.hero,:host([data-view="brief"]) main .wrap>section:not(.brief){display:none}
+.capbg{position:absolute;inset:0;opacity:.8;pointer-events:none;overflow:hidden;z-index:0}
+.capbg i{position:absolute;width:300px;height:56px;border-radius:30px;top:50%;inset-inline-start:-80px;transform-origin:left center;rotate:-45deg;animation:capf 8s ease-in-out infinite;opacity:.55}
+.capbg i:nth-child(1){background:linear-gradient(90deg,rgba(91,48,142,.9),rgba(91,48,142,.2))}
+.capbg i:nth-child(2){background:linear-gradient(90deg,rgba(38,40,97,.95),rgba(38,40,97,.2));margin-top:40px;animation-delay:-2.7s}
+.capbg i:nth-child(3){background:linear-gradient(90deg,rgba(255,188,0,.7),rgba(255,188,0,.1));width:170px;margin-top:84px;animation-delay:-5.3s}
+@keyframes capf{0%,100%{translate:0 0}50%{translate:26px -18px}}
+:host([dir="rtl"]) .capbg i{inset-inline-start:auto;inset-inline-end:-80px;transform-origin:right center;rotate:45deg}
+@media (prefers-reduced-motion:reduce){.capbg i{animation:none}}
 .about{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;border-top:1px solid var(--line);margin-top:48px;padding-top:36px}
 .about h2{margin:0 0 10px;font-size:22px}
 .about p{margin:0 0 10px;color:var(--muted)}
@@ -634,7 +642,8 @@ dialog .box.has-info img{max-height:56dvh}
       </div>
     </section>
 
-    <section class="about">
+    <section class="about" style="position:relative">
+      <span class="capbg" aria-hidden="true"><i></i><i></i><i></i></span>
       <div>
         <h2 data-t="aboutTitle"></h2>
         <p data-t="aboutText1"></p>
@@ -806,8 +815,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .benefit:hover svg{transform:scale(1.18) rotate(-6deg)}
 
 /* Countdown */
+.capbg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.capbg i{position:absolute;width:300px;height:56px;border-radius:30px;top:50%;inset-inline-start:-80px;transform-origin:left center;rotate:-45deg;animation:capf 8s ease-in-out infinite;opacity:.55}
+.capbg i:nth-child(1){background:linear-gradient(90deg,rgba(91,48,142,.9),rgba(91,48,142,.2))}
+.capbg i:nth-child(2){background:linear-gradient(90deg,rgba(38,40,97,.95),rgba(38,40,97,.2));margin-top:40px;animation-delay:-2.7s}
+.capbg i:nth-child(3){background:linear-gradient(90deg,rgba(255,188,0,.7),rgba(255,188,0,.1));width:170px;margin-top:84px;animation-delay:-5.3s}
+@keyframes capf{0%,100%{translate:0 0}50%{translate:26px -18px}}
+:host([dir="rtl"]) .capbg i{inset-inline-start:auto;inset-inline-end:-80px;transform-origin:right center;rotate:45deg}
+@media (prefers-reduced-motion:reduce){.capbg i{animation:none}}
 .next{padding-top:72px}
 .next .card>*{position:relative;z-index:1}
+.next .card>.capbg{position:absolute;z-index:0}
+.next .capbg i{inset-inline-start:auto!important;inset-inline-end:auto!important;left:36%;rotate:-45deg!important;transform-origin:left center!important;top:62%}
 .next .card{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;background:linear-gradient(135deg,var(--violet),var(--bg2) 75%);border-radius:20px;padding:32px 36px;position:relative;overflow:hidden}
 .next .card::before{content:"";position:absolute;z-index:0;inset-inline-end:-170px;top:-190px;width:280px;height:280px;pointer-events:none;border-radius:50%;border:12px solid rgba(255,188,0,.9);border-left-color:transparent;border-bottom-color:transparent;transform:rotate(-20deg);opacity:.9}
 .next h2{font-size:clamp(24px,2.6vw,32px);margin:0 0 6px}
@@ -1126,6 +1145,7 @@ dialog .box.has-info img{max-height:56dvh}
 
     <section class="next rv">
       <div class="card">
+        <span class="capbg" aria-hidden="true"><i></i><i></i><i></i></span>
         <div>
           <h2 data-t="nextH"></h2>
           <p data-t="nextP"></p>
