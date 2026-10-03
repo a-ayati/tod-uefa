@@ -1534,7 +1534,7 @@ root.addEventListener("click",e=>{
   openKey(t.dataset.open);
 });
 dlg.querySelector(".x").onclick=()=>dlg.close();
-dlg.addEventListener("click",e=>{if(!e.target.closest("img,video,.x,input,label,.vinfo"))dlg.close()});
+dlg.addEventListener("click",e=>{if(matchMedia("(pointer:coarse)").matches&&dlg.querySelector("video"))return; if(!e.target.closest("img,video,.x,input,label,.vinfo"))dlg.close()});
 dlg.addEventListener("close",()=>{vb.innerHTML="";curKey=null;navUpd();lockScroll(false);});
 
 let saved=null; try{saved=localStorage.getItem("todshow-lang")}catch(e){}
@@ -1817,7 +1817,7 @@ root.addEventListener("click",e=>{
   openKey(t.hasAttribute("data-open-dev")?DEV[curDev]:t.dataset.open);
 });
 dlg.querySelector(".x").onclick=()=>dlg.close();
-dlg.addEventListener("click",e=>{if(!e.target.closest("img,video,.x,input,label"))dlg.close()});
+dlg.addEventListener("click",e=>{if(matchMedia("(pointer:coarse)").matches&&dlg.querySelector("video"))return; if(!e.target.closest("img,video,.x,input,label"))dlg.close()});
 dlg.addEventListener("close",()=>{vb.innerHTML="";curKey=null;navUpd();lockScroll(false);});
 
 
