@@ -25,6 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/kv-mobile.jpg" media="(max-width:760px)" fetchpriority="high">
 <style>
 :root{--bg:#0C1423;--yellow:#FFBC00;--ar:"Alexandria","Geeza Pro",Tahoma,sans-serif;--en:"Alexandria","Helvetica Neue",Arial,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1423}}
@@ -382,7 +383,7 @@ dialog .box.has-info img{max-height:56dvh}
   .hero .media{aspect-ratio:4/5;max-height:none}
   .hero .media2{inset:0 0 auto 0;aspect-ratio:4/5;height:auto}
   .hero .media2 picture{display:block;width:100%;height:100%}
-  .hero::before{content:"";position:absolute;inset:0 0 auto 0;aspect-ratio:4/5;background:linear-gradient(180deg,rgba(12,20,35,.6),rgba(38,40,97,.3) 45%,rgba(91,48,142,.4) 80%,rgba(12,20,35,.9)),url(assets/kv-16x9.jpg) center/cover;filter:blur(24px) brightness(.8);transform:scale(1.25);-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
+  .hero::before{content:"";position:absolute;inset:0 0 auto 0;aspect-ratio:4/5;background:linear-gradient(180deg,rgba(12,20,35,.6),rgba(38,40,97,.3) 45%,rgba(91,48,142,.4) 80%,rgba(12,20,35,.9)),url(assets/kv-mobile.jpg) center/cover;filter:blur(24px) brightness(.8);transform:scale(1.25);-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
   .hero .media video,.hero .media img{object-fit:contain;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));mask-composite:intersect}
   .hero .media2 img{object-fit:cover;object-position:50% 40%;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
   .hero .shade{display:none}
@@ -569,7 +570,7 @@ dialog .box.has-info img{max-height:56dvh}
 <main>
   <div class="hero">
     <div class="media" data-slot="hero"></div>
-    <div class="media2" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="assets/kv-mobile.jpg"><img src="assets/kv-16x9.jpg" alt=""></picture></div>
+    <div class="media2" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="assets/kv-mobile.jpg"><img src="assets/kv-16x9.jpg" alt="" fetchpriority="high" decoding="async"></picture></div>
     <div class="shade"></div>
     <span class="wfv" id="wfv" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span data-t="wfv"></span></span>
     <button class="hsound" id="hsound" type="button" aria-label="Sound" hidden>
@@ -1188,7 +1189,7 @@ dialog .box.has-info img{max-height:56dvh}
 <main>
   <div class="hero">
     <div class="media" data-slot="hero"></div>
-    <div class="media2" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="assets/kv-mobile.jpg"><img src="assets/kv-16x9.jpg" alt=""></picture></div>
+    <div class="media2" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="assets/kv-mobile.jpg"><img src="assets/kv-16x9.jpg" alt="" fetchpriority="high" decoding="async"></picture></div>
     <div class="spot" aria-hidden="true"></div>
     <div class="hint" aria-hidden="true"><i></i><span data-t="scroll"></span></div>
     <div class="copy"><div class="wrap">
@@ -1465,7 +1466,7 @@ host.__setView=setView;
       /* decode the first frame while off-screen (muted autoplay is allowed) so the slide never shows black */
       let primed=0; v.muted=true; const pp=v.play(); const fin=()=>{if(primed)return; primed=1; v.pause(); try{v.currentTime=0}catch(e){}};
       if(pp&&pp.then) pp.then(()=>{v.addEventListener("timeupdate",fin,{once:true}); setTimeout(fin,600);},()=>{primed=1;}); else primed=1;
-      const wait=()=>{const el=Date.now()-t0; if(el>=4000&&primed&&(v.readyState>=2||el>12000)) playFilm(); else setTimeout(wait,200);}; wait();}},300);
+      const wait=()=>{const el=Date.now()-t0; if(el>=4000&&primed&&v.readyState>=2) playFilm(); else setTimeout(wait,200);}; wait();}},300);
 })();
 (function(){const b=root.getElementById("hsound"), hero=root.querySelector(".hero"); if(!b||!hero) return;
   const vid=()=>root.querySelector('.hero [data-slot="hero"] video');
@@ -1676,7 +1677,7 @@ mq.addEventListener("change",()=>build(root.querySelector('[data-slot="hero"]'),
       /* decode the first frame while off-screen (muted autoplay is allowed) so the slide never shows black */
       let primed=0; v.muted=true; const pp=v.play(); const fin=()=>{if(primed)return; primed=1; v.pause(); try{v.currentTime=0}catch(e){}};
       if(pp&&pp.then) pp.then(()=>{v.addEventListener("timeupdate",fin,{once:true}); setTimeout(fin,600);},()=>{primed=1;}); else primed=1;
-      const wait=()=>{const el=Date.now()-t0; if(el>=4000&&primed&&(v.readyState>=2||el>12000)) playFilm(); else setTimeout(wait,200);}; wait();}},300);
+      const wait=()=>{const el=Date.now()-t0; if(el>=4000&&primed&&v.readyState>=2) playFilm(); else setTimeout(wait,200);}; wait();}},300);
 })();
 (function(){const sl=[...root.querySelectorAll(".ks")], dots=[...root.querySelectorAll(".kdots i")], box=root.querySelector(".kv"); if(!sl.length) return; let n=0,hold=0;
   const show=i=>{n=(i+sl.length)%sl.length; sl.forEach((x,k)=>x.classList.toggle("on",k===n)); dots.forEach((x,k)=>x.classList.toggle("on",k===n));};
