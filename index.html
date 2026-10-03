@@ -1495,7 +1495,7 @@ host.__setView=setView;
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
     st=to; mark(to); hero.classList.toggle("is-img",to===0); hero.classList.toggle("is-vid",to===1);
   }
-  function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
+  function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){if(v.currentTime>.2) v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
   setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.preload="auto"; v.setAttribute("playsinline",""); if(!v.poster) v.poster="assets/kv-16x9.jpg"; v.addEventListener("ended",toImage);
       /* decode the first frame while off-screen (muted autoplay is allowed) so the slide never shows black */
@@ -1706,7 +1706,7 @@ mq.addEventListener("change",()=>build(root.querySelector('[data-slot="hero"]'),
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
     st=to; mark(to); hero.classList.toggle("is-img",to===0);
   }
-  function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
+  function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){if(v.currentTime>.2) v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
   setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.preload="auto"; v.setAttribute("playsinline",""); if(!v.poster) v.poster="assets/kv-16x9.jpg"; v.addEventListener("ended",toImage);
       /* decode the first frame while off-screen (muted autoplay is allowed) so the slide never shows black */
