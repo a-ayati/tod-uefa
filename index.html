@@ -721,6 +721,8 @@ header.solid{background:rgba(12,20,35,.9);backdrop-filter:blur(14px);-webkit-bac
 :host([lang="en"]) .hero h1{letter-spacing:-.03em}
 .hero p{margin:0 0 26px;font-size:clamp(17px,1.6vw,20px);color:#D7D6D6;max-width:44ch}
 .hero .ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+svg[hidden]{display:none!important}
+.sound svg{display:block}
 .sound{position:absolute;z-index:3;bottom:64px;inset-inline-end:28px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.35);backdrop-filter:blur(8px);display:grid;place-items:center;cursor:pointer}
 
 /* Benefits */
@@ -1376,12 +1378,12 @@ host.__setView=setView;
 (function(){const b=root.getElementById("hsound"), hero=root.querySelector(".hero"); if(!b||!hero) return;
   const vid=()=>root.querySelector('.hero [data-slot="hero"] video');
   b.classList.add("hint");
-  b.addEventListener("click",()=>{const v=vid(); if(!v) return; b.classList.remove("hint"); v.muted=!v.muted; if(!v.muted){v.volume=.8; v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});} root.querySelector(".s-off").hidden=!v.muted; root.querySelector(".s-on").hidden=v.muted;});
-  const mute=()=>{const v=vid(); if(v&&!v.muted){v.muted=true; root.querySelector(".s-off").hidden=false; root.querySelector(".s-on").hidden=true;}};
+  b.addEventListener("click",()=>{const v=vid(); if(!v) return; b.classList.remove("hint"); v.muted=!v.muted; if(!v.muted){v.volume=.8; v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});} root.querySelector(".s-off").toggleAttribute("hidden",!!(!v.muted)); root.querySelector(".s-on").toggleAttribute("hidden",!!(v.muted));});
+  const mute=()=>{const v=vid(); if(v&&!v.muted){v.muted=true; root.querySelector(".s-off").toggleAttribute("hidden",!!(false)); root.querySelector(".s-on").toggleAttribute("hidden",!!(true));}};
   new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting) mute();}),{threshold:.15}).observe(hero);
   document.addEventListener("visibilitychange",()=>{if(document.hidden) mute();});
   root.addEventListener("click",e=>{if(e.target.closest("[data-open]")) mute();},true);
-  setInterval(()=>{const v=vid(); b.hidden=!v; if(v){root.querySelector(".s-off").hidden=!v.muted; root.querySelector(".s-on").hidden=v.muted;}},1000);
+  setInterval(()=>{const v=vid(); b.hidden=!v; if(v){root.querySelector(".s-off").toggleAttribute("hidden",!!(!v.muted)); root.querySelector(".s-on").toggleAttribute("hidden",!!(v.muted));}},1000);
 })();
 (function(){const c0=root.getElementById("dcar"); if(!c0) return; const grp=c0.closest(".formats"), c=grp;
   const sets=[...root.querySelectorAll(".dc-view")].map(v=>[...v.querySelectorAll(".dc-slide")]), dots=[...c.querySelectorAll(".dc-dots i")], N=3; let n=0,hold=0;
@@ -1397,7 +1399,7 @@ host.__setView=setView;
 })();
 navAs.forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const b=a.dataset.nav==="brief";setView(b,true);try{history.replaceState(null,"",b?"#brief":location.pathname+location.search)}catch(err){}}));
 const hsnd=root.getElementById("hsound");
-function syncSound(){const v=root.querySelector('.hero [data-slot="hero"] video'); if(!hsnd) return; hsnd.hidden=!v; if(v){root.querySelector(".s-off").hidden=!v.muted; root.querySelector(".s-on").hidden=v.muted;}}
+function syncSound(){const v=root.querySelector('.hero [data-slot="hero"] video'); if(!hsnd) return; hsnd.hidden=!v; if(v){root.querySelector(".s-off").toggleAttribute("hidden",!!(!v.muted)); root.querySelector(".s-on").toggleAttribute("hidden",!!(v.muted));}}
 function fill(){
   root.querySelectorAll("[data-slot]").forEach(h=>{h.innerHTML="";h.appendChild(mediaEl(h.dataset.slot));});
   syncSound(); setTimeout(syncSound,300);
@@ -1602,7 +1604,7 @@ var setLang=function(l){
 };
 root.getElementById("lang").onclick=()=>window.__applyLang(lang==="ar"?"en":"ar");
 
-const sndSync=()=>{const v=root.querySelector('[data-slot="hero"] video'); const b=root.getElementById("sound"); if(!v){return;} b.hidden=false; root.getElementById("snd-off").hidden=!v.muted; root.getElementById("snd-on").hidden=v.muted;};
+const sndSync=()=>{const v=root.querySelector('[data-slot="hero"] video'); const b=root.getElementById("sound"); if(!v){return;} b.hidden=false; root.getElementById("snd-off").toggleAttribute("hidden",!!(!v.muted)); root.getElementById("snd-on").toggleAttribute("hidden",!!(v.muted));};
 root.getElementById("sound").onclick=()=>{
   const v=root.querySelector('[data-slot="hero"] video'); if(!v) return;
   v.muted=!v.muted; if(!v.muted){v.volume=.8; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}
