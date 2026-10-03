@@ -14,36 +14,35 @@ def get(url):
                 return json.load(r)
         except urllib.error.HTTPError as e:
             last = f"HTTP {e.code} {e.reason}"
-            if e.code in (403, 404): break
+            if e.code in (400, 403, 404): break
         except Exception as e:
             last = repr(e)
         time.sleep(3 * (attempt + 1))
     raise RuntimeError(f"{last} <- {url}")
 def board():
-    """Scoreboard in 30-day chunks (one big range can time out), merged into a single file."""
+    """Scoreboard one day at a time (ESPN answers 400 to multi-day ranges for this league), merged into a single file."""
     start = dt.datetime.strptime(SEASON_START, "%Y%m%d")
     stop = dt.datetime.utcnow() + dt.timedelta(days=120)
-    events, seen, d = [], set(), start
+    events, seen, ok, bad, d = [], set(), 0, 0, start
     while d <= stop:
-        e = min(d + dt.timedelta(days=29), stop)
-        rng = f"{d:%Y%m%d}-{e:%Y%m%d}"
         part = None
         for host in HOSTS:
-            for q in (f"dates={rng}&limit=500", f"dates={rng}", f"limit=500&dates={rng.replace('-', '-')}"):
-                try:
-                    part = get(f"{host}/site/v2/sports/{LEAGUE}/scoreboard?{q}")
-                    break
-                except Exception as ex:
-                    print("::warning title=scoreboard failed::", str(ex)[:300])
-            if part is not None:
+            try:
+                part = get(f"{host}/site/v2/sports/{LEAGUE}/scoreboard?dates={d:%Y%m%d}")
                 break
+            except Exception as ex:
+                err = str(ex)[:200]
         if part is None:
-            return None
-        for ev in part.get("events", []):
-            if ev.get("id") not in seen:
-                seen.add(ev.get("id")); events.append(ev)
-        d = e + dt.timedelta(days=1)
-    return {"events": events}
+            bad += 1
+            if bad <= 3: print("::warning title=scoreboard day failed::", d.strftime("%Y%m%d"), err)
+        else:
+            ok += 1
+            for ev in part.get("events", []):
+                if ev.get("id") not in seen:
+                    seen.add(ev.get("id")); events.append(ev)
+        d += dt.timedelta(days=1)
+    print(f"scoreboard days ok={ok} failed={bad}")
+    return {"events": events} if ok else None
 saved = 0
 b = board()
 if b and b["events"]:
