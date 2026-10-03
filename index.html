@@ -1497,7 +1497,7 @@ function showDev(name){
   curDev=name; devEl.dataset.d=name;
   root.querySelectorAll("[data-dev]").forEach(b=>b.setAttribute("aria-selected",b.dataset.dev===name));
   clearInterval(phoneTimer);
-  if(name==="phone"){let i=0; DEV.phone=PHONE[0]; build(devScreen,DEV.phone); phoneTimer=setInterval(()=>{ if(document.hidden||host.hidden||curDev!=="phone") return; i=(i+1)%PHONE.length; DEV.phone=PHONE[i]; build(devScreen,DEV.phone); },3500);}
+  if(name==="phone"){let i=0; DEV.phone=PHONE[0]; build(devScreen,DEV.phone); phoneTimer=setInterval(()=>{ if(document.hidden||host.hidden||curDev!=="phone") return; i=(i+1)%PHONE.length; DEV.phone=PHONE[i]; build(devScreen,DEV.phone); },4000);}
   else build(devScreen,DEV[name]);
   $("#dcap").textContent=T[lang]["dc"+({tv:1,phone:2,tablet:3,computer:4}[name])];
 }
