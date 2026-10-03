@@ -455,6 +455,13 @@ dialog .box.has-info img{max-height:56dvh}
 .fl-n.y{background:var(--yellow);color:#101010;border-color:var(--yellow)}.fl-n.y .ic{color:#101010}.fl-n .ic{color:var(--yellow)}
 .fl-a{width:22px;height:22px;color:var(--yellow);flex:none}
 :host([dir="rtl"]) .fl-a{transform:scaleX(-1)}
+@media (max-width:700px){
+.flow{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;gap:8px;padding:2px 2px 6px;-webkit-overflow-scrolling:touch}
+.flow::-webkit-scrollbar{display:none}
+.flow .fl-n{flex:none;white-space:nowrap;padding:10px 14px;font-size:13.5px;gap:6px}
+.flow .fl-n .ic{width:16px;height:16px}
+.flow .fl-a{width:16px;height:16px}
+}
 .caps{position:relative;height:104px;margin:-24px -24px 12px;overflow:hidden;border-radius:18px 18px 0 0}
 .caps i{position:absolute;width:180px;height:34px;border-radius:20px;background:linear-gradient(90deg,#5B308E,#7B4FB5);top:66px;left:30px;transform-origin:left center;rotate:-45deg;animation:capm 5s ease-in-out infinite}
 .caps i:nth-child(2){left:100px;background:linear-gradient(90deg,#262861,#5B308E);animation-delay:-1.6s}
@@ -1464,6 +1471,14 @@ host.__setView=setView;
     w.addEventListener("pointerenter",()=>{clearTimeout(tm); bar.classList.remove("run");}); w.addEventListener("pointerleave",sched);
     new IntersectionObserver(es=>{seen=es[0].isIntersecting; sched();},{threshold:.4}).observe(w);
     go(0);})();
+  /* flow chips: one line; gentle nudge so every step shows on narrow screens */
+  (function(){const fl=br.querySelector(".flow"); if(!fl) return; let done=0;
+    const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    function nudge(){const max=fl.scrollWidth-fl.clientWidth; if(done||max<6) return; done=1;
+      const rtl=getComputedStyle(fl).direction==="rtl", sg=rtl?-1:1;
+      const run=(from,to,ms,cb)=>{const t0=performance.now(); const f=t=>{const p=Math.min(1,(t-t0)/ms); fl.scrollLeft=sg*(from+(to-from)*ease(p)); if(p<1) requestAnimationFrame(f); else if(cb) cb();}; requestAnimationFrame(f);};
+      setTimeout(()=>run(0,max,1300,()=>setTimeout(()=>run(max,0,1100),500)),500);}
+    new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){nudge(); o.disconnect();}},{threshold:.6}).observe(fl);})();
   host.__refreshBrief=br._refresh;
 })();
 (function(){const hero=root.querySelector(".hero"); if(!hero) return; const m1=hero.querySelector(".media"), dots=[...hero.querySelectorAll(".dots b")];
