@@ -1497,7 +1497,7 @@ host.__setView=setView;
   }
   function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){if(v.currentTime>.2) v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
-  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.preload="auto"; v.setAttribute("playsinline",""); if(!v.poster) v.poster="assets/kv-16x9.jpg"; v.addEventListener("ended",toImage);
+  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.preload="auto"; v.setAttribute("playsinline",""); if(!v.poster) v.poster="assets/kv-16x9.jpg"; v.addEventListener("ended",()=>{if(st===1) toImage();}); v.addEventListener("timeupdate",()=>{if(st===1&&v.duration&&v.duration-v.currentTime<1.6) toImage();});
       /* decode the first frame while off-screen (muted autoplay is allowed) so the slide never shows black */
       let primed=0; v.muted=true; const pp=v.play(); const fin=()=>{if(primed)return; primed=1; v.pause(); try{v.currentTime=0}catch(e){}};
       if(pp&&pp.then) pp.then(()=>{v.addEventListener("timeupdate",fin,{once:true}); setTimeout(fin,600);},()=>{primed=1;}); else primed=1;
@@ -1708,7 +1708,7 @@ mq.addEventListener("change",()=>build(root.querySelector('[data-slot="hero"]'),
   }
   function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){if(v.currentTime>.2) v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
-  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.preload="auto"; v.setAttribute("playsinline",""); if(!v.poster) v.poster="assets/kv-16x9.jpg"; v.addEventListener("ended",toImage);
+  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.preload="auto"; v.setAttribute("playsinline",""); if(!v.poster) v.poster="assets/kv-16x9.jpg"; v.addEventListener("ended",()=>{if(st===1) toImage();}); v.addEventListener("timeupdate",()=>{if(st===1&&v.duration&&v.duration-v.currentTime<1.6) toImage();});
       /* decode the first frame while off-screen (muted autoplay is allowed) so the slide never shows black */
       let primed=0; v.muted=true; const pp=v.play(); const fin=()=>{if(primed)return; primed=1; v.pause(); try{v.currentTime=0}catch(e){}};
       if(pp&&pp.then) pp.then(()=>{v.addEventListener("timeupdate",fin,{once:true}); setTimeout(fin,600);},()=>{primed=1;}); else primed=1;
