@@ -1167,21 +1167,23 @@ const navAs=[...root.querySelectorAll("a[data-nav]")];
 function setView(b,scroll){host.setAttribute("data-view",b?"brief":"home");const d=root.querySelector(".bf-more");if(d)d.open=b;navAs.forEach(x=>x.toggleAttribute("aria-current",(x.dataset.nav==="brief")===b));if(scroll)scrollTo({top:0,behavior:"smooth"});}
 host.__setView=setView;
 (function(){const hero=root.querySelector(".hero"); if(!hero) return; const m1=hero.querySelector(".media"), dots=[...hero.querySelectorAll(".dots b")];
-  let st=0, tm=0;
+  /* slide A = cover image (first, 4s, lets the film load) ; slide B = the film */
+  let st=0, tm=0, started=0, t0=Date.now();
   const dir=()=>document.documentElement.dir==="rtl"?-1:1;
   const vid=()=>m1.querySelector("video");
   const mark=i=>dots.forEach((b,k)=>b.classList.toggle("on",k===i));
   mark(0);
+  hero.style.setProperty("--tx2","0%"); hero.style.setProperty("--tx1",(-100*dir())+"%");
   function go(to){
-    if(to===st) return; const d=dir(), inVar=to===1?"--tx2":"--tx1", outVar=to===1?"--tx1":"--tx2";
+    if(to===st) return; const d=dir(), inVar=to===1?"--tx1":"--tx2", outVar=to===1?"--tx2":"--tx1";
     hero.classList.add("noanim"); hero.style.setProperty(inVar,(-100*d)+"%"); void hero.offsetWidth; hero.classList.remove("noanim");
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
     st=to; mark(to);
   }
-  function toVideo(){const v=vid(); go(0); if(v){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
-  function ended(){go(1); clearTimeout(tm); tm=setTimeout(toVideo,5000);}
-  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.addEventListener("ended",ended);}},500);
-  hero.style.setProperty("--tx2",(-100*dir())+"%");
+  function playFilm(){const v=vid(); go(1); if(v){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
+  function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
+  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.pause(); v.addEventListener("ended",toImage);
+      const wait=()=>{const el=Date.now()-t0; if(el>=4000&&(v.readyState>=3||el>9000)) playFilm(); else setTimeout(wait,200);}; wait();}},300);
 })();
 (function(){const b=root.getElementById("hsound"), hero=root.querySelector(".hero"); if(!b||!hero) return;
   const vid=()=>root.querySelector('.hero [data-slot="hero"] video');
@@ -1372,21 +1374,23 @@ function fill(){
 }
 mq.addEventListener("change",()=>build(root.querySelector('[data-slot="hero"]'),heroKey()));
 (function(){const hero=root.querySelector(".hero"); if(!hero) return; const m1=hero.querySelector(".media"), dots=[...hero.querySelectorAll(".dots b")];
-  let st=0, tm=0;
+  /* slide A = cover image (first, 4s, lets the film load) ; slide B = the film */
+  let st=0, tm=0, started=0, t0=Date.now();
   const dir=()=>document.documentElement.dir==="rtl"?-1:1;
   const vid=()=>m1.querySelector("video");
   const mark=i=>dots.forEach((b,k)=>b.classList.toggle("on",k===i));
   mark(0);
+  hero.style.setProperty("--tx2","0%"); hero.style.setProperty("--tx1",(-100*dir())+"%");
   function go(to){
-    if(to===st) return; const d=dir(), inVar=to===1?"--tx2":"--tx1", outVar=to===1?"--tx1":"--tx2";
+    if(to===st) return; const d=dir(), inVar=to===1?"--tx1":"--tx2", outVar=to===1?"--tx2":"--tx1";
     hero.classList.add("noanim"); hero.style.setProperty(inVar,(-100*d)+"%"); void hero.offsetWidth; hero.classList.remove("noanim");
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
     st=to; mark(to);
   }
-  function toVideo(){const v=vid(); go(0); if(v){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
-  function ended(){go(1); clearTimeout(tm); tm=setTimeout(toVideo,5000);}
-  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.addEventListener("ended",ended);}},500);
-  hero.style.setProperty("--tx2",(-100*dir())+"%");
+  function playFilm(){const v=vid(); go(1); if(v){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
+  function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
+  setInterval(()=>{const v=vid(); if(v&&!v._hs){v._hs=1; v.loop=false; v.pause(); v.addEventListener("ended",toImage);
+      const wait=()=>{const el=Date.now()-t0; if(el>=4000&&(v.readyState>=3||el>9000)) playFilm(); else setTimeout(wait,200);}; wait();}},300);
 })();
 (function(){const sl=[...root.querySelectorAll(".ks")], dots=[...root.querySelectorAll(".kdots i")], box=root.querySelector(".kv"); if(!sl.length) return; let n=0,hold=0;
   const show=i=>{n=(i+sl.length)%sl.length; sl.forEach((x,k)=>x.classList.toggle("on",k===n)); dots.forEach((x,k)=>x.classList.toggle("on",k===n));};
