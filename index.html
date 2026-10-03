@@ -1789,16 +1789,16 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 root.querySelectorAll(".rv").forEach(el=>io.observe(el));
 
 /* Countdown: set NEXT_NIGHT to the real kick-off, e.g. new Date("2026-10-06T19:00:00Z") */
-const NEXT_NIGHT=null;
+const NEXT_NIGHT=new Date("2026-10-13T16:45:00Z"); /* first kick-off of the schedule table; updated live from the table when available */
 function nextTuesday(){
   const d=new Date(); d.setUTCHours(19,0,0,0);
   while(d<new Date()||d.getUTCDay()!==2) d.setUTCDate(d.getUTCDate()+1);
   return d;
 }
-const target=NEXT_NIGHT||nextTuesday(); const last={};
+const getTarget=()=>{const k=window.__nextKick; if(k&&k>new Date()) return k; return NEXT_NIGHT>new Date()?NEXT_NIGHT:nextTuesday();}; const last={};
 function setCd(id,v){const el=root.getElementById(id); if(last[id]!==v){el.textContent=v; last[id]=v; if(!reduce){el.classList.remove("tick");void el.offsetWidth;el.classList.add("tick")}}}
 function tickClock(){
-  let t=Math.max(0,Math.floor((target-new Date())/1000));
+  let t=Math.max(0,Math.floor((getTarget()-new Date())/1000));
   setCd("cd",Math.floor(t/86400)); t%=86400;
   setCd("ch",String(Math.floor(t/3600)).padStart(2,"0")); t%=3600;
   setCd("cm",String(Math.floor(t/60)).padStart(2,"0"));
@@ -1904,6 +1904,8 @@ let RESULTS=[["2026-09-09T19:00:00Z","LFC",2,"ATM",1],["2026-09-09T19:00:00Z","P
 let UPCOMING=[["2026-10-13T16:45:00Z","RCL","SPO"],["2026-10-13T16:45:00Z","SBH","SLA"],["2026-10-13T19:00:00Z","ARS","LIL"],["2026-10-13T19:00:00Z","ATM","MUN"],
  ["2026-10-13T19:00:00Z","INT","BRU"],["2026-10-13T19:00:00Z","GAL","BAR"],["2026-10-13T19:00:00Z","RBL","PSV"],["2026-10-13T19:00:00Z","VIK","BMU"],
  ["2026-10-13T19:00:00Z","VIL","NAP"],["2026-10-14T16:45:00Z","FEY","COM"]];
+function syncNextKick(){const t=UPCOMING.map(u=>+new Date(u[0])).filter(x=>x>Date.now()).sort((p,q)=>p-q)[0]; if(t) window.__nextKick=new Date(t);}
+syncNextKick();
 const PL={
  demirovic:["إرمدين ديميروفيتش","Ermedin Demirović","VFB"],torres:["فيران توريس","Ferran Torres","PSG"],bartra:["مارك بارترا","Marc Bartra","RBB"],
  dembele:["عثمان ديمبيلي","Ousmane Dembélé","PSG"],guirassy:["سيرهو غيراسي","Serhou Guirassy","BVB"],haaland:["إيرلينغ هالاند","Erling Haaland","MCI"],
@@ -2072,16 +2074,19 @@ function deriveLive(){
   const top=Object.values(g).sort((a,b)=>b.c-a.c||a.n.localeCompare(b.n)).slice(0,10);
   if(top.length) SCORERS=top.map(o=>{const k="l_"+norm(o.n).replace(/ /g,"_"); PL[k]=[PLAR[norm(o.n)]||o.n,o.n,o.t]; return [k,o.c];});
 }
+/* live feed first; if the browser cannot reach it, use the copy the daily GitHub Action saves in /data */
+async function getJ(url,local){
+  try{const r=await fetch(url); if(r.ok) return await r.json();}catch(e){}
+  const r2=await fetch(local+"?v="+Math.floor(Date.now()/36e5)); if(!r2.ok) throw new Error(local); return await r2.json();
+}
 async function loadStandings(){
-  const r=await fetch(LIVE.base+"/v2/sports/"+LIVE.league+"/standings"); if(!r.ok) throw new Error("standings");
-  const j=await r.json(), ent=j.children&&j.children[0]&&j.children[0].standings&&j.children[0].standings.entries;
+  const j=await getJ(LIVE.base+"/v2/sports/"+LIVE.league+"/standings","data/standings.json"), ent=j.children&&j.children[0]&&j.children[0].standings&&j.children[0].standings.entries;
   if(!ent||!ent.length) return;
   const val=(e,n)=>{const x=(e.stats||[]).find(y=>y.name===n); return x?+x.value:0;};
   STANDINGS=ent.map(e=>[val(e,"rank"),teamCode(e.team),val(e,"wins"),val(e,"ties"),val(e,"losses"),val(e,"points")]).sort((a,b)=>a[0]-b[0]);
 }
 async function loadBoard(range){
-  const r=await fetch(LIVE.base+"/site/v2/sports/"+LIVE.league+"/scoreboard?dates="+range+"&limit=500"); if(!r.ok) throw new Error("scoreboard");
-  ingest(await r.json());
+  ingest(await getJ(LIVE.base+"/site/v2/sports/"+LIVE.league+"/scoreboard?dates="+range+"&limit=500","data/scoreboard.json"));
 }
 const ymd=d=>d.toISOString().slice(0,10).replace(/-/g,"");
 async function refreshLive(full){
@@ -2090,12 +2095,12 @@ async function refreshLive(full){
     const jobs=[loadStandings(),loadBoard(ymd(now)+"-"+ymd(fut))];
     if(full&&ymd(y)>=LIVE.seasonStart) jobs.push(loadBoard(LIVE.seasonStart+"-"+ymd(y)));
     await Promise.all(jobs);
-    deriveLive(); liveOK=true; liveAt=new Date(); renderStats();
+    deriveLive(); syncNextKick(); liveOK=true; liveAt=new Date(); renderStats();
   }catch(e){ /* keep whatever is on screen */ }
 }
 let lastFull=0;
 function tick(){
-  if(document.hidden||host.hidden) return;
+  if(document.hidden) return;
   const full=Date.now()-lastFull>LIVE.slow; if(full) lastFull=Date.now();
   refreshLive(full);
 }

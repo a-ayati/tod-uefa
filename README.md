@@ -43,6 +43,7 @@ a non-commercial design test, not for promotion. For anything real, use the offi
 The "Champions League by the numbers" section refreshes itself every 2 minutes from ESPN's public
 scoreboard and standings feeds (matches, results, table and top scorers). If the feed is unreachable
 the built-in snapshot stays on screen. Assists are a manual snapshot in `index.html` (`ASSISTS`).
+A GitHub Action (`.github/workflows/update-data.yml`) refreshes `data/scoreboard.json` and `data/standings.json` every day; the page falls back to them when the live feed is unreachable, and the customer-view countdown always targets the next kick-off in the schedule table.
 The ESPN feed is unofficial, so it can change without notice.
 
 ## Colours
