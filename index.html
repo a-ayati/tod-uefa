@@ -723,7 +723,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .dev[data-d="phone"] .screen{aspect-ratio:9/19;border:9px solid #262861;border-radius:40px;box-shadow:inset 0 0 0 2px #5B308E,0 0 0 1px rgba(255,255,255,.22),0 30px 60px -24px rgba(0,0,0,.8)}
 .dev[data-d="phone"] .base{height:0}
 .dev[data-d="tablet"]{max-width:640px}
-.dev[data-d="tablet"] .screen{aspect-ratio:4/3;border:14px solid #262861;border-radius:26px;box-shadow:inset 0 0 0 2px #5B308E,0 0 0 1px rgba(255,255,255,.22),0 30px 60px -24px rgba(0,0,0,.8)}
+.dev[data-d="tablet"] .screen{aspect-ratio:16/10;border:14px solid #262861;border-radius:26px;box-shadow:inset 0 0 0 2px #5B308E,0 0 0 1px rgba(255,255,255,.22),0 30px 60px -24px rgba(0,0,0,.8)}
 .dev[data-d="tablet"] .base{height:0}
 .dev[data-d="computer"]{max-width:880px}
 .dev[data-d="computer"] .chrome{display:flex;border-radius:12px 12px 0 0}
@@ -1293,6 +1293,10 @@ const ASSETS={
   sq:         {type:"image",src:"assets/kv-1x1.jpg",size:"1:1 · 1080 × 1080"},
   promo6:     {type:"video",src:"assets/promo-6s-ar.mp4",en:"assets/promo-6s-en.mp4",poster:"assets/thumb-6s.jpg",size:"6s · 16:9"},
   final:      {type:"image",src:"assets/kv-16x9.jpg",fb:"assets/kv-16x9.jpg",size:"16:9 · 1920 × 1080"},
+  s1:         {type:"image",src:"assets/story-1.jpg",en:"assets/story-en-1.jpg",size:"9:16"},
+  s2:         {type:"image",src:"assets/story-2.jpg",en:"assets/story-en-2.jpg",size:"9:16"},
+  s3:         {type:"image",src:"assets/story-3.jpg",en:"assets/story-en-3.jpg",size:"9:16"},
+  promo15:    {type:"video",src:"assets/promo-15s-ar.mp4",en:"assets/promo-15s-en.mp4",size:"15s · 16:9"},
   c1:         {type:"image",src:"assets/customer-1.jpg",en:"assets/customer-en-1.jpg",size:"1:1 · 1080 × 1080"},
   c2:         {type:"image",src:"assets/customer-2.jpg",en:"assets/customer-en-2.jpg",size:"1:1 · 1080 × 1080"},
   c3:         {type:"image",src:"assets/customer-3.jpg",en:"assets/customer-en-3.jpg",size:"1:1 · 1080 × 1080"}
@@ -1485,13 +1489,16 @@ root.querySelectorAll("[data-tilt]").forEach(el=>{
 });
 
 /* Device switcher */
-const DEV={tv:"promo6",phone:"heroMobile",tablet:"final",computer:"heroDesktop"};
+const DEV={tv:"promo6",phone:"s1",tablet:"promo15",computer:"heroDesktop"};
+const PHONE=["s1","s2","s3"]; let phoneTimer=0;
 const devEl=$("#dev"), devScreen=$("#devscreen");
 let curDev="tv";
 function showDev(name){
   curDev=name; devEl.dataset.d=name;
   root.querySelectorAll("[data-dev]").forEach(b=>b.setAttribute("aria-selected",b.dataset.dev===name));
-  build(devScreen,DEV[name]);
+  clearInterval(phoneTimer);
+  if(name==="phone"){let i=0; DEV.phone=PHONE[0]; build(devScreen,DEV.phone); phoneTimer=setInterval(()=>{ if(document.hidden||host.hidden||curDev!=="phone") return; i=(i+1)%PHONE.length; DEV.phone=PHONE[i]; build(devScreen,DEV.phone); },3500);}
+  else build(devScreen,DEV[name]);
   $("#dcap").textContent=T[lang]["dc"+({tv:1,phone:2,tablet:3,computer:4}[name])];
 }
 root.querySelectorAll("[data-dev]").forEach(b=>b.addEventListener("click",()=>showDev(b.dataset.dev)));
