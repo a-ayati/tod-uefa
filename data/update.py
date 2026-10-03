@@ -29,11 +29,14 @@ def board():
         rng = f"{d:%Y%m%d}-{e:%Y%m%d}"
         part = None
         for host in HOSTS:
-            try:
-                part = get(f"{host}/site/v2/sports/{LEAGUE}/scoreboard?dates={rng}&limit=300")
+            for q in (f"dates={rng}&limit=500", f"dates={rng}", f"limit=500&dates={rng.replace('-', '-')}"):
+                try:
+                    part = get(f"{host}/site/v2/sports/{LEAGUE}/scoreboard?{q}")
+                    break
+                except Exception as ex:
+                    print("::warning title=scoreboard failed::", str(ex)[:300])
+            if part is not None:
                 break
-            except Exception as ex:
-                print("::warning title=scoreboard failed::", rng, str(ex)[:300])
         if part is None:
             return None
         for ev in part.get("events", []):
