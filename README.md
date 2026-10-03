@@ -17,12 +17,12 @@ Direct link to the campaign brief page: https://a-ayati.github.io/tod-uefa/#brie
 |---|---|
 | `hero-textless.mp4` | 15-second textless film used as the cover (both views) |
 | `promo-15s-ar.mp4`, `promo-15s-en.mp4` | 15-second promo, Arabic / English (shown by page language) |
-| `promo-6s.mp4` | 6-second promo, 16:9 |
+| `promo-6s-ar.mp4`, `promo-6s-en.mp4` | 6-second promo, Arabic / English (shown by page language) |
 | `kv-16x9.jpg` | Key visual 1920 × 1080 |
 | `kv-1x1.jpg` | Key visual 1080 × 1080 |
 | `kv-9x16.jpg` | Key visual 1080 × 1920 |
 | `thumb-15s.jpg`, `thumb-15s-en.jpg` | Thumbnail for the 15s promo (a frame taken from the video) |
-| `thumb-6s.jpg` | Thumbnail for the 6s promo, 16:9 |
+| `thumb-6s.jpg`, `thumb-6s-en.jpg` | Thumbnail for the 6s promo, 16:9 |
 | `design-1.jpg`, `design-2.jpg`, `design-3.jpg` | The three designs shown in the "Campaign brief" page (any size, shown in a 4:5 frame) |
 | `story-1.jpg`, `story-2.jpg`, `story-3.jpg` | The three story (9:16) versions, shown next to the 1:1 slider |
 | `wide-1.jpg`, `wide-2.jpg`, `wide-3.jpg` | The three screen / TV (16:9) versions, shown below the 1:1 and story sliders |
