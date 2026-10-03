@@ -379,10 +379,12 @@ dialog .box.has-info img{max-height:56dvh}
   .topbar .icon-btn{display:none}
   .topbar nav ul{gap:12px;font-size:13px}
   .hero{display:flex;flex-direction:column;background:var(--bg)}
-  .hero .media{aspect-ratio:4/3;max-height:none}
-  .hero .media2{inset:0 0 auto 0;aspect-ratio:4/3;height:auto}
-  .hero::before{content:"";position:absolute;inset:0 0 auto 0;aspect-ratio:4/3;background:url(assets/kv-16x9.jpg) center/cover;filter:blur(24px) brightness(.8);transform:scale(1.25);-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
-  .hero .media video,.hero .media img,.hero .media2 img{object-fit:contain;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));mask-composite:intersect}
+  .hero .media{aspect-ratio:4/5;max-height:none}
+  .hero .media2{inset:0 0 auto 0;aspect-ratio:4/5;height:auto}
+  .hero .media2 picture{display:block;width:100%;height:100%}
+  .hero::before{content:"";position:absolute;inset:0 0 auto 0;aspect-ratio:4/5;background:url(assets/kv-16x9.jpg) center/cover;filter:blur(24px) brightness(.8);transform:scale(1.25);-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}
+  .hero .media video,.hero .media img{object-fit:contain;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));mask-composite:intersect}
+  .hero .media2 img{object-fit:cover;object-position:50% 40%}
   .hero .shade{display:none}
   .hero .info{position:relative;inset:auto;padding:14px 0 24px}
   .hero .info{padding-bottom:24px}
@@ -567,7 +569,7 @@ dialog .box.has-info img{max-height:56dvh}
 <main>
   <div class="hero">
     <div class="media" data-slot="hero"></div>
-    <div class="media2" aria-hidden="true"><img src="assets/kv-16x9.jpg" alt=""></div>
+    <div class="media2" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="assets/kv-mobile.jpg"><img src="assets/kv-16x9.jpg" alt=""></picture></div>
     <div class="shade"></div>
     <span class="wfv" id="wfv" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span data-t="wfv"></span></span>
     <button class="hsound" id="hsound" type="button" aria-label="Sound" hidden>
@@ -1169,7 +1171,7 @@ dialog .box.has-info img{max-height:56dvh}
 }
 @media (max-width:600px){.wrap{padding:0 18px}.hero .copy{padding-bottom:40px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-@media (max-width:760px){.hero::before{content:"";position:absolute;inset:0;background:url(assets/kv-16x9.jpg) center/cover;filter:blur(26px) brightness(.75);transform:scale(1.3)}.hero .media video,.hero .media img,.hero .media2 img{object-fit:contain;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));mask-composite:intersect}.hero .media,.hero .media2{background:transparent}}
+@media (max-width:760px){.hero::before{content:"";position:absolute;inset:0;background:url(assets/kv-mobile.jpg) center/cover;filter:blur(26px) brightness(.75);transform:scale(1.3)}.hero .media video,.hero .media img{object-fit:contain;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent),linear-gradient(transparent calc(50% - 28.2vw),#000 calc(50% - 17vw),#000 calc(50% + 17vw),transparent calc(50% + 28.2vw));mask-composite:intersect}.hero .media2 picture{display:block;width:100%;height:100%}.hero .media2 img{object-fit:contain;object-position:50% 22%}.hero .media,.hero .media2{background:transparent}}
 </style><div class="page">
 
 <header id="hdr">
@@ -1186,7 +1188,7 @@ dialog .box.has-info img{max-height:56dvh}
 <main>
   <div class="hero">
     <div class="media" data-slot="hero"></div>
-    <div class="media2" aria-hidden="true"><img src="assets/kv-16x9.jpg" alt=""></div>
+    <div class="media2" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="assets/kv-mobile.jpg"><img src="assets/kv-16x9.jpg" alt=""></picture></div>
     <div class="spot" aria-hidden="true"></div>
     <div class="hint" aria-hidden="true"><i></i><span data-t="scroll"></span></div>
     <div class="copy"><div class="wrap">
