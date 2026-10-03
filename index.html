@@ -113,6 +113,8 @@ nav a[aria-current]{color:#fff;border-color:var(--yellow)}
 .lang{font-weight:700;font-size:14px;background:none;border:0;cursor:pointer;color:#fff;padding:6px}
 
 /* Hero */
+.hero .hsound,.hero .sound{transition:opacity .4s ease,background .2s,color .2s,transform .2s}
+.hero.is-img .hsound,.hero.is-img .sound{opacity:0;pointer-events:none;transform:scale(.8)}
 .hsound{position:absolute;z-index:4;top:16px;inset-inline-end:20px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(12,20,35,.55);color:#fff;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,transform .2s}
 .hsound[hidden]{display:none}
 .hsound:hover,.hsound:focus-visible{background:var(--yellow);color:#101010;transform:scale(1.06)}
@@ -722,6 +724,9 @@ header.solid{background:rgba(12,20,35,.9);backdrop-filter:blur(14px);-webkit-bac
 .hero p{margin:0 0 26px;font-size:clamp(17px,1.6vw,20px);color:#D7D6D6;max-width:44ch}
 .hero .ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 svg[hidden]{display:none!important}
+.hero .hsound,.hero .sound{transition:opacity .4s ease,background .2s,color .2s,transform .2s}
+.hero.is-img .hsound,.hero.is-img .sound{opacity:0;pointer-events:none;transform:scale(.8)}
+
 .sound svg{display:block}
 .sound{position:absolute;z-index:3;bottom:64px;inset-inline-end:28px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.35);backdrop-filter:blur(8px);display:grid;place-items:center;cursor:pointer}
 
@@ -1362,13 +1367,13 @@ host.__setView=setView;
   const dir=()=>document.documentElement.dir==="rtl"?-1:1;
   const vid=()=>m1.querySelector("video");
   const mark=i=>dots.forEach((b,k)=>b.classList.toggle("on",k===i));
-  mark(0);
+  mark(0); hero.classList.add("is-img");
   hero.style.setProperty("--tx2","0%"); hero.style.setProperty("--tx1",(-100*dir())+"%");
   function go(to){
     if(to===st) return; const d=dir(), inVar=to===1?"--tx1":"--tx2", outVar=to===1?"--tx2":"--tx1";
     hero.classList.add("noanim"); hero.style.setProperty(inVar,(-100*d)+"%"); void hero.offsetWidth; hero.classList.remove("noanim");
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
-    st=to; mark(to);
+    st=to; mark(to); hero.classList.toggle("is-img",to===0);
   }
   function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
@@ -1570,13 +1575,13 @@ mq.addEventListener("change",()=>build(root.querySelector('[data-slot="hero"]'),
   const dir=()=>document.documentElement.dir==="rtl"?-1:1;
   const vid=()=>m1.querySelector("video");
   const mark=i=>dots.forEach((b,k)=>b.classList.toggle("on",k===i));
-  mark(0);
+  mark(0); hero.classList.add("is-img");
   hero.style.setProperty("--tx2","0%"); hero.style.setProperty("--tx1",(-100*dir())+"%");
   function go(to){
     if(to===st) return; const d=dir(), inVar=to===1?"--tx1":"--tx2", outVar=to===1?"--tx2":"--tx1";
     hero.classList.add("noanim"); hero.style.setProperty(inVar,(-100*d)+"%"); void hero.offsetWidth; hero.classList.remove("noanim");
     hero.style.setProperty(inVar,"0%"); hero.style.setProperty(outVar,(100*d)+"%");
-    st=to; mark(to);
+    st=to; mark(to); hero.classList.toggle("is-img",to===0);
   }
   function playFilm(){const v=vid(); go(1); if(v&&!host.hidden){v.currentTime=0; const p=v.play(); if(p&&p.catch)p.catch(()=>{});}}
   function toImage(){go(0); clearTimeout(tm); tm=setTimeout(playFilm,4000);}
