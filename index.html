@@ -30,7 +30,9 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1423}}
 :root[data-theme="dark"]{--bg:#0C1423}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth;background:var(--bg)}
+html,body{overflow-x:clip;max-width:100%}
 body{margin:0;background:var(--bg)}
+#h-land,#h-show{display:block;overflow-x:clip;max-width:100vw}
 [hidden]{display:none!important}
 
 .switch{position:fixed;z-index:9999;inset-inline-end:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;
@@ -357,7 +359,7 @@ dialog .box.has-info img{max-height:56dvh}
 .credit b{color:#fff}
 
 @media (max-width:980px){
-  nav{display:none}
+  .topbar nav ul{gap:14px;font-size:13.5px}
   .formats{grid-template-columns:1fr .5625fr}.fmt.hd{grid-column:1/-1;order:-1}
   .context{grid-template-columns:1fr;justify-items:center;text-align:center;padding:28px}
   .context p{margin-inline:auto}
@@ -372,6 +374,8 @@ dialog .box.has-info img{max-height:56dvh}
 @media (max-width:600px){
   .wrap{padding:0 16px}
   .topbar .btn.g{display:none}
+  .topbar .icon-btn{display:none}
+  .topbar nav ul{gap:12px;font-size:13px}
   .hero .media{aspect-ratio:4/5;max-height:none}
   .hero::before{content:"";position:absolute;inset:0;background:url(assets/kv-16x9.jpg) center/cover;filter:blur(26px) brightness(.75);transform:scale(1.3)}
   .hero .media video,.hero .media img,.hero .media2 img{object-fit:contain}
