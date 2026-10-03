@@ -19,22 +19,40 @@ def get(url):
             last = repr(e)
         time.sleep(3 * (attempt + 1))
     raise RuntimeError(f"{last} <- {url}")
-end = (dt.datetime.utcnow() + dt.timedelta(days=120)).strftime("%Y%m%d")
-jobs = {
-    "scoreboard.json": f"/site/v2/sports/{LEAGUE}/scoreboard?dates={SEASON_START}-{end}&limit=500",
-    "standings.json": f"/v2/sports/{LEAGUE}/standings",
-}
+def board():
+    """Scoreboard in 30-day chunks (one big range can time out), merged into a single file."""
+    start = dt.datetime.strptime(SEASON_START, "%Y%m%d")
+    stop = dt.datetime.utcnow() + dt.timedelta(days=120)
+    events, seen, d = [], set(), start
+    while d <= stop:
+        e = min(d + dt.timedelta(days=29), stop)
+        rng = f"{d:%Y%m%d}-{e:%Y%m%d}"
+        part = None
+        for host in HOSTS:
+            try:
+                part = get(f"{host}/site/v2/sports/{LEAGUE}/scoreboard?dates={rng}&limit=300")
+                break
+            except Exception as ex:
+                print("FAILED scoreboard", rng, ex, file=sys.stderr)
+        if part is None:
+            return None
+        for ev in part.get("events", []):
+            if ev.get("id") not in seen:
+                seen.add(ev.get("id")); events.append(ev)
+        d = e + dt.timedelta(days=1)
+    return {"events": events}
 saved = 0
-for name, path in jobs.items():
-    for host in HOSTS:
-        try:
-            data = get(host + path)
-            with open(f"data/{name}", "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
-            print("saved", name, "from", host)
-            saved += 1
-            break
-        except Exception as e:
-            print("FAILED", name, e, file=sys.stderr)
+b = board()
+if b and b["events"]:
+    json.dump(b, open("data/scoreboard.json", "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    print("saved scoreboard.json:", len(b["events"]), "events"); saved += 1
+for host in HOSTS:
+    try:
+        data = get(host + f"/v2/sports/{LEAGUE}/standings")
+        json.dump(data, open("data/standings.json", "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        print("saved standings.json from", host); saved += 1
+        break
+    except Exception as e:
+        print("FAILED standings", e, file=sys.stderr)
 # never fail the workflow just because the feed is down: the page keeps its previous data
-print(f"{saved}/{len(jobs)} files refreshed")
+print(f"{saved}/2 files refreshed")
