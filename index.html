@@ -720,7 +720,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .dev[data-d="tv"] .screen{aspect-ratio:16/9;border:8px solid #262861;border-radius:14px}
 .dev[data-d="tv"] .base{width:28%;height:10px;border-radius:0 0 8px 8px}
 .dev[data-d="phone"]{max-width:300px}
-.dev[data-d="phone"] .screen{aspect-ratio:9/19;border:9px solid #262861;border-radius:40px;box-shadow:inset 0 0 0 2px #5B308E,0 0 0 1px rgba(255,255,255,.22),0 30px 60px -24px rgba(0,0,0,.8)}
+.dev[data-d="phone"] .screen{aspect-ratio:9/16;border:5px solid #101010;border-radius:28px;background:#000;box-shadow:0 0 0 2px #262861,0 0 0 3px rgba(255,255,255,.2),0 30px 60px -24px rgba(0,0,0,.8)}
+.dev[data-d="phone"] .screen::after{content:"";position:absolute;top:9px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#050505;box-shadow:0 0 0 1.5px #1a1a1a;z-index:4;pointer-events:none}
+.pbars{position:absolute;top:8px;inset-inline:16px;display:flex;gap:4px;z-index:3;pointer-events:none}
+.pbars i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.4);overflow:hidden;box-shadow:0 0 0 .5px rgba(0,0,0,.25);position:relative}
+.pbars i.done{background:#fff}
+.pbars i.on::after{content:"";position:absolute;inset:0;background:#fff;transform-origin:left center;animation:pfill 4s linear forwards}
+:host([dir="rtl"]) .pbars i.on::after{transform-origin:right center}
+@keyframes pfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.pbars i.on::after{animation:none;transform:none}}
 .dev[data-d="phone"] .base{height:0}
 .dev[data-d="tablet"]{max-width:640px}
 .dev[data-d="tablet"] .screen{aspect-ratio:16/10;border:14px solid #262861;border-radius:26px;box-shadow:inset 0 0 0 2px #5B308E,0 0 0 1px rgba(255,255,255,.22),0 30px 60px -24px rgba(0,0,0,.8)}
@@ -1501,7 +1509,7 @@ function showDev(name){
   curDev=name; devEl.dataset.d=name;
   root.querySelectorAll("[data-dev]").forEach(b=>b.setAttribute("aria-selected",b.dataset.dev===name));
   clearInterval(phoneTimer);
-  if(name==="phone"){let i=0; DEV.phone=PHONE[0]; build(devScreen,DEV.phone); phoneTimer=setInterval(()=>{ if(document.hidden||host.hidden||curDev!=="phone") return; i=(i+1)%PHONE.length; DEV.phone=PHONE[i]; build(devScreen,DEV.phone); },4000);}
+  if(name==="phone"){let i=0; const bars=()=>{const d=document.createElement("div"); d.className="pbars"; d.innerHTML=PHONE.map((_,k)=>'<i class="'+(k<i?"done":k===i?"on":"")+'"></i>').join(""); devScreen.appendChild(d);}; DEV.phone=PHONE[0]; build(devScreen,DEV.phone); bars(); phoneTimer=setInterval(()=>{ if(document.hidden||host.hidden||curDev!=="phone") return; i=(i+1)%PHONE.length; DEV.phone=PHONE[i]; build(devScreen,DEV.phone); bars(); },4000);}
   else build(devScreen,DEV[name]);
   $("#dcap").textContent=T[lang]["dc"+({tv:1,phone:2,tablet:3,computer:4}[name])];
 }
