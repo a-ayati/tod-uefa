@@ -33,7 +33,7 @@ def board():
                 part = get(f"{host}/site/v2/sports/{LEAGUE}/scoreboard?dates={rng}&limit=300")
                 break
             except Exception as ex:
-                print("FAILED scoreboard", rng, ex, file=sys.stderr)
+                print("::warning title=scoreboard failed::", rng, str(ex)[:300])
         if part is None:
             return None
         for ev in part.get("events", []):
@@ -53,6 +53,6 @@ for host in HOSTS:
         print("saved standings.json from", host); saved += 1
         break
     except Exception as e:
-        print("FAILED standings", e, file=sys.stderr)
+        print("::warning title=standings failed::", str(e)[:300])
 # never fail the workflow just because the feed is down: the page keeps its previous data
 print(f"{saved}/2 files refreshed")
