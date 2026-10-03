@@ -1141,7 +1141,8 @@ function mediaEl(key){
   if(type==="video"){
     const v=document.createElement("video");
     Object.assign(v,{src,muted:true,loop:true,playsInline:true,autoplay:key==="hero"});
-    if(a.poster&&!local[key]) v.poster=a.poster;
+    if(key==="hero"){v.preload="auto"; v.style.opacity="0"; v.style.transition="opacity .5s ease"; v.addEventListener("playing",()=>{v.style.opacity="1"},{once:true});}
+    else if(a.poster&&!local[key]) v.poster=a.poster;
     v.onerror=()=>{ if(a.fb&&!local[key]){const im=document.createElement("img");im.src=a.fb;im.alt="";im.onerror=()=>slot(key);v.replaceWith(im);} else slot(key); }; return v;
   }
   const i=document.createElement("img"); i.src=src; i.alt=""; i.onerror=()=>{ if(a.fb&&i.getAttribute("src")!==a.fb&&!local[key]) i.src=a.fb; else slot(key); }; return i;
@@ -1346,7 +1347,7 @@ function build(host,key){
   if(type==="video"){
     el=document.createElement("video");
     Object.assign(el,{src,muted:true,loop:true,playsInline:true,autoplay:true});
-    el.setAttribute("muted",""); if(a.poster&&!l) el.poster=a.poster;
+    el.setAttribute("muted",""); if(host.dataset.slot==="hero"){el.preload="auto"; el.style.opacity="0"; el.style.transition="opacity .5s ease"; el.addEventListener("playing",()=>{el.style.opacity="1"},{once:true});} else if(a.poster&&!l) el.poster=a.poster;
   }else{el=document.createElement("img");el.src=src;el.alt="";}
   el.onerror=()=>{
     if(a.fb&&!l&&el.getAttribute("src")!==a.fb){ if(el.tagName==="VIDEO"){const im=document.createElement("img");im.alt="";im.onerror=()=>placeholder(host,key);im.src=a.fb;el.replaceWith(im);if(host.dataset.slot==="hero")root.getElementById("sound").hidden=true;} else el.src=a.fb; }
