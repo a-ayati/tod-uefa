@@ -1410,7 +1410,7 @@ function mediaEl(key){
     Object.assign(v,{src,muted:true,loop:true,playsInline:true,autoplay:key==="hero"});
     if(key==="hero"){v.preload="auto"; v.style.opacity="0"; v.style.transition="opacity .5s ease"; v.addEventListener("playing",()=>{v.style.opacity="1"},{once:true});}
     else if(a.poster&&!local[key]) v.poster=a.poster;
-    v.onerror=()=>{ if(a.fb&&!local[key]){const im=document.createElement("img");im.src=a.fb;im.alt="";im.onerror=()=>slot(key);v.replaceWith(im);} else slot(key); }; return v;
+    v.onerror=()=>{ if(!v._r&&!local[key]&&navigator.onLine!==false){v._r=1; setTimeout(()=>{v.src=src+(src.includes("?")?"&":"?")+"r="+Date.now(); v.load();},800); return;} if(a.fb&&!local[key]){const im=document.createElement("img");im.src=a.fb;im.alt="";im.onerror=()=>slot(key);v.replaceWith(im);} else slot(key); }; return v;
   }
   const i=document.createElement("img"); i.src=src; i.alt=""; i.onerror=()=>{ if(a.fb&&i.getAttribute("src")!==a.fb&&!local[key]) i.src=a.fb; else slot(key); }; return i;
 }
@@ -1683,6 +1683,7 @@ function build(host,key){
     el.setAttribute("muted",""); if(host.dataset.slot==="hero"){el.preload="auto"; el.style.opacity="0"; el.style.transition="opacity .5s ease"; el.addEventListener("playing",()=>{el.style.opacity="1"},{once:true});} else if(a.poster&&!l) el.poster=(lang==="en"&&a.posterEn)||a.poster;
   }else{el=document.createElement("img");el.src=src;el.alt="";}
   el.onerror=()=>{
+    if(!el._r&&!l&&navigator.onLine!==false){el._r=1; setTimeout(()=>{el.src=src+(src.includes("?")?"&":"?")+"r="+Date.now(); if(el.load) el.load();},800); return;}
     if(a.fb&&!l&&el.getAttribute("src")!==a.fb){ if(el.tagName==="VIDEO"){const im=document.createElement("img");im.alt="";im.onerror=()=>placeholder(host,key);im.src=a.fb;el.replaceWith(im);if(host.dataset.slot==="hero")root.getElementById("sound").hidden=true;} else el.src=a.fb; }
     else placeholder(host,key);
   };
@@ -2214,6 +2215,46 @@ function route(){
 }
 if(location.hash==="#customer"||location.hash==="#brief") route();
 addEventListener("hashchange",route);
+})();
+</script>
+<script>
+/* Self-healing: recovers from the usual browsing failures within seconds (no user action needed) */
+(function(){
+  var G=window, now=Date.now, NK="tod-heal";
+  function once(k){try{if(sessionStorage.getItem(k))return false;sessionStorage.setItem(k,"1");return true}catch(e){return true}}
+  function bust(u){return u+(u.indexOf("?")>-1?"&":"?")+"r="+now()}
+  function reload(){ if(once(NK+"-reload")) location.replace(location.pathname+"?"+(location.search.replace(/^\?/,"").replace(/(^|&)r=\d+/,"")+"&r="+now()).replace(/^&/,"")+location.hash); }
+  /* 1. the page did not draw at all (script error, half-loaded file): one clean reload */
+  setTimeout(function(){
+    var h=document.getElementById("h-show"), l=document.getElementById("h-land");
+    var ok=function(x){return x&&x.shadowRoot&&x.shadowRoot.children.length>1};
+    if(!ok(h)&&!ok(l)) reload();
+  },6000);
+  G.addEventListener("error",function(e){ if(e&&e.target&&e.target!==G){ var t=e.target; if(t.tagName==="IMG"&&!t._h&&t.src){t._h=1; setTimeout(function(){t.src=bust(t.src)},1000)} } },true);
+  /* 2. every few seconds: look at all videos / images, in both views and the viewer */
+  var seen=new WeakMap();
+  function roots(){var r=[document]; ["h-show","h-land"].forEach(function(id){var h=document.getElementById(id); if(h&&h.shadowRoot) r.push(h.shadowRoot)}); return r}
+  function check(){
+    if(document.hidden||navigator.onLine===false) return;
+    roots().forEach(function(r){
+      r.querySelectorAll("video").forEach(function(v){
+        var st=seen.get(v)||{t:-1,n:0,w:0};
+        if(v.error&&st.n<2){ st.n++; var t=v.currentTime||0; v.src=bust(v.getAttribute("src")||v.src); v.load(); v.addEventListener("loadedmetadata",function f(){v.removeEventListener("loadedmetadata",f); try{v.currentTime=t}catch(e){} if(v.autoplay||v._wasPlaying) v.play().catch(function(){})}); }
+        else if(!v.paused&&!v.ended&&v.readyState<3){ /* playing but starving */
+          if(v.currentTime===st.t){ st.w++; if(st.w>=3&&st.n<3){ st.n++; st.w=0; var tt=v.currentTime; v.load(); v.addEventListener("loadedmetadata",function f(){v.removeEventListener("loadedmetadata",f); try{v.currentTime=tt}catch(e){} v.play().catch(function(){})}); } } else st.w=0;
+        } else st.w=0;
+        if(!v.paused) v._wasPlaying=true;
+        st.t=v.currentTime; seen.set(v,st);
+      });
+      r.querySelectorAll("img").forEach(function(im){ if(im.complete&&im.naturalWidth===0&&im.getAttribute("src")&&!im._h){ im._h=1; im.src=bust(im.getAttribute("src")); } });
+    });
+  }
+  setInterval(check,3000);
+  /* 3. the connection came back: re-check straight away */
+  G.addEventListener("online",function(){setTimeout(check,300)});
+  document.addEventListener("visibilitychange",function(){ if(!document.hidden) setTimeout(check,500) });
+  /* 4. the browser restored an old cached copy of the page: refresh it once */
+  G.addEventListener("pageshow",function(e){ if(e.persisted&&once(NK+"-bf")) location.reload(); });
 })();
 </script>
 </body>
