@@ -577,6 +577,10 @@ dialog[open]{position:fixed;inset:0;margin:0;width:100%;max-width:100vw;height:1
 dialog .x{position:fixed;z-index:20;top:calc(10px + env(safe-area-inset-top,0px));right:calc(10px + env(safe-area-inset-right,0px));left:auto;inset-inline-end:auto;width:40px;height:40px;font-size:22px;line-height:1;display:grid;place-items:center;padding:0;background:rgba(12,20,35,.75);border:1px solid rgba(255,255,255,.3);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 dialog .x::after{content:"";position:absolute;inset:-8px}
 }
+/* close button: always visible, top-right of the screen, above the design (desktop, tablet, phone, both languages) */
+dialog .x{position:fixed!important;z-index:60!important;top:calc(14px + env(safe-area-inset-top,0px))!important;right:calc(18px + env(safe-area-inset-right,0px))!important;left:auto!important;width:42px!important;height:42px!important;display:grid!important;place-items:center;padding:0!important;font-size:24px!important;line-height:1!important;border-radius:50%!important;background:rgba(12,20,35,.82)!important;border:1px solid rgba(255,255,255,.35)!important;color:#fff!important;cursor:pointer;touch-action:manipulation;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+dialog .x:hover{background:var(--yellow)!important;color:#101010!important;border-color:var(--yellow)!important}
+dialog .x::after{content:"";position:absolute;inset:-6px}
 @media (pointer:coarse) and (orientation:landscape){
 dialog .box,dialog .box.has-info{box-sizing:border-box;height:100dvh;max-height:100dvh;padding:10px 64px;align-content:center;justify-content:center}
 dialog .box:not(.has-info) img,dialog .box:not(.has-info) video{max-height:calc(100dvh - 20px)}
@@ -1210,6 +1214,10 @@ dialog[open]{position:fixed;inset:0;margin:0;width:100%;max-width:100vw;height:1
 dialog .x{position:fixed;z-index:20;top:calc(10px + env(safe-area-inset-top,0px));right:calc(10px + env(safe-area-inset-right,0px));left:auto;inset-inline-end:auto;width:40px;height:40px;font-size:22px;line-height:1;display:grid;place-items:center;padding:0;background:rgba(12,20,35,.75);border:1px solid rgba(255,255,255,.3);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 dialog .x::after{content:"";position:absolute;inset:-8px}
 }
+/* close button: always visible, top-right of the screen, above the design (desktop, tablet, phone, both languages) */
+dialog .x{position:fixed!important;z-index:60!important;top:calc(14px + env(safe-area-inset-top,0px))!important;right:calc(18px + env(safe-area-inset-right,0px))!important;left:auto!important;width:42px!important;height:42px!important;display:grid!important;place-items:center;padding:0!important;font-size:24px!important;line-height:1!important;border-radius:50%!important;background:rgba(12,20,35,.82)!important;border:1px solid rgba(255,255,255,.35)!important;color:#fff!important;cursor:pointer;touch-action:manipulation;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+dialog .x:hover{background:var(--yellow)!important;color:#101010!important;border-color:var(--yellow)!important}
+dialog .x::after{content:"";position:absolute;inset:-6px}
 @media (pointer:coarse) and (orientation:landscape){
 dialog .box,dialog .box.has-info{box-sizing:border-box;height:100dvh;max-height:100dvh;padding:10px 64px;align-content:center;justify-content:center}
 dialog .box:not(.has-info) img,dialog .box:not(.has-info) video{max-height:calc(100dvh - 20px)}
