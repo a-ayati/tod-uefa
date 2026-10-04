@@ -143,6 +143,12 @@ a[data-nav="brief"]:not([aria-current]){animation:navglow 2.6s ease-in-out infin
 .hero:not(.rdy) .media2{translate:0 0!important;transition:none!important}
 .hero .media{position:relative;aspect-ratio:16/9;max-height:78vh;width:100%;overflow:hidden}
 .hero .media>img,.hero .media>video{width:100%;height:100%;object-fit:cover;display:block}
+.wfvm{display:none}
+@media (max-width:600px){
+.wfvm{display:inline-flex;align-items:center;gap:8px;position:absolute;z-index:6;left:50%;top:107vw;transform:translateX(-50%);padding:11px 20px;border-radius:999px;border:1px solid rgba(255,188,0,.7);background:rgba(12,20,35,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:700 14px var(--ar);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;box-shadow:0 10px 30px -12px rgba(0,0,0,.8)}
+.wfvm .ic{width:16px;height:16px;color:var(--yellow)}
+.wfvm:active{transform:translateX(-50%) scale(.97)}
+}
 .hero .shade{position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 0%,rgba(12,20,35,.55) 22%,transparent 50%);pointer-events:none}
 .hero .info{position:absolute;inset-inline:0;bottom:0;padding-bottom:40px}
 .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:20px;padding:5px 12px;margin-bottom:14px;backdrop-filter:blur(8px)}
@@ -589,6 +595,7 @@ dialog .box:not(.has-info) img,dialog .box:not(.has-info) video{max-height:calc(
     <div class="media" data-slot="hero"></div>
     <div class="media2" aria-hidden="true"><picture><source media="(max-width:760px)" srcset="assets/kv-mobile.jpg"><img src="assets/kv-16x9.jpg" alt="" fetchpriority="high" decoding="async"></picture></div>
     <div class="shade"></div>
+    <button class="wfvm" id="wfvm" type="button"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span data-t="wfv"></span></button>
     <span class="wfv" id="wfv" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span data-t="wfv"></span></span>
     <button class="hsound" id="hsound" type="button" aria-label="Sound" hidden>
       <svg class="s-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="m22 9-6 6m0-6 6 6"/></svg>
@@ -1428,7 +1435,8 @@ host.__setView=setView;
 (function(){const hero=root.querySelector(".hero"), w=root.getElementById("wfv"); if(!hero||!w) return;
   hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect(); w.style.left=(e.clientX-r.left)+"px"; w.style.top=(e.clientY-r.top)+"px"; w.classList.toggle("on",!e.target.closest(".info a,.info button,.hsound,.dots"));});
   hero.addEventListener("pointerleave",()=>w.classList.remove("on"));
-  hero.addEventListener("click",e=>{ if(!hero.classList.contains("is-vid")) return; if(e.target.closest(".info a,.info button,.hsound,.dots")) return; openKey("promo15"); });
+  const wm=root.getElementById("wfvm"); if(wm) wm.addEventListener("click",e=>{e.stopPropagation(); openKey("promo15");});
+  hero.addEventListener("click",e=>{ if(!hero.classList.contains("is-vid")) return; if(e.target.closest(".info a,.info button,.hsound,.dots,.wfvm")) return; openKey("promo15"); });
 })();
 (function(){const br=root.querySelector(".brief"); if(!br) return; br.classList.add("js");
   const $$=(q)=>[...br.querySelectorAll(q)];
