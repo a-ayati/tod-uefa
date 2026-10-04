@@ -564,6 +564,12 @@ dialog .box.has-info img{max-height:56dvh}
 .mx-name{grid-area:n;flex-direction:row;align-items:center}
 .mx-row .s11{grid-area:a}.mx-row .s916{grid-area:b}.mx-row .s169{grid-area:c}
 .bnav{top:60px}
+@media (max-width:600px){
+.bnav{padding:6px 8px;gap:4px}
+.bnav a{padding:5px 11px;font-size:13px;gap:5px;border-radius:16px}
+.bnav a .ic{width:15px;height:15px}
+}
+
 }
 @media (prefers-reduced-motion:reduce){.ht-words i,.caps i{animation:none}.ht-words i:first-child{opacity:1;transform:none}.brief .rv{transition:none}}
 @media (pointer:coarse){
@@ -1449,8 +1455,13 @@ host.__setView=setView;
   /* nav: smooth scroll + scrollspy */
   const links=$$(".bnav a");
   links.forEach(a=>a.addEventListener("click",e=>{e.preventDefault(); const t=br.querySelector(a.getAttribute("href")); if(t) t.scrollIntoView({behavior:"smooth",block:"start"});}));
+  /* keep the active tab centred in the bar so the reader always sees which section they are in */
+  const navEl=br.querySelector(".bnav");
+  function centerTab(){const on=navEl&&navEl.querySelector("a.on"); if(!on||navEl.scrollWidth<=navEl.clientWidth+2) return;
+    const n=navEl.getBoundingClientRect(), r=on.getBoundingClientRect(), d=(r.left+r.width/2)-(n.left+n.width/2);
+    if(Math.abs(d)>4) navEl.scrollBy({left:d,behavior:"smooth"});}
   const secs=$$(".bsec");
-  const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id.replace("b-",""); links.forEach(a=>a.classList.toggle("on",a.dataset.bn===id));}}),{rootMargin:"-30% 0px -60% 0px"});
+  const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id.replace("b-",""); links.forEach(a=>a.classList.toggle("on",a.dataset.bn===id)); centerTab();}}),{rootMargin:"-30% 0px -60% 0px"});
   secs.forEach(x=>so.observe(x));
   const topb=br.querySelector("[data-top]"); if(topb) topb.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
   /* video player */
