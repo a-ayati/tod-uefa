@@ -563,10 +563,10 @@ dialog .box.has-info img{max-height:56dvh}
 .mx-row{grid-template-columns:1fr 1fr;grid-template-areas:"n n" "a b" "c c"}
 .mx-name{grid-area:n;flex-direction:row;align-items:center}
 .mx-row .s11{grid-area:a}.mx-row .s916{grid-area:b}.mx-row .s169{grid-area:c}
-.bnav{top:60px}
+.bnav{top:calc(var(--hdr,60px) + env(safe-area-inset-top,0px))}
 @media (max-width:600px){
-.bnav{padding:6px 8px;gap:4px}
-.bnav a{padding:5px 11px;font-size:13px;gap:5px;border-radius:16px}
+.bnav{padding:5px 8px 6px;gap:4px;margin-top:4px}
+.bnav a{padding:3px 10px;font-size:12.5px;gap:5px;border-radius:14px;line-height:1.5}
 .bnav a .ic{width:15px;height:15px}
 }
 
@@ -1457,6 +1457,11 @@ host.__setView=setView;
   links.forEach(a=>a.addEventListener("click",e=>{e.preventDefault(); const t=br.querySelector(a.getAttribute("href")); if(t) t.scrollIntoView({behavior:"smooth",block:"start"});}));
   /* keep the active tab centred in the bar so the reader always sees which section they are in */
   const navEl=br.querySelector(".bnav");
+  const hdEl=root.querySelector("header");
+  const setHdr=()=>{ if(hdEl) br.style.setProperty("--hdr",(Math.ceil(hdEl.getBoundingClientRect().height)+1)+"px"); };
+  setHdr(); addEventListener("resize",setHdr); addEventListener("orientationchange",()=>setTimeout(setHdr,300)); addEventListener("load",setHdr); setTimeout(setHdr,800);
+  /* follow the yellow pill continuously, not only when the section changes */
+  setInterval(()=>{ if(!document.hidden&&host.getAttribute("data-view")==="brief") centerTab(); },900);
   function centerTab(){const on=navEl&&navEl.querySelector("a.on"); if(!on||navEl.scrollWidth<=navEl.clientWidth+2) return;
     const n=navEl.getBoundingClientRect(), r=on.getBoundingClientRect(), d=(r.left+r.width/2)-(n.left+n.width/2);
     if(Math.abs(d)>4) navEl.scrollBy({left:d,behavior:"smooth"});}
