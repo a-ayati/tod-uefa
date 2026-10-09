@@ -1081,6 +1081,7 @@ dialog .box.has-info img{max-height:56dvh}
 .mrow .t.h{justify-content:flex-end}.mrow .t.a{justify-content:flex-start}
 .tc{display:flex;align-items:center;gap:10px}
 .pi small.tl{display:flex;align-items:center;gap:6px}
+@media (max-width:700px){.va-row,.va-bot{display:none!important}}
 .snote{margin:18px auto 0;max-width:70ch;color:var(--muted);font-size:13px}
 @media (prefers-reduced-motion:no-preference){.spanel>*{animation:spin .35s ease}@keyframes spin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
 @media (max-width:900px){
@@ -1962,6 +1963,8 @@ function wireCrests(){
   });
 }
 let stTab="matches", stSub="up", stPl="goals", stFull=false, liveOK=false, liveAt=null;
+/* phones: no moving strip - the matches / table / players show as a normal static list */
+const PH=()=>matchMedia("(max-width:700px)").matches; matchMedia("(max-width:700px)").addEventListener("change",()=>renderStats());
 const stPanel=root.getElementById("spanel");
 function renderStats(){
   const l=lang, s=S[l], i=l==="ar"?0:1, loc=l==="ar"?"ar-u-nu-latn":"en-GB", tz="Asia/Qatar";
@@ -1987,14 +1990,14 @@ function renderStats(){
   let html="";
   if(stTab==="matches"){
     html+=`<div class="tabs sub" role="tablist"><button type="button" role="tab" data-sub="up" aria-selected="${stSub==="up"}">${s.up}</button><button type="button" role="tab" data-sub="res" aria-selected="${stSub==="res"}">${s.res}</button></div>`;
-    if(!stFull){
+    if(!stFull&&!PH()){
       const cards=stSub==="up"
         ? UPCOMING.map(m=>{const lv=m[3]; return `<div class="mcard"><div class="mtop${lv?" lv":""}">${lv?`<i class="dot"></i>${s.live} ${lv.clock||""}`:shortDT(m[0])}</div>${row(m[1],lv?lv.hs:null)}${row(m[2],lv?lv.as:null)}</div>`;}).join("")
         : RESULTS.slice().reverse().map(m=>`<div class="mcard"><div class="mtop">${shortD(m[0])} · ${s.ft}</div>${row(m[1],m[2])}${row(m[3],m[4])}</div>`).join("");
       html+=car(cards,s.allM)+`<p class="tznote">${s.tzn}</p>`;
     }else{
       html+=less();
-      const list=stSub==="up"?UPCOMING.slice():RESULTS.slice().reverse();
+      const cap=(!stFull&&PH())?6:1e9; const list=(stSub==="up"?UPCOMING.slice():RESULTS.slice().reverse()).slice(0,cap);
       let cur="";
       html+=`<div class="sbox">`;
       list.forEach(m=>{
@@ -2008,23 +2011,23 @@ function renderStats(){
       html+=`</div>`;
     }
   }else if(stTab==="table"){
-    if(!stFull){
+    if(!stFull&&!PH()){
       const cards=STANDINGS.slice(0,10).map(r=>`<div class="mcard"><div class="mtop">${s.rank} ${r[0]}</div>${row(r[1])}<div class="mfoot"><b>${r[5]}</b><span>${s.Pts}</span><small>${s.W} ${r[2]} · ${s.D} ${r[3]} · ${s.L} ${r[4]}</small></div></div>`).join("");
       html+=car(cards,s.allT);
     }else{
       html+=less();
       html+=`<div class="tblw"><table class="tbl"><thead><tr><th>#</th><th class="tn">${s.team}</th><th title="${s.Pf}">${s.P}</th><th title="${s.Wf}">${s.W}</th><th title="${s.Df}">${s.D}</th><th title="${s.Lf}">${s.L}</th><th>${s.Pts}</th></tr></thead><tbody>`;
-      STANDINGS.forEach(r=>{html+=`<tr><td>${r[0]}</td><td class="tn"><span class="tc">${cr(r[1])}<span>${nm(r[1])}</span></span></td><td>${r[2]+r[3]+r[4]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td class="pts">${r[5]}</td></tr>`;});
+      STANDINGS.slice(0,(!stFull&&PH())?10:1e9).forEach(r=>{html+=`<tr><td>${r[0]}</td><td class="tn"><span class="tc">${cr(r[1])}<span>${nm(r[1])}</span></span></td><td>${r[2]+r[3]+r[4]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td class="pts">${r[5]}</td></tr>`;});
       html+=`</tbody></table></div>`;
     }
   }else{
     html+=`<div class="tabs sub" role="tablist"><button type="button" role="tab" data-pl="goals" aria-selected="${stPl==="goals"}">${icG}<span>${s.goals}</span></button><button type="button" role="tab" data-pl="assists" aria-selected="${stPl==="assists"}">${icA}<span>${s.assists}</span></button></div>`;
     const rows=stPl==="goals"?SCORERS:ASSISTS, kind=stPl==="goals"?"g":"a";
-    if(!stFull){
+    if(!stFull&&!PH()){
       html+=car(rows.map(r=>{const p=PL[r[0]];return `<div class="mcard"><div class="mtop pv">${pic(kind)}<span>${count(r[1],kind)}</span></div><div class="pname">${p[i]}</div>${row(p[2])}</div>`;}).join(""),s.allP);
     }else{
       html+=less();
-      html+=`<div class="sbox narrow">${rows.map(r=>{const p=PL[r[0]];return `<div class="prow"><span class="pn" aria-label="${count(r[1],kind)}">${r[1]}</span><span class="pi"><b>${p[i]}</b><small class="tl">${cr(p[2],1)}<span>${nm(p[2])}</span></small></span></div>`;}).join("")}</div>`;
+      html+=`<div class="sbox narrow">${rows.slice(0,(!stFull&&PH())?8:1e9).map(r=>{const p=PL[r[0]];return `<div class="prow"><span class="pn" aria-label="${count(r[1],kind)}">${r[1]}</span><span class="pi"><b>${p[i]}</b><small class="tl">${cr(p[2],1)}<span>${nm(p[2])}</span></small></span></div>`;}).join("")}</div>`;
     }
     if(liveOK&&stPl==="assists") html+=`<p class="tznote">${s.astn}</p>`;
   }
